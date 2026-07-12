@@ -1,4 +1,7 @@
 ---
+
+import NavBar from "./../components/NavBar.astro";
+
 // Lógica de Astro (Frontmatter) - Se mantiene todo exactamente igual
 const teamMembers = [
   { nombre: "César Ricardo Lazcano Valdez", profesion: "Ingeniero en Sistemas", perfil: "Especialista en sistemas críticos y soporte transaccional." },
@@ -48,18 +51,23 @@ const areasDeTrabajo = [
   </head>
   <body>
     <nav class="navbar">
-      <div class="nav-brand">
-        <img src="/Havenser_Logo.png" alt="Logo de Havenser" class="brand-logo" />
+    <div class="nav-brand">
+        <a href="/"><img
+            src="/Havenser_Logo.png"
+            alt="Logo de Havenser"
+            class="brand-logo"
+        />
         <img src="/Havenser_titulo.png" alt="Havenser" class="brand-title" />
-      </div>
-      <ul class="nav-links">
+        </a>
+    </div>
+    <ul class="nav-links">
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#productos">Productos</a></li>
         <li><a href="#eventos">Eventos</a></li>
+        <li><a href="/CursoPython">Curso de Python</a></li>
         <li><a href="#contacto" class="btn-contacto">Contacto</a></li>
-      </ul>
-    </nav>
+    </ul>
+</nav>
 
     <header class="hero">
       <div class="hero-wrapper">
@@ -133,6 +141,12 @@ const areasDeTrabajo = [
             </div>
           ))}
         </div>
+      </div>
+    </section>
+    
+    <section id="servicios" class="cursos">
+      <div class="container">
+        
       </div>
     </section>
 
