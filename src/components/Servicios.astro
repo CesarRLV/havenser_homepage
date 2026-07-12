@@ -1,0 +1,72 @@
+
+---
+import TarjetaServicio from './TarjetaServicios.astro';
+
+const servicios = [
+  {
+    titulo: "Inteligencia Artificial y Analítica de Datos",
+    icon: "🧠", // O 'chart-network', 'cpu'
+    desc: "Desarrollo de algoritmos de aprendizaje automático (Machine Learning), modelos predictivos y procesamiento de datos complejos para la toma de decisiones estratégicas industriales."
+  },
+  {
+    titulo: "Conectividad, Redes e Infraestructura",
+    icon: "☁️", // O 'server', 'wifi'
+    desc: "Diseño y optimización de redes de comunicación seguras, arquitectura de sistemas distribuidos y soporte de infraestructura de alta disponibilidad para aplicaciones críticas."
+  },
+  {
+    titulo: "Ingeniería Mecánica y Automatización",
+    icon: "⚙️", // O 'bot', 'wrench'
+    desc: "Diseño de sistemas mecánicos, robótica, modelado de prototipos físicos e integración de hardware para la automatización de procesos de manufactura o laboratorio."
+  },
+  {
+    titulo: "Ciencias Exactas y Biosoluciones",
+    icon: "📊", // O 'microscope', 'atom'
+    desc: "Modelado físico-matemático para simulación de fenómenos complejos junto con investigación aplicada en biotecnología y análisis químico para sectores médicos, agrícolas o de materiales."
+  }
+];
+
+---
+<section id="servicios" class="...">
+  <h2>Nuestros Servicios</h2>
+  <div class="grid-servicios">
+    {servicios.map((servicio) => (
+      <TarjetaServicio 
+        titulo={servicio.titulo} 
+        descripcion={servicio.desc} 
+        icono={servicio.icon} 
+      />
+    ))}
+  </div>
+</section>
+
+<style is:global>
+ 
+    /* Resto de estilos (Tarjetas, Equipo, Formulario) - Sin cambios */
+	.grid-especialidades {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 30px;
+	}
+
+	.card-interactiva {
+		background: white;
+		padding: 40px;
+		border-radius: 12px;
+		text-align: center;
+		box-shadow: var(--shadow);
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease;
+		cursor: pointer;
+	}
+
+	.card-interactiva:hover {
+		transform: translateY(-10px);
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+	}
+
+	.card-interactiva .icon {
+		font-size: 3.5rem;
+		margin-bottom: 20px;
+	}
+</style>

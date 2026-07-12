@@ -1,3 +1,7 @@
+---
+
+---
+
 <nav class="navbar">
     <div class="nav-brand">
         <img
@@ -16,3 +20,97 @@
         <li><a href="#contacto" class="btn-contacto">Contacto</a></li>
     </ul>
 </nav>
+
+<style>
+    /* Navbar MODIFICADO para las dos imágenes */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 40px; /* Reducido un poco el padding vertical */
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    /* Contenedor de marca modificado para alinear logo y título */
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Espacio entre el logo y el título */
+    }
+
+    /* Estilos específicos para las nuevas imágenes del banner */
+    .brand-logo {
+        max-height: 35px; /* Altura proporcional para el navbar */
+        width: auto; /* Mantener relación de aspecto */
+        object-fit: contain;
+    }
+
+    .brand-title {
+        max-height: 55px; /* Ligeramente más pequeño que el logo suele verse mejor */
+        width: auto;
+        object-fit: contain;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 25px;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+    }
+
+    .btn-contacto {
+        background-color: var(--secondary);
+        color: white !important;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--text-dark);
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: var(--secondary);
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.5rem;
+        }
+        h2 {
+            font-size: 2.2rem;
+        }
+
+        .navbar {
+            padding: 15px 20px;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-brand {
+            gap: 10px; /* Reducir brecha en móviles */
+        }
+
+        .brand-logo {
+            height: 40px;
+        } /* Ajustar tamaños en móvil */
+        .brand-title {
+            height: 28px;
+        }
+
+        .nav-links {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+    }
+</style>
