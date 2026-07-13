@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-// 1. Importamos todos nuestros componentes
+import General from '../layouts/General.astro';
 import Navbar from '../components/NavBar.astro';
 import PortadaLogo from '../components/PortadaLogo.astro';
 import Nosotros from '../components/Nosotros.astro';
@@ -14,12 +13,12 @@ import ContactoForm from '../components/ContactoForm.astro';
   
   <Navbar />
   
-  <main>
+  <General>
     <PortadaLogo />
-    <Nosotros />
+    
     <Servicios />
     
     <ContactoForm />
-  </main>
+  </General>
   
 </Layout>

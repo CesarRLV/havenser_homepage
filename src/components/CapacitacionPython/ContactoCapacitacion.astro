@@ -1,0 +1,66 @@
+---
+// src/components/ContactoCapacitacion.astro
+const SITE_INFO={
+    TELEFONO_CURSOS: "+52 1 55 1234 5678",
+    EMAIL_CURSOS: "consultoria@havenser.com",
+    NOMBRE: "Havenser",
+    URL: "www.havenser.com"
+}
+---
+
+<section class="py-16 px-6 bg-[#111b2c] text-white">
+    <div
+        class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+    >
+        <div class="bg-gray-800/50 p-8 rounded-xl border-l-4 border-orange-500">
+            <h3
+                class="text-3xl font-bold mb-4"
+                
+            >
+                INVERSIÓN TOTAL POR GRUPO (10 personas)
+            </h3>
+            <p class="text-4xl font-extrabold text-orange-400 mb-2">
+                $40,000 <span class="text-xl">+IVA</span>
+            </p>
+            <p class="text-xl text-gray-300 my-6 italic">
+                Equivale a $1,289 por hora de capacitación para todo su equipo.
+            </p>
+            <p
+                class="text-xl text-gray-400 leading-relaxed"
+                style="font-family: Calibri, sans-serif;"
+            >
+                Incluye sesiones en vivo, material grabado, casos reales del
+                sector y proyecto final con retroalimentación personalizada.
+            </p>
+        </div>
+
+        <div class="text-center md:text-left ">
+            <h3
+                class="text-4xl font-bold mb-6"
+            >
+                RESERVE SU FECHA DE ARRANQUE
+            </h3>
+            <div class="space-y-4">
+                <a
+                    href="tel:+5255XXXXXXXX"
+                    class="block text-2xl hover:text-blue-400 transition-colors"
+                >
+                    📞 <span class="ml-2 font-mono">{SITE_INFO.TELEFONO_CURSOS}</span>
+                </a>
+                <a
+                    href="mailto:contacto@havenser.com"
+                    class="block text-2xl hover:text-blue-400 transition-colors"
+                >
+                    ✉️ <span class="ml-2">consultoria@havenser.com</span>
+                </a>
+                <a
+                    href="https://www.havenser.com"
+                    target="_blank"
+                    class="block text-2xl hover:text-blue-400 transition-colors"
+                >
+                    🌐 <span class="ml-2">{SITE_INFO.URL}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

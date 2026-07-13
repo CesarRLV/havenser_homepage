@@ -46,54 +46,76 @@
 </section>
 
 <style>
-    .formulario {
-        max-width: 650px;
-        margin: 0 auto;
-        background: white;
-        padding: 50px;
-        border-radius: 12px;
-        color: var(--text-dark);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
+  .seccion-contacto {
+    background-color: var(--bg-main); /* #111b2c */
+    padding: 6rem 2rem;
+  }
 
-    .form-group {
-        margin-bottom: 25px;
-        display: flex;
-        flex-direction: column;
-    }
+  .formulario-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--bg-surface); /* #192232 */
+    border: 1px solid var(--accent);
+    padding: 3rem;
+    border-radius: 8px;
+  }
 
-    .form-group label {
-        margin-bottom: 8px;
-        font-weight: 600;
-    }
+  .formulario h2 {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
 
-    .form-group input,
-    .form-group textarea {
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-family: inherit;
-        font-size: 1rem;
-    }
+  .form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-    .btn-submit {
-        width: 100%;
-        padding: 18px;
-        background-color: var(--secondary);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition:
-            background-color 0.3s,
-            transform 0.2s;
-    }
+  .form-group label {
+    font-family: 'Calibri', sans-serif;
+    color: var(--text-light);
+    font-size: 1rem;
+  }
 
-    .btn-submit:hover {
-        background-color: #2563eb;
-        transform: scale(1.02);
-    }
-    
+  /* Inputs de Alta Gama Tecnológica */
+  .form-group input, 
+  .form-group textarea {
+    font-family: 'Calibri', sans-serif;
+    background-color: var(--bg-main); /* #111b2c */
+    border: 1px solid var(--accent); /* #3e4b61 */
+    color: var(--text-light);
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-group input:focus, 
+  .form-group textarea:focus {
+    border-color: var(--text-light); /* Resalta en #e6e6f0 al escribir */
+    box-shadow: 0 0 8px rgba(230, 230, 240, 0.1);
+  }
+
+  .btn-submit {
+    font-family: 'Calibri', sans-serif;
+    width: 100%;
+    background-color: var(--accent); /* #3e4b61 */
+    color: var(--text-light);
+    border: 1px solid transparent;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .btn-submit:hover {
+    background-color: transparent;
+    border-color: var(--text-light);
+    transform: translateY(-2px);
+  }
 </style>
