@@ -14,103 +14,94 @@
 </html>
 
 <style is:global>
-	/* Variables y estilos globales - Sin cambios */
 	:root {
-		--primary: #0f172a;
-		--secondary: #3b82f6;
-		--text-dark: #333;
-		--text-light: #f8fafc;
-		--bg-light: #f1f5f9;
-		--shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		/* ==========================================
+     SISTEMA DE COLORES HAVENSER
+     ========================================== */
+		/* Fondo principal ultra oscuro (Seriedad y Tecnología) */
+		--bg-main: #111b2c;
+
+		/* Fondo secundario para tarjetas, navbar o secciones (Ligeramente más claro) */
+		--bg-surface: #192232;
+
+		/* Color de acento/bordes/hover (Profesionalismo) */
+		--accent: #3e4b61;
+
+		/* Texto secundario o descriptivo (Lectura cómoda) */
+		--text-muted: #8d94a1;
+
+		/* Texto principal y títulos (Contraste excelente, no cansa la vista como el blanco puro) */
+		--text-light: #e6e6f0;
+	}
+
+	/* ==========================================
+   RESETS Y TIPOGRAFÍA BASE
+   ========================================== */
+	html {
+		scroll-behavior: smooth; /* Para que el menú navegue suavemente a las secciones */
 	}
 
 	body {
 		margin: 0;
+		padding: 0;
+		background-color: var(--bg-main);
+		color: var(--text-light);
+		/* Calibri para textos, con respaldos de fuentes del sistema limpias por si acaso */
 		font-family:
-			system-ui,
-			-apple-system,
-			sans-serif;
-		color: var(--text-dark);
+			"Calibri", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 		line-height: 1.6;
-		background-color: white;
+		font-size: 1.1rem; /* Un texto ligeramente más grande da sensación de elegancia */
 	}
 
-	p {
-		font-size: 20px;
-	}
-
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 20px;
-	}
-
-	section {
-		padding: 80px 0;
-	}
-
-	h2 {
-		text-align: center;
-		font-size: 2.8rem;
-		margin-bottom: 50px;
-		color: var(--primary);
-	}
-
-	.bg-light {
-		background-color: var(--bg-light);
-	}
-	.bg-dark {
-		background-color: var(--primary);
+	/* ==========================================
+   TIPOGRAFÍA DE TÍTULOS (GEORGIA)
+   ========================================== */
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: "Georgia", serif;
 		color: var(--text-light);
-	}
-	.bg-dark h2 {
-		color: var(--text-light);
-	}
-
-	/* Logo eliminado de la portada, ahora está en el banner, se quita la clase .logo antigua si la hubiera */
-
-	h1 {
-		font-size: 3.8rem;
-		color: var(--primary);
-		margin-bottom: 10px;
 		margin-top: 0;
+		margin-bottom: 1rem;
+		font-weight: normal; /* Georgia luce mucho más sofisticada sin un negrita exagerado */
 	}
 
-
-	.grid-equipo {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 25px;
+	/* Jerarquía de tamaños */
+	h1 {
+		font-size: 3.5rem;
+		line-height: 1.2;
+	}
+	h2 {
+		font-size: 2.5rem;
+		line-height: 1.3;
+		border-bottom: 2px solid var(--accent);
+		padding-bottom: 0.5rem;
+		display: inline-block;
+	}
+	h3 {
+		font-size: 1.5rem;
 	}
 
-	.card-equipo {
-		background: white;
-		padding: 25px;
-		border-radius: 10px;
-		border-left: 5px solid var(--secondary);
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+	/* ==========================================
+   ELEMENTOS COMUNES
+   ========================================== */
+	p {
+		color: var(
+			--text-muted
+		); /* Usamos el gris azulado para los párrafos, se ve muy corporativo */
+		margin-bottom: 1.5rem;
 	}
 
-	.card-equipo h4 {
-		color: var(--secondary);
-		margin-top: 5px;
-		margin-bottom: 10px;
+	a {
+		color: var(--text-light);
+		text-decoration: none;
+		transition: all 0.3s ease; /* Transiciones suaves de tecnología de alta gama */
 	}
 
-
-	/* Media Queries para Responsividad - Ajustes para las imágenes del banner */
-	@media (max-width: 768px) {
-		h1 {
-			font-size: 2.5rem;
-		}
-		h2 {
-			font-size: 2.2rem;
-		}
-		
-
-		.prism-h-container {
-			width: 180px;
-			height: 180px;
-		}
+	a:hover {
+		color: var(--accent);
 	}
 </style>

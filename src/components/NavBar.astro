@@ -12,11 +12,9 @@
         <img src="/Havenser_titulo.png" alt="Havenser" class="brand-title" />
     </div>
     <ul class="nav-links">
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#eventos">Eventos</a></li>
-        <li><a href="#eventos">Curso de Python</a></li>
+        <li><a href="#nosotros">¿Quiénes somos?</a></li>
+        <li><a href="#servicios">Nuestros Servicios</a></li>
+        <li><a href="#eventos">Galería</a></li>
         <li><a href="#contacto" class="btn-contacto">Contacto</a></li>
     </ul>
 </nav>
@@ -33,6 +31,12 @@
         position: sticky;
         top: 0;
         z-index: 1000;
+        background-color: var(--bg-surface);
+        border-bottom: 1px solid var(--accent);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 1rem 2rem;
     }
 
     /* Contenedor de marca modificado para alinear logo y título */
@@ -50,7 +54,7 @@
     }
 
     .brand-title {
-        max-height: 55px; /* Ligeramente más pequeño que el logo suele verse mejor */
+        max-height: 35px; /* Ligeramente más pequeño que el logo suele verse mejor */
         width: auto;
         object-fit: contain;
     }
@@ -76,6 +80,7 @@
         color: var(--text-dark);
         font-weight: 500;
         transition: color 0.3s;
+        font-size: 1.2rem;
     }
 
     .nav-links a:hover {
