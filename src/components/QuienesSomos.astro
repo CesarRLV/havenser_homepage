@@ -1,0 +1,49 @@
+---
+// src/components/QuienesSomos.astro
+
+const objetivos = [
+  {
+    title: "Innovación Comercializable",
+    description: "Desarrollamos proyectos tecnológicos viables orientados a la monetización, licenciamiento y transferencia al sector empresarial."
+  },
+  {
+    title: "Sinergia Interdisciplinaria",
+    description: "Fusionamos software inteligente, infraestructura de red segura y hardware optimizado para soluciones híbridas de alto impacto."
+  },
+  {
+    title: "Optimización de Procesos",
+    description: "Elevamos la competitividad industrial mediante herramientas basadas en datos, modelos predictivos y automatización mecánica."
+  },
+  {
+    title: "Escalabilidad y Rentabilidad",
+    description: "Diseñamos modelos de negocio flexibles y sostenibles que garantizan el crecimiento orgánico de nuestra organización."
+  }
+];
+---
+
+<section id="nosotros" class="py-20 px-6 bg-[#111b2c] text-white">
+
+  <div class="max-w-6xl mx-auto">
+    
+    <div class="mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6" style="font-family: Georgia, serif;">¿Quiénes Somos?</h2>
+      <p class="text-xl text-gray-300 max-w-3xl leading-relaxed" style="font-family: Calibri, sans-serif;">
+        Somos un colectivo interdisciplinario de científicos e ingenieros apasionados por transformar el conocimiento avanzado en soluciones tecnológicas de alto impacto. 
+        Nos integramos como una organización que fusiona la rigurosidad de las ciencias exactas con la innovación de la tecnología.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {objetivos.map((obj) => (
+        <div class="bg-gray-800/40 p-8 rounded-lg border-l-4 border-blue-500 shadow-lg hover:bg-gray-800/60 transition-all duration-300">
+          <h3 class="text-2xl font-semibold mb-4 text-blue-300" style="font-family: Georgia, serif;">
+            {obj.title}
+          </h3>
+          <p class="text-gray-300 leading-relaxed" style="font-family: Calibri, sans-serif;">
+            {obj.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

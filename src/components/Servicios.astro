@@ -1,0 +1,96 @@
+---
+import TarjetaServicio from "./TarjetaServicios.astro";
+
+const servicios = [
+  {
+    titulo: "Optimización y Automatización de Procesos",
+    descripcion:
+      "Incrementamos la eficiencia operativa de su organización mediante el diseño e implementación de sistemas basados en Inteligencia Artificial, Ciencia de Datos avanzada e Internet de las Cosas (IoT), transformando flujos manuales en activos automatizados de alto rendimiento.",
+    icono: "🤖", // Puedes cambiarlo después por un componente de icono SVG o Lucide
+  },
+  {
+    titulo: "Conectividad, Redes e Infraestructura",
+    descripcion:
+      "Diseñamos y optimizamos arquitecturas cloud y sistemas distribuidos robustos. Garantizamos entornos seguros, escalables y de alta disponibilidad diseñados estructuralmente para soportar operaciones críticas de alta demanda sin interrupciones.",
+    icono: "☁️",
+  },
+  {
+    titulo: "Ciencias Exactas y Biosoluciones",
+    descripcion:
+      "Desarrollamos modelos físico-matemáticos de alta fidelidad para la simulación predictiva de fenómenos complejos. Proveemos investigación científica aplicada en biotecnología y análisis químico avanzado enfocado en sectores médicos, agrícolas y de materiales de vanguardia.",
+    icono: "🧬",
+  },
+  {
+    titulo: "Desarrollo de Aplicaciones a la Medida",
+    descripcion:
+      "Ingeniería y construcción de plataformas de software, ecosistemas web y aplicativos empresariales personalizados. Creamos soluciones escalables adaptadas estrictamente a los objetivos estratégicos y a la lógica de negocio de su organización.",
+    icono: "💻",
+  },
+  {
+    titulo: "Capacitación Especializada y Mentoría",
+    descripcion:
+      "Diseñamos programas formativos corporativos y consultoría técnica personalizada de alto nivel. Transferimos competencias clave en metodologías ágiles y herramientas avanzadas para elevar las capacidades tecnológicas de sus equipos de ingeniería y analistas.",
+    icono: "🎓",
+    url: "/cursos", // Enlace a la sección de cursos
+  },
+];
+---
+
+<section id="servicios">
+  <h2>Nuestros Servicios</h2>
+  <div class="grid-especialidades">
+    {
+      servicios.map((servicio) => (
+        <TarjetaServicio
+          titulo={servicio.titulo}
+          descripcion={servicio.descripcion}
+          icono={servicio.icono}
+          url={servicio.url}
+        />
+      ))
+    }
+  </div>
+</section>
+
+<style is:global>
+  /* Resto de estilos (Tarjetas, Equipo, Formulario) - Sin cambios */
+  .grid-especialidades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  .card-interactiva {
+    background-color: var(--bg-surface); /* Usa el fondo secundario #192232 */
+    border: 1px solid var(--accent); /* Borde sutil #3e4b61 */
+    border-radius: 8px; /* Bordes ligeramente redondeados, muy moderno */
+    padding: 2rem;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .card-interactiva:hover {
+    transform: translateY(-5px); /* Efecto de levitación al pasar el mouse */
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); /* Sombra elegante */
+    border-color: var(--text-light); /* El borde resalta sutilmente */
+  }
+
+  .card-interactiva h2 {
+    /* Aquí automáticamente tomará la fuente Georgia por la regla global */
+    margin-bottom: 1rem;
+    border-bottom: none; /* Quitamos la línea del h2 global para que se vea limpio */
+    padding: 1rem 0 0.5rem 0;
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  .card-interactiva p {
+    /* Tomará Calibri y el color grisáceo automáticamente */
+    margin-bottom: 0;
+  }
+
+  .icono {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+</style>

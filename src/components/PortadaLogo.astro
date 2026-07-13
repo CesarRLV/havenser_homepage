@@ -1,0 +1,261 @@
+---
+// Componente Hero con Animación de Circuito H
+---
+
+<header class="hero-circuito">
+  <canvas id="circuitoCanvas"></canvas>
+  
+  <div class="header-content">
+    <h1>Innovación, Datos y Tecnología</h1>
+    <p>Potenciando el futuro a través de la inteligencia artificial y la nube.</p>
+  </div>
+</header>
+
+<style>
+  /* Contenedor principal de la portada */
+  .hero-circuito {
+    width: 100%;
+    height: 90vh; /* Aumentamos ligeramente la altura para formato hero de escritorio */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+    background-color: var(--bg-main);
+  }
+
+  #circuitoCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--text-light);
+    padding: 0 20px;
+    pointer-events: none; /* Permite que los clics pasen a través del texto si fuera necesario */
+    margin-top: 180px;
+  }
+
+  .header-content h1 {
+    font-family: 'Georgia', serif;
+    font-size: 2.8rem; /* Tamaño con jerarquía visual */
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+  }
+
+  .header-content p {
+    font-family: 'Calibri', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 300;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+  }
+</style>
+
+<script>
+  // Astro empaquetará este script automáticamente para el cliente
+  const canvas = document.getElementById('circuitoCanvas');
+  
+  if (canvas) { // Buena práctica: verificar que el elemento exista antes de ejecutar
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+        generarEstructuraH(); 
+    }
+
+    const numPuntos = 120;
+    const puntos = [];
+
+    let nodosCircuito = [];
+    let lineasCircuito = [];
+    let circuitoIniciado = false;
+
+    function initPuntos() {
+        puntos.length = 0;
+        for (let i = 0; i < numPuntos; i++) {
+            puntos.push({
+                angulo: Math.random() * Math.PI * 2,
+                radioOrbita: Math.random() * (Math.min(canvas.width, canvas.height) * 0.35) + 20,
+                velocidadOrbita: (Math.random() - 0.5) * 0.03,
+                distorsion: (Math.random() - 0.5) * 0.5,
+                radio: Math.random() * 2 + 1,
+                alpha: Math.random() * 0.7 + 0.3,
+                x: 0,
+                y: 0,
+                objetivoX: null,
+                objetivoY: null
+            });
+        }
+    }
+
+    function generarEstructuraH() {
+        nodosCircuito = [];
+        lineasCircuito = [];
+
+        const cx = canvas.width / 2;
+        const cy = (canvas.height / 2) - 50;
+
+        const hAncho = 110;
+        const hAlto = 150;
+        const hMitadA = hAncho / 2;
+        const hMitadH = hAlto / 2;
+
+        const puntosH = [];
+        const pasosVerticales = 6;
+        const pasosHorizontales = 4;
+
+        // Columna Izquierda H
+        for (let i = 0; i <= pasosVerticales; i++) {
+            puntosH.push({ x: cx - hMitadA, y: cy - hMitadH + (hAlto / pasosVerticales) * i });
+        }
+        // Columna Derecha H
+        for (let i = 0; i <= pasosVerticales; i++) {
+            puntosH.push({ x: cx + hMitadA, y: cy - hMitadH + (hAlto / pasosVerticales) * i });
+        }
+        // Barra Horizontal Central H
+        for (let i = 1; i < pasosHorizontales; i++) {
+            puntosH.push({ x: cx - hMitadA + (hAncho / pasosHorizontales) * i, y: cy });
+        }
+
+        // Marco / Borde del Circuito
+        const marcoAncho = 260;
+        const marcoAlto = 200;
+        const mMitadA = marcoAncho / 2;
+        const mMitadH = marcoAlto / 2;
+
+        const puntosBorde = [
+            { x: cx - mMitadA, y: cy - mMitadH },
+            { x: cx + mMitadA, y: cy - mMitadH },
+            { x: cx + mMitadA, y: cy + mMitadH },
+            { x: cx - mMitadA, y: cy + mMitadH },
+            { x: cx, y: cy - mMitadH },
+            { x: cx, y: cy + mMitadH },
+            { x: cx - mMitadA, y: cy },
+            { x: cx + mMitadA, y: cy }
+        ];
+
+        nodosCircuito = [...puntosH, ...puntosBorde];
+
+        for (let i = 0; i < nodosCircuito.length; i++) {
+            for (let j = i + 1; j < nodosCircuito.length; j++) {
+                const p1 = nodosCircuito[i];
+                const p2 = nodosCircuito[j];
+                const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+
+                if (dist < 70 || (Math.abs(p1.x - p2.x) < 5 && dist < 110) || (Math.abs(p1.y - p2.y) < 5 && dist < 110)) {
+                    lineasCircuito.push({ p1, p2 });
+                }
+            }
+        }
+
+        if (circuitoIniciado) {
+            asignarObjetivos();
+        }
+    }
+
+    function asignarObjetivos() {
+        for (let i = 0; i < puntos.length; i++) {
+            const nodoTarget = nodosCircuito[i % nodosCircuito.length];
+            puntos[i].objetivoX = nodoTarget.x;
+            puntos[i].objetivoY = nodoTarget.y;
+        }
+    }
+
+    function dibujarFondoDifuminado() {
+        const cx = canvas.width / 2;
+        const cy = (canvas.height / 2) - 50;
+        const maxRadius = Math.max(canvas.width, canvas.height) * 0.8;
+
+        const gradiente = ctx.createRadialGradient(cx, cy, 20, cx, cy, maxRadius);
+        // Ajuste de colores para integrarse con --bg-main (#111b2c)
+        gradiente.addColorStop(0, '#192232'); 
+        gradiente.addColorStop(0.6, '#111b2c');
+        gradiente.addColorStop(1, '#010206');
+
+        ctx.fillStyle = gradiente;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function animar() {
+        dibujarFondoDifuminado();
+
+        const cx = canvas.width / 2;
+        const cy = (canvas.height / 2) - 50;
+
+        if (circuitoIniciado) {
+            ctx.save();
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(0, 162, 255, 0.4)';
+            ctx.shadowColor = '#0088ff';
+            ctx.shadowBlur = 10;
+
+            lineasCircuito.forEach(linea => {
+                ctx.beginPath();
+                ctx.moveTo(linea.p1.x, linea.p1.y);
+                ctx.lineTo(linea.p2.x, linea.p2.y);
+                ctx.stroke();
+            });
+            ctx.restore();
+        }
+
+        for (let i = 0; i < puntos.length; i++) {
+            const p = puntos[i];
+
+            if (!circuitoIniciado) {
+                p.angulo += p.velocidadOrbita;
+                p.radioOrbita += p.distorsion;
+
+                if (p.radioOrbita < 30 || p.radioOrbita > Math.min(canvas.width, canvas.height) * 0.4) {
+                    p.distorsion *= -1;
+                }
+
+                p.x = cx + Math.cos(p.angulo) * p.radioOrbita;
+                p.y = cy + Math.sin(p.angulo) * p.radioOrbita;
+
+            } else {
+                if (p.objetivoX !== null && p.objetivoY !== null) {
+                    p.x += (p.objetivoX - p.x) * 0.025;
+                    p.y += (p.objetivoY - p.y) * 0.025;
+                }
+            }
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radio, 0, Math.PI * 2);
+            ctx.fillStyle = '#61dafb';
+            ctx.shadowColor = '#00d2ff';
+            ctx.shadowBlur = circuitoIniciado ? 8 : 6;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        requestAnimationFrame(animar);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    initPuntos();
+    animar();
+
+    setTimeout(() => {
+        circuitoIniciado = true;
+        asignarObjetivos();
+    }, 3500);
+  }
+</script>
