@@ -1,10 +1,27 @@
 ---
 // src/components/GridCursos.astro
+
 const cursos = [
-  { titulo: "IA en el Trabajo", desc: "Domina herramientas de IA para optimizar tu productividad diaria." },
-  { titulo: "Análisis de Datos (Químicos/Biólogos)", desc: "Python, SQL y R enfocados a la investigación y laboratorio." },
-  { titulo: "Python Automotriz", desc: "Python aplicado al análisis de manufactura y calidad." },
-  { titulo: "Sistemas con Java", desc: "Desarrollo robusto de sistemas utilizando Java moderno." }
+  { 
+    titulo: "IA en el Trabajo", 
+    desc: "Domina herramientas de IA para optimizar tu productividad diaria.",
+    link: "/cursos/ia-trabajo" 
+  },
+  { 
+    titulo: "Análisis de Datos (Químicos/Biólogos)", 
+    desc: "Python, SQL y R enfocados a la investigación y laboratorio.",
+    link: "/cursos/datos-quimicos" 
+  },
+  { 
+    titulo: "Python Automotriz", 
+    desc: "Python aplicado al análisis de manufactura y calidad.",
+    link: "/cursos/python-automotriz" 
+  },
+  { 
+    titulo: "Sistemas con Java", 
+    desc: "Desarrollo robusto de sistemas utilizando Java moderno.",
+    link: "/cursos/desarrollo-java" 
+  }
 ];
 ---
 <section class="py-20 px-6 bg-gray-50">
@@ -12,10 +29,11 @@ const cursos = [
     <h2 class="text-3xl font-bold mb-12 text-[#111b2c]" style="font-family: Georgia, serif;">Nuestros Cursos</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {cursos.map(c => (
-        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500 hover:shadow-xl transition-shadow">
+        <a href={c.link} class="block bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500 hover:shadow-2xl hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
           <h3 class="text-xl font-bold mb-3 text-[#111b2c]">{c.titulo}</h3>
-          <p class="text-gray-600 text-sm" style="font-family: Calibri, sans-serif;">{c.desc}</p>
-        </div>
+          <p class="text-gray-600 text-sm mb-4" style="font-family: Calibri, sans-serif;">{c.desc}</p>
+          <span class="text-blue-600 font-bold text-sm">Ver detalles →</span>
+        </a>
       ))}
     </div>
   </div>
