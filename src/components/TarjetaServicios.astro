@@ -1,15 +1,16 @@
 ---
-const { titulo, descripcion, icono } = Astro.props;
+const { titulo, descripcion, icono, url } = Astro.props;
 ---
 
-<div class="card">
-    <p class="card-title">{titulo}</p>
+<div id={"card-"} class="card">
+    
+    <p class="card-title">{icono}{titulo}</p>
     </p>
     <p class="small-desc">
         {descripcion}
     </p>
     <div class="go-corner">
-        <div class="go-arrow">→</div>
+        <a id={"card-a-"} href={url} ><div class="go-arrow">→</div></a>
     </div>
 </div>
 <style>
@@ -100,3 +101,5 @@ const { titulo, descripcion, icono } = Astro.props;
 }
 
 </style>
+<script>
+</script>

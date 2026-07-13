@@ -31,6 +31,7 @@ const servicios = [
     descripcion:
       "Diseñamos programas formativos corporativos y consultoría técnica personalizada de alto nivel. Transferimos competencias clave en metodologías ágiles y herramientas avanzadas para elevar las capacidades tecnológicas de sus equipos de ingeniería y analistas.",
     icono: "🎓",
+    url: "/cursos", // Enlace a la sección de cursos
   },
 ];
 ---
@@ -44,6 +45,7 @@ const servicios = [
           titulo={servicio.titulo}
           descripcion={servicio.descripcion}
           icono={servicio.icono}
+          url={servicio.url}
         />
       ))
     }

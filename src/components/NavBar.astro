@@ -1,123 +1,33 @@
 ---
-
+// src/components/Navbar.astro
 ---
 
-<nav class="navbar">
-    <div class="nav-brand">
-        <img
-            src="/Havenser_Logo.png"
-            alt="Logo de Havenser"
-            class="brand-logo"
-        />
-        <img src="/Havenser_titulo.png" alt="Havenser" class="brand-title" />
-    </div>
-    <ul class="nav-links">
-        <li><a href="#nosotros">¿Quiénes somos?</a></li>
-        <li><a href="#servicios">Nuestros Servicios</a></li>
-        <li><a href="#eventos">Galería</a></li>
-        <li><a href="#contacto" class="btn-contacto">Contacto</a></li>
-    </ul>
-</nav>
-
-<style>
-    /* Navbar MODIFICADO para las dos imágenes */
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 40px; /* Reducido un poco el padding vertical */
-        background-color: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: var(--bg-surface);
-        border-bottom: 1px solid var(--accent);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding: 1rem 2rem;
-    }
-
-    /* Contenedor de marca modificado para alinear logo y título */
-    .nav-brand {
-        display: flex;
-        align-items: center;
-        gap: 15px; /* Espacio entre el logo y el título */
-    }
-
-    /* Estilos específicos para las nuevas imágenes del banner */
-    .brand-logo {
-        max-height: 35px; /* Altura proporcional para el navbar */
-        width: auto; /* Mantener relación de aspecto */
-        object-fit: contain;
-    }
-
-    .brand-title {
-        max-height: 35px; /* Ligeramente más pequeño que el logo suele verse mejor */
-        width: auto;
-        object-fit: contain;
-    }
-
-    .nav-links {
-        list-style: none;
-        display: flex;
-        gap: 25px;
-        margin: 0;
-        padding: 0;
-        align-items: center;
-    }
-
-    .btn-contacto {
-        background-color: var(--secondary);
-        color: white !important;
-        padding: 10px 20px;
-        border-radius: 5px;
-    }
-
-    .nav-links a {
-        text-decoration: none;
-        color: var(--text-dark);
-        font-weight: 500;
-        transition: color 0.3s;
-        font-size: 1.2rem;
-    }
-
-    .nav-links a:hover {
-        color: var(--secondary);
-    }
-
+<nav x-data="{ open: false }" class="bg-[#111b2c] shadow-lg sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
     
+    <a href="/" class="flex items-center gap-3">
+      <img src="/Havenser_Logo.png" alt="Logo" class="h-9 w-auto" />
+      <img src="/Havenser_titulo.png" alt="Havenser" class="h-9 w-auto" />
+    </a>
 
-    @media (max-width: 768px) {
-        h1 {
-            font-size: 2.5rem;
-        }
-        h2 {
-            font-size: 2.2rem;
-        }
+    <button @click="open = !open" class="md:hidden text-white focus:outline-none">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
 
-        .navbar {
-            padding: 15px 20px;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .nav-brand {
-            gap: 10px; /* Reducir brecha en móviles */
-        }
-
-        .brand-logo {
-            height: 40px;
-        } /* Ajustar tamaños en móvil */
-        .brand-title {
-            height: 28px;
-        }
-
-        .nav-links {
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
-    }
-</style>
+    <ul 
+      :class="open ? 'flex' : 'hidden md:flex'" 
+      class="absolute md:relative top-full left-0 w-full md:w-auto bg-[#111b2c] md:bg-transparent flex-col md:flex-row gap-6 p-6 md:p-0 items-center border-t border-gray-700 md:border-none"
+    >
+      <li><a href="#nosotros" @click="open = false" class="text-white hover:text-orange-500 font-medium transition-colors text-lg" style="font-family: Calibri, sans-serif;">¿Quiénes somos?</a></li>
+      <li><a href="#servicios" @click="open = false" class="text-white hover:text-orange-500 font-medium transition-colors text-lg" style="font-family: Calibri, sans-serif;">Nuestros Servicios</a></li>
+      <li><a href="#eventos" @click="open = false" class="text-white hover:text-orange-500 font-medium transition-colors text-lg" style="font-family: Calibri, sans-serif;">Galería</a></li>
+      <li>
+        <a href="#contacto" @click="open = false" class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition duration-300 font-bold">
+          Contacto
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

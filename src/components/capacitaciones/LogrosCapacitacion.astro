@@ -16,7 +16,7 @@ const {listado, titulo, subtitulo} = Astro.props;
     <div class=" h-2 bg-orange-500 mb-10"></div>
 
     <ul class="space-y-6">
-      {listado.map((item) => (
+      {listado.map((item: unknown) => (
         <li class="flex items-start text-lg leading-relaxed" >
           <span class="mr-3 text-orange-500 font-bold">•</span>
           <p class="text-3xl text-slate-600 leading-relaxed font-light">{item}</p>
