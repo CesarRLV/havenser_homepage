@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PortadaCursos from '../components/Capacitaciones/PortadaCursos.astro';
+import GridCursos from '../components/Capacitaciones/GridCursos.astro';
+---
+
+<Layout title="Cursos Havenser | Capacitación Técnica">
+  <main>
+    <PortadaCursos />
+    
+    <section class="py-16 px-6 max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-6">Excelencia en Transferencia Tecnológica</h2>
+      <p class="text-gray-700 leading-relaxed text-lg" style="font-family: Calibri, sans-serif;">
+        En Havenser, creemos que la mejor ventaja competitiva es un equipo capacitado. 
+        Nuestros cursos no son solo teoría; son una transferencia de competencias clave 
+        en metodologías ágiles y herramientas avanzadas para elevar las capacidades 
+        tecnológicas de sus equipos de ingeniería y analistas.
+      </p>
+    </section>
+
+    <GridCursos />
+  </main>
+</Layout>
