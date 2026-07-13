@@ -3,16 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import PortadaCursos from '../components/Capacitaciones/PortadaCursos.astro';
 import GridCursos from '../components/Capacitaciones/GridCursos.astro';
 import Navbar from '../components/NavBar.astro';
+import General from '../layouts/General.astro';
 ---
 
 <Layout title="Cursos Havenser | Capacitación Técnica">
   <Navbar />
-    <main>
+    <General>
     
     <PortadaCursos />
     
-    <section class="py-16 px-6 max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-6">Excelencia en Transferencia Tecnológica</h2>
+    <section class="py-16 px-6 max-w-4xl mx-auto text-center text-black">
+      <h2 class="text-3xl text-black font-bold mb-6">Excelencia en Transferencia Tecnológica</h2>
       <p class="text-xl leading-relaxed text-lg" style="font-family: Calibri, sans-serif;">
         En Havenser, creemos que la mejor ventaja competitiva es un equipo capacitado. 
         Nuestros cursos no son solo teoría; son una transferencia de competencias clave 
@@ -22,5 +23,5 @@ import Navbar from '../components/NavBar.astro';
     </section>
 
     <GridCursos />
-  </main>
+</General>
 </Layout>
