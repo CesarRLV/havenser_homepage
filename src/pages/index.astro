@@ -19,7 +19,10 @@ import BtnTerms from '../components/legal/BtnTerms.astro';
     <PortadaLogo />
     <QuienesSomos />
     <Servicios />
-    <BtnTerms/>
+    <div class="flex flex-row justify-center gap-4 mt-8 mb-16">
+      <BtnTerms url="/TerminosCondiciones" titulo="Términos y Condiciones"/>
+      <BtnTerms url="/privacidad" titulo="Aviso de Privacidad"/>
+    </div>
     <ContactoForm />
   </General>
   

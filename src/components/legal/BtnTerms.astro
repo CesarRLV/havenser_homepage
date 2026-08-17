@@ -1,10 +1,11 @@
 ---
 // Puedes colocar esto en el componente donde necesites el enlace, como Footer.astro
+const {url, titulo} = Astro.props;
 ---
 
 <div class="legal-link-container">
-  <a href="/TerminosCondiciones" class="legal-link">
-    Términos y Condiciones
+  <a href={url} class="legal-link">
+    {titulo}
   </a>
 </div>
 
