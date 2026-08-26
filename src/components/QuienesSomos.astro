@@ -1,4 +1,7 @@
 ---
+import B2BEfficiencyFeature from "./animaciones/B2BEfficiencyFeature.astro";
+import DoctoralExpertiseViz from "./animaciones/DoctoralExpertiseViz.astro";
+import NatureTechBrain from "./animaciones/NatureTechBrain.astro";
 import PortadaImagen from "./Portadas/PortadaImagen.astro";
 
 // src/components/QuienesSomos.astro
@@ -29,28 +32,28 @@ const valores = [
 >
   <PortadaImagen
     alto="70vh"
-    urlImagen="../../public/banner_sol_1.jpg"
+    urlImagen="/banner_sol_1.jpg"
     titulo="Creando soluciones..."
     parrafo="Inspirando al futuro"
   />
 
   <div class="max-w-7xl mx-auto px-6 pt-6 lg:px-8 relative">
     <!-- Encabezado y Descripción Principal -->
-    <div class="text-center max-w-4xl mx-auto mb-20">
+    <div class="text-center max-w-4xl mx-auto mb-20 mt-10">
       <h2
-        class="text-4xl md:text-5xl font-bold mb-4 text-[#c9a126]"
+        class="!text-4xl md:!text-7xl font-bold mb-4 text-[#c9a126]"
         style="font-family: Georgia, serif;"
       >
         ¿Quiénes Somos?
       </h2>
       <h3
-        class="text-2xl md:text-3xl text-[#e6e6f0] mb-8 font-semibold tracking-wide"
+        class="text-2xl md:text-4xl text-light mb-8 font-semibold tracking-wide"
         style="font-family: Georgia, serif;"
       >
         "Innovación inteligente, ejecución impecable."
       </h3>
       <p
-        class="text-lg md:text-xl text-[#e6e6f0]/80 leading-relaxed"
+        class="text-lg md:text-xl text-[#e6e6f0]/85 leading-relaxed py-4"
         style="font-family: Calibri, sans-serif;"
       >
         Somos una firma consultora de ingeniería avanzada y ciencias exactas.
@@ -60,8 +63,35 @@ const valores = [
       </p>
     </div>
 
-    <!-- Misión y Visión (Grid de 2 columnas) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+    <!-- Llamada a la acción (CTA) hacia la siguiente sección -->
+    <div class="text-center mt-5 mb-15">
+      <a
+        href="#servicios"
+        class="inline-flex items-center justify-center bg-transparent border-2 border-[#c9a126] text-[#c9a126] hover:bg-[#c9a126] hover:text-[#10192d] font-bold px-10 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#c9a126]/20 transform hover:-translate-y-1"
+        style="font-family: Calibri, sans-serif; letter-spacing: 0.5px;"
+      >
+        Explorar Nuestros Servicios
+        <!-- Icono de flecha para indicar que es un ancla de desplazamiento -->
+        <svg
+          class="w-5 h-5 ml-3"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Misión y Visión (Grid de 2 columnas) pantallas grandes-->
+    <div
+      class="hidden [@media(min-width:950px)]:grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-8 mb-16"
+    >
       <!-- Card Misión -->
       <div
         class="bg-[#152036] p-10 rounded-xl border-t-4 border-[#6e7b90] shadow-2xl hover:-translate-y-2 transition-transform duration-300 group"
@@ -91,7 +121,7 @@ const valores = [
           </h4>
         </div>
         <p
-          class="text-[#e6e6f0]/80 leading-relaxed text-lg"
+          class="text-[#e6e6f0]/85 leading-relaxed text-lg"
           style="font-family: Calibri, sans-serif;"
         >
           Incrementar la eficiencia operativa B2B integrando inteligencia
@@ -99,6 +129,8 @@ const valores = [
           en activos automatizados de alto rendimiento.
         </p>
       </div>
+
+      <B2BEfficiencyFeature />
 
       <!-- Card Visión -->
       <div
@@ -134,7 +166,7 @@ const valores = [
           </h4>
         </div>
         <p
-          class="text-[#e6e6f0]/80 leading-relaxed text-lg"
+          class="text-[#e6e6f0]/85 leading-relaxed text-lg"
           style="font-family: Calibri, sans-serif;"
         >
           Diseñar el estándar del éxito empresarial, consolidándonos como el
@@ -144,30 +176,124 @@ const valores = [
       </div>
     </div>
 
+    <!-- Misión y Visión (Grid de 2 columnas) pantallas CHICAS-->
+    <div
+      class="hidden [@media(max-width:950px)]:grid [@media(max-width:770px)]:grid-cols-1 sm:grid-cols-2 gap-8 mb-16"
+    >
+      <B2BEfficiencyFeature />
+      <!-- Card Misión -->
+      <div>
+        <div
+          class="bg-[#152036] p-10 rounded-xl border-t-4 border-[#6e7b90] shadow-2xl hover:-translate-y-2 transition-transform duration-300 group"
+        >
+          <div class="flex items-center mb-6">
+            <div
+              class="w-12 h-12 rounded-lg bg-[#10192d] border border-[#3e4b61] flex items-center justify-center text-[#6e7b90] group-hover:scale-110 transition-transform duration-300 mr-4"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
+              >
+            </div>
+            <h4
+              class="text-3xl font-bold text-[#e6e6f0]"
+              style="font-family: Georgia, serif;"
+            >
+              Nuestra Misión
+            </h4>
+          </div>
+          <p
+            class="text-[#e6e6f0]/85 leading-relaxed text-lg"
+            style="font-family: Calibri, sans-serif;"
+          >
+            Incrementar la eficiencia operativa B2B integrando inteligencia
+            artificial, infraestructura de red segura y simulaciones predictivas
+            en activos automatizados de alto rendimiento.
+          </p>
+        </div>
+
+        <!-- Card Visión -->
+        <div
+          class="bg-[#152036] p-10 rounded-xl border-t-4 border-[#c9a126] shadow-2xl hover:-translate-y-2 transition-transform duration-300 group"
+        >
+          <div class="flex items-center mb-6">
+            <div
+              class="w-12 h-12 rounded-lg bg-[#10192d] border border-[#3e4b61] flex items-center justify-center text-[#c9a126] group-hover:scale-110 transition-transform duration-300 mr-4"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                ></path></svg
+              >
+            </div>
+            <h4
+              class="text-3xl font-bold text-[#e6e6f0]"
+              style="font-family: Georgia, serif;"
+            >
+              Nuestra Visión
+            </h4>
+          </div>
+          <p
+            class="text-[#e6e6f0]/85 leading-relaxed text-lg"
+            style="font-family: Calibri, sans-serif;"
+          >
+            Diseñar el estándar del éxito empresarial, consolidándonos como el
+            aliado interdisciplinario definitivo para la modernización e
+            innovación industrial.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- Propuesta de Valor (Banner Destacado) -->
     <div
-      class="bg-gradient-to-br from-[#152036] to-[#10192d] p-10 md:p-14 rounded-2xl border border-[#3e4b61] shadow-2xl mb-24 relative overflow-hidden group"
+      class="grid [@media(min-width:900px)]:grid-cols-2 grid-cols-1 bg-gradient-to-br from-[#152036] to-[#10192d] p-8 md:p-14 rounded-2xl border border-[#3e4b61] shadow-2xl mb-24 relative overflow-hidden group"
     >
-      <div
-        class="absolute inset-0 bg-[#3e4b61] opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-      >
+      <div class="hidden [@media(min-width:900px)]:flex"><NatureTechBrain /></div>
+      <div>
+        <div
+          class="absolute inset-0 bg-[#3e4b61] opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+        >
+        </div>
+        <h4
+          class="text-3xl font-bold mb-6 text-[#c9a126] text-center"
+          style="font-family: Georgia, serif;"
+        >
+          Propuesta de Valor
+        </h4>
+        <p
+          class="text-xl md:text-2xl text-[#e6e6f0] leading-relaxed text-justify max-w-5xl mx-auto"
+          style="font-family: Calibri, sans-serif;"
+        >
+          Capitalizamos el <strong class="text-[#c9a126]/90"
+            >conocimiento</strong
+          > de nivel doctoral de nuestros especialistas interdisciplinarios (matemáticas,
+          química, ingeniería automotriz y sistemas) para diseñar <strong
+            class="text-[#c9a126]/90">modelos de negocio</strong
+          > y herramientas basadas en datos que resuelven los desafíos técnicos más
+          críticos de tu organización.
+        </p>
       </div>
-      <h4
-        class="text-3xl font-bold mb-6 text-[#c9a126] text-center"
-        style="font-family: Georgia, serif;"
-      >
-        Propuesta de Valor
-      </h4>
-      <p
-        class="text-xl md:text-2xl text-[#e6e6f0] leading-relaxed text-center max-w-5xl mx-auto"
-        style="font-family: Calibri, sans-serif;"
-      >
-        Capitalizamos el conocimiento de nivel doctoral de nuestros
-        especialistas interdisciplinarios (matemáticas, química, ingeniería
-        automotriz y sistemas) para diseñar modelos de negocio y herramientas
-        basadas en datos que resuelven los desafíos técnicos más críticos de tu
-        organización.
-      </p>
     </div>
 
     <!-- Valores Core (Grid de 4 columnas) -->
