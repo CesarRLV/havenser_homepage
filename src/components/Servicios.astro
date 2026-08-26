@@ -1,96 +1,233 @@
 ---
-import TarjetaServicio from "./TarjetaServicios.astro";
+import PortadaImagen from "./Portadas/PortadaImagen.astro";
+
+// src/components/Servicios.astro
 
 const servicios = [
   {
-    titulo: "Optimización y Automatización de Procesos",
-    descripcion:
-      "Incrementamos la eficiencia operativa de su organización mediante el diseño e implementación de sistemas basados en Inteligencia Artificial, Ciencia de Datos avanzada e Internet de las Cosas (IoT), transformando flujos manuales en activos automatizados de alto rendimiento.",
-    icono: "🤖", // Puedes cambiarlo después por un componente de icono SVG o Lucide
+    icon: "🤖",
+    image: "", // <- Aquí agregarás la ruta de tu imagen después (ej. "/img/ai-data.jpg")
+    title: "AI & Data Operativa",
+    desc: "Transformamos flujos manuales en activos de alto rendimiento mediante IA y machine learning.",
+    subs: ["RPA y Web Scraping", "Pipelines de Datos (ETL)", "Modelos Analíticos Predictivos"],
+    link: "#contacto"
   },
   {
-    titulo: "Conectividad, Redes e Infraestructura",
-    descripcion:
-      "Diseñamos y optimizamos arquitecturas cloud y sistemas distribuidos robustos. Garantizamos entornos seguros, escalables y de alta disponibilidad diseñados estructuralmente para soportar operaciones críticas de alta demanda sin interrupciones.",
-    icono: "☁️",
+    icon: "☁️",
+    image: "",
+    title: "Infraestructura Cloud",
+    desc: "Ecosistemas distribuidos y arquitecturas escalables para operaciones transaccionales críticas.",
+    subs: ["Despliegue y Migración AWS", "Alertamiento Serverless", "Arquitectura IoT Segura"],
+    link: "#contacto"
   },
   {
-    titulo: "Ciencias Exactas y Biosoluciones",
-    descripcion:
-      "Desarrollamos modelos físico-matemáticos de alta fidelidad para la simulación predictiva de fenómenos complejos. Proveemos investigación científica aplicada en biotecnología y análisis químico avanzado enfocado en sectores médicos, agrícolas y de materiales de vanguardia.",
-    icono: "🧬",
+    icon: "💻",
+    image: "",
+    title: "Ingeniería de Software",
+    desc: "Plataformas tecnológicas full-stack adaptadas a la lógica exacta y rentabilidad de su negocio.",
+    subs: ["Desarrollo Web Custom", "Plataformas LMS y ERP", "Arquitectura de Bases de Datos"],
+    link: "#contacto"
   },
   {
-    titulo: "Desarrollo de Aplicaciones a la Medida",
-    descripcion:
-      "Ingeniería y construcción de plataformas de software, ecosistemas web y aplicativos empresariales personalizados. Creamos soluciones escalables adaptadas estrictamente a los objetivos estratégicos y a la lógica de negocio de su organización.",
-    icono: "💻",
+    icon: "🥽",
+    image: "",
+    title: "Realidad Extendida (XR)",
+    desc: "Soluciones de Spatial Computing para reducir costos y riesgos mediante inmersión 3D.",
+    subs: ["Entrenamiento en VR", "Guiado Industrial con AR", "Colaboración en Realidad Mixta"],
+    link: "#contacto"
   },
   {
-    titulo: "Capacitación Especializada y Mentoría",
-    descripcion:
-      "Diseñamos programas formativos corporativos y consultoría técnica personalizada de alto nivel. Transferimos competencias clave en metodologías ágiles y herramientas avanzadas para elevar las capacidades tecnológicas de sus equipos de ingeniería y analistas.",
-    icono: "🎓",
-    url: "/cursos", // Enlace a la sección de cursos
+    icon: "🧬",
+    image: "",
+    title: "I+D y Simulación",
+    desc: "Rigor científico aplicado para resolver los desafíos más complejos de la industria.",
+    subs: ["Modelado Físico-Matemático", "Biocomputación Aplicada", "Matemáticas en Ciberseguridad"],
+    link: "#contacto"
   },
+  {
+    icon: "🔒",
+    image: "",
+    title: "Auditoría y Seguridad",
+    desc: "Blindaje absoluto de sistemas contra ataques o fugas de información sensible.",
+    subs: ["Penetration Testing", "Auditoría Cloud/On-Premise", "Marcos Normativos (Políticas)"],
+    link: "#contacto"
+  },
+  {
+    icon: "🚚",
+    image: "",
+    title: "Logística Predictiva",
+    desc: "Optimización de la cadena de suministro para erradicar cuellos de botella y costos extra.",
+    subs: ["Modelos de Demanda (ML)", "Optimización de Rutas", "Simulación de Almacenes"],
+    link: "#contacto"
+  },
+  {
+    icon: "🧪",
+    image: "",
+    title: "Biotech y Regulatoria",
+    desc: "Validación científica para escalar procesos químicos, médicos y agroalimentarios.",
+    subs: ["Sistemas Biológicos", "Optimización de Fórmulas", "Consultoría en Bioseguridad"],
+    link: "#contacto"
+  },
+  {
+    icon: "🧠",
+    image: "",
+    title: "IA Generativa Agéntica",
+    desc: "Asistentes corporativos autónomos integrados en los flujos internos de su empresa.",
+    subs: ["Agentes Autónomos", "Implementación RAG Local", "Extracción Documental"],
+    link: "#contacto"
+  },
+  {
+    icon: "🏢",
+    image: "",
+    title: "Gemelos Digitales (IoT)",
+    desc: "Monitoreo en tiempo real para plantas de manufactura e infraestructura física.",
+    subs: ["Integración de Sensores", "Dashboards Industriales", "Gemelos Digitales 3D"],
+    link: "#contacto"
+  },
+  {
+    icon: "🎓",
+    image: "",
+    title: "Capacitación y Mentoría",
+    desc: "Transferencia de competencias técnicas para convertir a su equipo en analistas estratégicos.",
+    subs: ["Academias Corporativas", "Entrenamiento SQL/Python", "Metodologías Ágiles"],
+    link: "#contacto"
+  }
 ];
 ---
 
-<section id="servicios">
-  <h2>Nuestros Servicios</h2>
-  <div class="grid-especialidades">
-    {
-      servicios.map((servicio) => (
-        <TarjetaServicio
-          titulo={servicio.titulo}
-          descripcion={servicio.descripcion}
-          icono={servicio.icono}
-          url={servicio.url}
-        />
-      ))
-    }
+<section id="servicios" class="py-24 bg-[#10192d] relative overflow-hidden text-[#e6e6f0] z-10">
+  <PortadaImagen
+    alto="70vh"
+    urlImagen="/banner_city.jpg"
+    titulo="Nuevos Retos..."
+    parrafo="nuevas fronteras."
+    direction="left"
+  />
+  <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mt-5">
+    <div class="absolute w-150 h-150 bg-[#c9a126] opacity-[0.03] rounded-full blur-[100px] top-32 -left-32"></div>
+    <div class="absolute w-200 h-200 bg-[#6e7b90] opacity-[0.03] rounded-full blur-[100px] bottom-10 right-[-20%]"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 mt-15">
+    
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#e6e6f0]" style="font-family: Georgia, serif;">
+        Portafolio de <span class="text-[#c9a126]">Soluciones</span>
+      </h2>
+      <p class="text-lg md:text-xl text-[#e6e6f0]/80 leading-relaxed" style="font-family: Calibri, sans-serif;">
+        Arquitecturas tecnológicas avanzadas <strong class="text-[#c9a126]/85">diseñadas a la medida </strong>
+        para resolver la complejidad operativa y escalar su <strong class="text-[#c9a126]/85"> rentabilidad B2B </strong> .
+      </p>
+    </div>
+
+    <!-- Grid Orgánico y Off-Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start pb-12">
+      {servicios.map((srv, index) => (
+        <div class={`
+          bg-[#152036] p-6 md:p-8 rounded-2xl border border-[#3e4b61] shadow-xl 
+          transition-all duration-500 group md:hover:-translate-y-4 md:hover:shadow-[0_15px_40px_rgba(201,161,38,0.12)] md:hover:border-[#c9a126]
+          flex flex-col h-full relative overflow-hidden
+          ${index % 3 === 1 ? 'lg:mt-16' : ''} 
+          ${index % 3 === 2 ? 'lg:mt-32' : ''}
+        `}>
+          
+          <div class="absolute inset-0 bg-linear-to-br from-[#c9a126]/5 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+          <!-- HEADER DE LA TARJETA (Imagen + Icono + Título + Flecha en móvil) -->
+          <div class="accordion-header cursor-pointer md:cursor-auto select-none md:select-auto w-full relative z-10">
+            
+            <!-- Espacio para la Imagen -->
+            <div class="w-full h-36 md:h-44 mb-6 bg-[#10192d] border border-[#3e4b61]/50 rounded-xl flex items-center justify-center overflow-hidden relative group-hover:border-[#c9a126]/40 transition-colors duration-300">
+              <span class="text-[#6e7b90]/50 text-xs font-bold uppercase tracking-widest text-center px-4" style="font-family: Calibri, sans-serif;">
+                [ Espacio Imagen: {srv.title} ]
+              </span>
+              <!-- Cuando tengas las imágenes, descomenta la siguiente línea: -->
+              <!-- {srv.image && <img src={srv.image} alt={srv.title} class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />} -->
+            </div>
+
+            <!-- Título e Icono -->
+            <div class="flex items-center justify-between md:block">
+              <div class="flex items-center md:block gap-4">
+                <div class="text-4xl md:text-5xl md:mb-6 transform md:group-hover:scale-110 transition-transform duration-300 origin-left">
+                  {srv.icon}
+                </div>
+                <h3 class="text-xl md:text-3xl font-bold text-[#e6e6f0] md:group-hover:text-[#c9a126] transition-colors duration-300" style="font-family: Georgia, serif;">
+                  {srv.title}
+                </h3>
+              </div>
+              <!-- Flecha (Solo visible en Móvil) -->
+              <div class="md:hidden text-[#c9a126] transition-transform duration-300 chevron">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CUERPO DE LA TARJETA (Acordeón oculto en móvil, siempre visible en escritorio) -->
+          <div class="accordion-body hidden opacity-0 md:flex md:opacity-100 flex-col grow mt-4 md:mt-0 transition-opacity duration-300 relative z-10">
+            <p class="text-[#e6e6f0]/90 mb-3 mt-2 md:mt-4 text-[1.05rem] leading-relaxed grow" style="font-family: Calibri, sans-serif;">
+              {srv.desc}
+            </p>
+
+            <ul class="space-y-3 mb-8 border-t border-[#3e4b61]/50 pt-6">
+              {srv.subs.map((sub) => (
+                <li class="flex items-start text-sm text-[#e6e6f0]/80 group/item" style="font-family: Calibri, sans-serif;">
+                  <svg class="w-5 h-5 text-[#6e7b90] mr-3 mt-0.5 md:group-hover/item:text-[#c9a126] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span class="text-sm md:text-lg md:group-hover/item:text-[#e6e6f0] transition-colors">{sub}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-auto pt-2 pb-2 md:pb-0">
+              <a href={srv.link} class="inline-flex items-center text-[#c9a126] font-bold text-sm hover:text-[#e6e6f0] transition-colors duration-300" style="font-family: Calibri, sans-serif; letter-spacing: 0.5px;">
+                Agendar Consultoría
+                <svg class="w-4 h-4 ml-2 transform md:group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+              </a>
+            </div>
+          </div>
+          
+        </div>
+      ))}
+    </div>
+
   </div>
 </section>
 
-<style is:global>
-  /* Resto de estilos (Tarjetas, Equipo, Formulario) - Sin cambios */
-  .grid-especialidades {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-  }
-  .card-interactiva {
-    background-color: var(--bg-surface); /* Usa el fondo secundario #192232 */
-    border: 1px solid var(--accent); /* Borde sutil #3e4b61 */
-    border-radius: 8px; /* Bordes ligeramente redondeados, muy moderno */
-    padding: 2rem;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease,
-      border-color 0.3s ease;
-  }
+<!-- Script Vanilla JS nativo de Astro para el Acordeón Móvil -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const headers = document.querySelectorAll('.accordion-header');
+    
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        // Ejecutar animación de acordeón SOLO si estamos en una pantalla móvil (< 768px de Tailwind)
+        if (window.innerWidth < 768) {
+          const body = header.nextElementSibling;
+          const chevron = header.querySelector('.chevron');
 
-  .card-interactiva:hover {
-    transform: translateY(-5px); /* Efecto de levitación al pasar el mouse */
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); /* Sombra elegante */
-    border-color: var(--text-light); /* El borde resalta sutilmente */
-  }
-
-  .card-interactiva h2 {
-    /* Aquí automáticamente tomará la fuente Georgia por la regla global */
-    margin-bottom: 1rem;
-    border-bottom: none; /* Quitamos la línea del h2 global para que se vea limpio */
-    padding: 1rem 0 0.5rem 0;
-    margin: 1rem 0 1.5rem 0;
-  }
-
-  .card-interactiva p {
-    /* Tomará Calibri y el color grisáceo automáticamente */
-    margin-bottom: 0;
-  }
-
-  .icono {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-</style>
+          if (!(body instanceof HTMLElement) || !(chevron instanceof HTMLElement)) return;
+          
+          if (body.classList.contains('hidden')) {
+            // Acción: Desplegar
+            body.classList.remove('hidden');
+            body.classList.add('flex');
+            // Pequeño retraso para que Tailwind procese el 'flex' antes de transicionar la opacidad
+            setTimeout(() => {
+              body.classList.remove('opacity-0');
+              body.classList.add('opacity-100');
+            }, 10);
+            chevron.classList.add('rotate-180');
+          } else {
+            // Acción: Ocultar
+            body.classList.remove('opacity-100');
+            body.classList.add('opacity-0');
+            chevron.classList.remove('rotate-180');
+            setTimeout(() => {
+              body.classList.remove('flex');
+              body.classList.add('hidden');
+            }, 300); // 300ms equivale a duration-300 de Tailwind
+          }
+        }
+      });
+    });
+  });
+</script>

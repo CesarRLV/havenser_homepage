@@ -1,121 +1,128 @@
 ---
-
+// src/components/ContactoForm.astro
 ---
 
-<section id="contacto" class="seccion-contacto bg-dark">
-    <div class="container">
-        <h2>Contáctanos</h2>
-        <p>¿Tienes un proyecto en mente? Hablemos.</p>
-        <form class="formulario" onsubmit="event.preventDefault();">
-            <div class="form-group">
-                <label for="nombre">Nombre Completo</label>
-                <input
-                    type="text"
-                    id="nombre"
-                    placeholder="Tu nombre"
-                    required
-                />
-            </div>
-            <div class="form-group">
-                <label for="email">Correo Electrónico</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="tu@correo.com"
-                    required
-                />
-            </div>
-            <div class="form-group">
-                <label for="asunto">Asunto</label>
-                <input
-                    type="text"
-                    id="asunto"
-                    placeholder="Motivo de tu mensaje"
-                />
-            </div>
-            <div class="form-group">
-                <label for="mensaje">Mensaje</label>
-                <textarea
-                    id="mensaje"
-                    rows="4"
-                    placeholder="Cuéntanos sobre tu proyecto..."></textarea>
-            </div>
-            <button type="submit" class="btn-submit">Enviar Mensaje</button>
+<section id="contacto" class="py-24 bg-[#10192d] relative z-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    
+    <!-- Contenedor Principal (Color de Superficie Havenser) -->
+    <div class="relative bg-[#152036] border border-[#3e4b61] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[700px]">
+      
+      <!-- Lado Izquierdo: Imagen con Corte Diagonal -->
+      <div class="w-full h-72 md:h-full md:absolute md:inset-y-0 md:left-0 md:w-[58%] diagonal-split z-0 bg-[#7985a0]">
+        <!-- Placeholder premium para la imagen (Reemplaza el src cuando tengas la foto) -->
+        <img 
+          src="/contactForm.jpg" 
+          alt="Consultoría Tecnológica Havenser" 
+          class="w-full h-full object-cover  mix-blend-overlay"
+        />
+        <!-- Gradiente para fundir sutilmente la imagen con la interfaz -->
+        <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#10192d]/90 to-transparent pointer-events-none"></div>
+      </div>
+
+      <!-- Lado Derecho: Formulario y Logo -->
+      <div class="w-full md:w-[50%] md:ml-auto p-8 md:p-14 relative z-10 flex flex-col justify-end">
+        
+        <div class="mb-8 text-right flex flex-col items-end">
+          <!-- Logo de Havenser -->
+          <img src="/LOGO1.png" alt="Havenser Logo" class="h-14 md:h-16 w-auto mb-6 rounded" />
+          
+          <h2 class="text-3xl md:text-4xl font-bold text-[#e6e6f0] mb-2" style="font-family: Georgia, serif;">
+            Transformemos su Operación
+          </h2>
+          <p class="text-[#8d94a1] text-lg" style="font-family: Calibri, sans-serif;">
+            ¿Tiene un desafío técnico complejo? Hablemos.
+          </p>
+        </div>
+
+        <form class="space-y-5" onsubmit="event.preventDefault();">
+          
+          <!-- Input: Nombre -->
+          <div class="flex flex-col gap-1.5 group">
+            <label for="nombre" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
+              Nombre Completo
+            </label>
+            <input 
+              type="text" 
+              id="nombre" 
+              placeholder="Ingresa tu nombre" 
+              required
+              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300"
+              style="font-family: Calibri, sans-serif;" 
+            />
+          </div>
+          
+          <!-- Input: Email -->
+          <div class="flex flex-col gap-1.5 group">
+            <label for="email" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
+              Correo Corporativo
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              placeholder="nombre@empresa.com" 
+              required
+              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300"
+              style="font-family: Calibri, sans-serif;" 
+            />
+          </div>
+
+          <!-- Input: Asunto -->
+          <div class="flex flex-col gap-1.5 group">
+            <label for="asunto" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
+              Asunto
+            </label>
+            <input 
+              type="text" 
+              id="asunto" 
+              placeholder="Motivo de tu mensaje"
+              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300"
+              style="font-family: Calibri, sans-serif;" 
+            />
+          </div>
+
+          <!-- Textarea: Mensaje -->
+          <div class="flex flex-col gap-1.5 group">
+            <label for="mensaje" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
+              Mensaje
+            </label>
+            <textarea 
+              id="mensaje" 
+              rows="4" 
+              placeholder="Cuéntanos sobre los cuellos de botella de tu organización..." 
+              required
+              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300 resize-none"
+              style="font-family: Calibri, sans-serif;"
+            ></textarea>
+          </div>
+
+          <!-- Botón de Envío -->
+          <button 
+            type="submit" 
+            class="w-full mt-4 bg-[#3e4b61] border border-transparent text-[#e6e6f0] font-bold text-lg rounded-lg px-6 py-4 hover:bg-transparent hover:border-[#e6e6f0] hover:text-[#e6e6f0] transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
+            style="font-family: Calibri, sans-serif;"
+          >
+            Enviar Solicitud
+          </button>
+          
         </form>
+      </div>
+
     </div>
+  </div>
 </section>
 
 <style>
-  .seccion-contacto {
-    background-color: var(--bg-main); /* #111b2c */
-    padding: 6rem 2rem;
+  /* === MAGIA DEL CORTE DIAGONAL === */
+  .diagonal-split {
+    /* Por defecto (móviles): Corte diagonal en la parte inferior para que apunte hacia el formulario */
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
   }
-
-  .formulario-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: var(--bg-surface); /* #192232 */
-    border: 1px solid var(--accent);
-    padding: 3rem;
-    border-radius: 8px;
-  }
-
-  .formulario h2 {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-
-  .form-group {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .form-group label {
-    font-family: 'Calibri', sans-serif;
-    color: var(--text-light);
-    font-size: 1rem;
-  }
-
-  /* Inputs de Alta Gama Tecnológica */
-  .form-group input, 
-  .form-group textarea {
-    font-family: 'Calibri', sans-serif;
-    background-color: var(--bg-main); /* #111b2c */
-    border: 1px solid var(--accent); /* #3e4b61 */
-    color: var(--text-light);
-    padding: 0.8rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .form-group input:focus, 
-  .form-group textarea:focus {
-    border-color: var(--text-light); /* Resalta en #e6e6f0 al escribir */
-    box-shadow: 0 0 8px rgba(230, 230, 240, 0.1);
-  }
-
-  .btn-submit {
-    font-family: 'Calibri', sans-serif;
-    width: 100%;
-    background-color: var(--accent); /* #3e4b61 */
-    color: var(--text-light);
-    border: 1px solid transparent;
-    padding: 1rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-  }
-
-  .btn-submit:hover {
-    background-color: transparent;
-    border-color: var(--text-light);
-    transform: translateY(-2px);
+  
+  @media (min-width: 768px) {
+    .diagonal-split {
+      /* En escritorio: Corte diagonal severo en el lado derecho, revelando el formulario */
+      clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+    }
   }
 </style>

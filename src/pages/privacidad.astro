@@ -1,0 +1,118 @@
+---
+// src/pages/AvisoPrivacidad.astro
+import Layout from '../layouts/Layout.astro';
+
+import NavBar from "../components/NavBar.astro";
+---
+
+<Layout title="Aviso de Privacidad | Havenser">
+    <NavBar />
+  <main class="container-legal">
+    <h1>Aviso de Privacidad Integral</h1>
+
+    <section class="legal-content">
+      <h2>1. La Identidad y Domicilio del Responsable</h2>
+      <p><strong>Havenser</strong>, con domicilio en Pachuca de Soto, Hidalgo, México, es responsable del tratamiento y protección de sus datos personales.</p>
+
+      <h2>2. Datos Personales que Recabamos</h2>
+      <p>Para la prestación de nuestros servicios tecnológicos, consultoría y formación profesional, recabamos los siguientes datos personales:</p>
+      <ul>
+        <li><strong>Datos de Identificación y Contacto:</strong> Nombre completo, correo electrónico, teléfono de contacto, puesto/cargo laboral.</li>
+        <li><strong>Datos de Facturación:</strong> Registro Federal de Contribuyentes (RFC), domicilio fiscal, régimen fiscal, Constancia de Situación Fiscal.</li>
+        <li><strong>Datos Académicos y de Plataforma:</strong> Nombre completo, correo electrónico, área de trabajo, calificaciones, porcentaje de asistencia y métricas de progreso obtenidas para la emisión de constancias de participación internas o diplomas del curso.</li>
+        <li><strong>Datos Técnicos y de Navegación:</strong> Dirección IP, tipo de navegador, datos de sesión, códigos de invitado y registros de acceso (logs) a nuestros portales de evaluación o aplicaciones web.</li>
+      </ul>
+
+      <h2>3. Finalidades del Tratamiento de Datos</h2>
+      <p>Los datos personales que recabamos serán utilizados para las siguientes finalidades primarias (necesarias para el servicio):</p>
+      <ul>
+        <li>Prestar servicios de consultoría tecnológica, desarrollo de software, gestión de datos y bases de datos.</li>
+        <li>Coordinar, impartir y evaluar los cursos de capacitación solicitados por empresas o particulares.</li>
+        <li>Gestionar y autenticar el acceso seguro de los usuarios a nuestro sistema de gestión de aprendizaje (LMS) e interfaces web.</li>
+        <li>Monitorear y auditar la actividad de la red para garantizar la seguridad informática y prevenir fraudes, abusos en el uso de licencias o accesos no autorizados a las plataformas.</li>
+        <li>Emisión y validación de comprobantes fiscales digitales (CFDI 4.0) y diplomas o reconocimientos de participación.</li>
+        <li>Gestión de cobros, transferencias (SPEI) y aclaraciones administrativas.</li>
+      </ul>
+      <p>Como finalidades secundarias (opcionales):</p>
+      <ul>
+        <li>Envío de boletines técnicos, invitaciones a nuevos cursos o actualizaciones de servicios de la consultoría. (Si el titular no desea que sus datos se utilicen para finalidades secundarias, podrá manifestarlo enviando un correo a <a href="mailto:consultoria@havenser.com">consultoria@havenser.com</a>).</li>
+      </ul>
+
+      <h2>4. Transferencia de Datos Personales y Proveedores de Infraestructura</h2>
+      <p>Sus datos personales no serán compartidos ni transferidos con terceros para fines de comercialización. No obstante, el titular acepta expresamente que, por la naturaleza de los servicios de alta tecnología, los datos pueden ser almacenados, procesados o transitar por servidores de proveedores de infraestructura en la nube (tales como Amazon Web Services y Cloudflare). Dichos proveedores actúan bajo los estrictos lineamientos de seguridad de Havenser y los marcos legales internacionales. De igual forma, se transferirán datos cuando sea estrictamente necesario para cumplir con obligaciones fiscales (SAT) o lo exija el artículo 37 de la LFPDPPP.</p>
+
+      <h2>5. Uso de Cookies y Rastreadores Tecnológicos</h2>
+      <p>Le informamos que en nuestro sitio web oficial y plataformas de aprendizaje utilizamos cookies de sesión (HTTP-Only) y tecnologías similares para mantener activa la autenticación del usuario, mejorar el rendimiento y garantizar la seguridad de sus conexiones. El usuario puede deshabilitar estas tecnologías desde su navegador, en el entendido de que esto podría limitar el funcionamiento de nuestros servicios.</p>
+
+      <h2>6. Medios para Ejercer los Derechos ARCO</h2>
+      <p>Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos personales (Derechos ARCO). Para el ejercicio de cualquiera de estos derechos, deberá enviar una solicitud al correo electrónico <a href="mailto:consultoria@havenser.com">consultoria@havenser.com</a> indicando su nombre, copia de identificación oficial y la descripción clara del derecho que desea ejercer.</p>
+
+      <h2>7. Cambios al Aviso de Privacidad</h2>
+      <p>El presente aviso de privacidad puede sufrir modificaciones derivadas de requerimientos legales o de nuestras propias necesidades por los servicios que ofrecemos. Dichos cambios estarán siempre disponibles y actualizados en nuestro sitio web oficial (havenser.com).</p>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* Contenedor principal centrado */
+  .container-legal {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+
+  /* Título principal de la página */
+  h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  /* Tarjeta o bloque visual que contiene el texto legal */
+  .legal-content {
+    background-color: var(--bg-surface);
+    padding: 4rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--accent);
+  }
+
+  /* Espaciado para los subtítulos dentro de la tarjeta */
+  .legal-content h2 {
+    margin-top: 3rem;
+    font-size: 2rem;
+  }
+
+  .legal-content h2:first-of-type {
+    margin-top: 0;
+  }
+
+  /* Ajustes de las listas para integrarse perfectamente al diseño base */
+  .legal-content ul {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .legal-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Resaltar palabras clave */
+  strong {
+    color: var(--text-light);
+    font-weight: bold;
+  }
+  
+  /* Ajustes para diseño responsivo (móviles) */
+  @media (max-width: 768px) {
+    .container-legal {
+      padding: 4rem 1rem;
+    }
+    .legal-content {
+      padding: 2rem;
+    }
+    .legal-content h2 {
+      font-size: 1.75rem;
+    }
+  }
+</style>
