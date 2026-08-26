@@ -18,12 +18,39 @@ import PortadaLogo from '../components/Portadas/PortadaLogo.astro';
   
   <General>
     <PortadaLogo />
-    <!--  <Portada2/>-->
+    <div class="sticky h-[10vh] z-1 top-0 flex justify-center " style="background-color: var(--bg-main);">
+        <!-- Llamada a la acción (CTA) hacia la siguiente sección -->
+      <div class="text-center mt-1">
+        <a
+          href="#contacto"
+          class="inline-flex items-center justify-center bg-transparent border-2 border-[#155DFC] text-[#c6d0e6] hover:bg-[#155DFC] hover:text-[#10192d] font-bold px-10 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#c9a126]/20 transform hover:-translate-y-1"
+          style="font-family: Calibri, sans-serif; letter-spacing: 0.5px;"
+        >
+          contáctanos
+          <!-- Icono de flecha para indicar que es un ancla de desplazamiento -->
+          <svg
+            class="w-5 h-5 ml-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
     <QuienesSomos />
     <Servicios />
-    <div class="flex flex-row justify-center gap-4 mt-8 mb-16">
+    <section class="z-20 relative bg-white  pt-8 pb-16">
+      <div class="bg-white flex flex-row justify-center gap-4 z-20 ">
       <BtnTerms url="/TerminosCondiciones" titulo="Términos y Condiciones"/>
       <BtnTerms url="/privacidad" titulo="Aviso de Privacidad"/>
+      </section>
     </div>
     <ContactoForm />
   </General>

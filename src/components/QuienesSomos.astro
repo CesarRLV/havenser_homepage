@@ -63,29 +63,32 @@ const valores = [
       </p>
     </div>
 
-    <!-- Llamada a la acción (CTA) hacia la siguiente sección -->
-    <div class="text-center mt-5 mb-15">
-      <a
-        href="#servicios"
-        class="inline-flex items-center justify-center bg-transparent border-2 border-[#c9a126] text-[#c9a126] hover:bg-[#c9a126] hover:text-[#10192d] font-bold px-10 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#c9a126]/20 transform hover:-translate-y-1"
-        style="font-family: Calibri, sans-serif; letter-spacing: 0.5px;"
-      >
-        Explorar Nuestros Servicios
-        <!-- Icono de flecha para indicar que es un ancla de desplazamiento -->
-        <svg
-          class="w-5 h-5 ml-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+    <div class="flex flex-row justify-center gap-8">
+      <!-- Llamada a la acción (CTA) hacia la siguiente sección -->
+      <div class="text-center mt-5 mb-15">
+        <a
+          href="#servicios"
+          class="inline-flex items-center justify-center bg-transparent border-2 border-[#c9a126] text-[#c9a126] hover:bg-[#c9a126] hover:text-[#10192d] font-bold px-10 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#c9a126]/20 transform hover:-translate-y-1"
+          style="font-family: Calibri, sans-serif; letter-spacing: 0.5px;"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-        </svg>
-      </a>
+          Explorar Nuestros Servicios
+          <!-- Icono de flecha para indicar que es un ancla de desplazamiento -->
+          <svg
+            class="w-5 h-5 ml-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </a>
+      </div>
+      
     </div>
 
     <!-- Misión y Visión (Grid de 2 columnas) pantallas grandes-->
@@ -269,7 +272,9 @@ const valores = [
     <div
       class="grid [@media(min-width:900px)]:grid-cols-2 grid-cols-1 bg-gradient-to-br from-[#152036] to-[#10192d] p-8 md:p-14 rounded-2xl border border-[#3e4b61] shadow-2xl mb-24 relative overflow-hidden group"
     >
-      <div class="hidden [@media(min-width:900px)]:flex"><NatureTechBrain /></div>
+      <div class="hidden [@media(min-width:900px)]:flex">
+        <NatureTechBrain />
+      </div>
       <div>
         <div
           class="absolute inset-0 bg-[#3e4b61] opacity-0 group-hover:opacity-10 transition-opacity duration-500"
