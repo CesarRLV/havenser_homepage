@@ -1,181 +1,57 @@
 ---
-// Servicios.astro
-// Componente de la sección Nuestros Servicios
-
-// ==========================================
-// CONFIGURACIÓN DE TAMAÑOS DE LETRA
-// Modifica estas clases de Tailwind para ajustar 
-// rápidamente los tamaños en todo el componente
-// ==========================================
-const typography = {
-  seccion: {
-    titulo: "text-3xl sm:text-4xl",
-    subtitulo: "text-lg",
+const services = [
+  {
+    title: "Automatización e Inteligencia Operativa",
+    subtitle: "AI & Data",
+    desc: "Eliminamos cuellos de botella operativos mediante la implementación de modelos predictivos y machine learning. Transformamos flujos manuales en activos automatizados de alto rendimiento, incrementando drásticamente la eficiencia empresarial de su organización."
   },
-  tarjetaEscritorio: {
-    titulo: "text-xl",
-    descripcionLarga: "text-sm",
-    descripcionCorta: "text-sm",
-    enlace: "text-sm",
+  {
+    title: "Infraestructura de Redes y Cloud",
+    subtitle: "Web & Network Infrastructure",
+    desc: "Diseñamos ecosistemas distribuidos robustos y arquitecturas cloud escalables. Garantizamos entornos de conectividad segura y de alta disponibilidad, estructurados para el soporte continuo de operaciones transaccionales críticas."
   },
-  tarjetaMovil: {
-    titulo: "text-base",
-    descripcion: "text-sm",
-    boton: "text-sm",
+  {
+    title: "Ingeniería de Software y Sistemas",
+    subtitle: "Aplicaciones a la Medida",
+    desc: "Construimos plataformas tecnológicas adaptadas a la lógica exacta de su negocio. Desarrollamos sistemas web empresariales utilizando arquitecturas full-stack modernas, orientadas a maximizar su rentabilidad."
+  },
+  {
+    title: "Simulación Predictiva e I+D",
+    subtitle: "Investigación Aplicada",
+    desc: "Ponemos el rigor científico al servicio de la industria. Desarrollamos modelos físico-matemáticos de alta fidelidad e investigación aplicada para resolver desafíos operativos complejos."
+  },
+  {
+    title: "Ciberseguridad y Matemáticas Aplicadas",
+    subtitle: "Protección de Activos",
+    desc: "Protegemos sus activos digitales más valiosos. Integramos análisis matemáticos avanzados y auditorías de vulnerabilidad para blindar infraestructuras de red contra amenazas sistémicas."
+  },
+  {
+    title: "Ingeniería y Cadena de Suministro",
+    subtitle: "Optimización Industrial",
+    desc: "Elevamos la competitividad industrial mediante la optimización tecnológica de procesos logísticos. Aplicamos modelado físico para optimizar el rendimiento y eficiencia de líneas de operación."
+  },
+  {
+    title: "Aceleración Tecnológica Corporativa",
+    subtitle: "Capacitación y Mentoría",
+    desc: "Transferimos competencias técnicas de alto nivel a su talento interno. Diseñamos academias corporativas para convertir a sus equipos en analistas estratégicos dominando herramientas avanzadas."
   }
-};
-
-const servicios = [
-
-  {
-    titulo: "Capacitación Especializada y Mentoría",
-    descripcion_corta:
-      "Diseñamos programas formativos corporativos y consultoría técnica personalizada de alto nivel.",
-    descripcion:
-      "Diseñamos programas formativos corporativos y consultoría técnica personalizada de alto nivel. Transferimos competencias clave en metodologías ágiles y herramientas avanzadas para elevar las capacidades tecnológicas de sus equipos de ingeniería y analistas.",
-    icono: "🎓",
-    url: "/cursos", // Enlace a la sección de cursos
-  },
-  {
-    titulo: "Optimización y Automatización de Procesos",
-    descripcion:
-      "Incrementamos la eficiencia operativa de su organización mediante el diseño e implementación de sistemas basados en Inteligencia Artificial, Ciencia de Datos avanzada e Internet de las Cosas (IoT), transformando flujos manuales en activos automatizados de alto rendimiento.",
-    icono: "🤖",
-  },
-  {
-    titulo: "Conectividad, Redes e Infraestructura",
-    descripcion_corta:
-      "Diseñamos y optimizamos arquitecturas cloud y sistemas distribuidos robustos.",
-    descripcion:
-      "Diseñamos y optimizamos arquitecturas cloud y sistemas distribuidos robustos. Garantizamos entornos seguros, escalables y de alta disponibilidad diseñados estructuralmente para soportar operaciones críticas de alta demanda sin interrupciones.",
-    icono: "☁️",
-  },
-  {
-    titulo: "Ciencias Exactas y Biosoluciones",
-    descripcion_corta:
-      "Desarrollamos modelos físico-matemáticos de alta fidelidad para la simulación predictiva de fenómenos complejos.",
-    descripcion:
-      "Desarrollamos modelos físico-matemáticos de alta fidelidad para la simulación predictiva de fenómenos complejos. Proveemos investigación científica aplicada en biotecnología y análisis químico avanzado enfocado en sectores médicos, agrícolas y de materiales de vanguardia.",
-    icono: "🧬",
-  },
-  {
-    titulo: "Desarrollo de Aplicaciones a la Medida",
-    descripcion_corta:
-      "Construimos plataformas de software y ecosistemas web adaptados a la lógica de negocio de su organización.",
-    descripcion:
-      "Ingeniería y construcción de plataformas de software, ecosistemas web y aplicativos empresariales personalizados. Creamos soluciones escalables adaptadas estrictamente a los objetivos estratégicos y a la lógica de negocio de su organización.",
-    icono: "💻",
-  },
 ];
 ---
-
-{/* Aplicación del color de fondo personalizado #131D2E */}
-<section id="servicios" class="bg-[#131D2E] py-16 lg:py-24">
+<section id="servicios" class="py-20 bg-brand-deep">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    {/* Encabezado adaptado para fondo oscuro */}
-    <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
-      <h2 class:list={["font-extrabold text-white tracking-tight mb-4", typography.seccion.titulo]}>
-        Nuestros Servicios
-      </h2>
-      <p class:list={["text-gray-300", typography.seccion.subtitulo]}>
-        Soluciones tecnológicas integrales diseñadas para potenciar el crecimiento y la eficiencia de su organización.
-      </p>
-    </div>
-
-    {/* Grid de Tarjetas */}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      {servicios.map((servicio) => {
-        const descCorta = servicio.descripcion_corta || servicio.descripcion.substring(0, 110) + '...';
-        const urlServicio = servicio.url || "#";
-
-        return (
-          <>
-            {/* ---------------------------------------------------- */}
-            {/* VISTA ESCRITORIO: Tarjeta con efecto Hover            */}
-            {/* ---------------------------------------------------- */}
-            <div class="hidden md:block group bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 overflow-hidden h-full">
-              <a href={urlServicio} class="flex flex-col h-full cursor-pointer">
-                
-                <div class="h-48 bg-gray-100 relative overflow-hidden">
-                  <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-sm font-medium border-b border-gray-200">
-                    [Imagen: {servicio.titulo}]
-                  </div>
-                </div>
-
-                <div class="p-6 flex-grow flex flex-col relative">
-                  <div class="text-4xl mb-4">{servicio.icono}</div>
-                  <h3 class:list={["font-bold !text-gray-900 mb-3 leading-tight", typography.tarjetaEscritorio.titulo]}>
-                    {servicio.titulo}
-                  </h3>
-                  
-                  <div class="relative flex-grow">
-                    {/* Descripción Larga */}
-                    <p class:list={["!text-gray-700 transition-opacity duration-300 opacity-0 group-hover:opacity-100 relative z-10 leading-relaxed", typography.tarjetaEscritorio.descripcionLarga]}>
-                      {servicio.descripcion}
-                    </p>
-                    
-                    {/* Descripción Corta */}
-                    <p class:list={["!text-gray-600 transition-opacity duration-300 group-hover:opacity-0 absolute top-0 left-0 w-full h-full", typography.tarjetaEscritorio.descripcionCorta]}>
-                      {descCorta}
-                    </p>
-                  </div>
-                  
-                  <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
-                    <span class:list={["text-blue-600 font-semibold group-hover:text-blue-800 flex items-center gap-1 transition-colors", typography.tarjetaEscritorio.enlace]}>
-                      Ver detalle
-                      <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            {/* ---------------------------------------------------- */}
-            {/* VISTA MÓVIL: Tarjeta tipo Dropdown / Acordeón         */}
-            {/* ---------------------------------------------------- */}
-            <div class="md:hidden bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-              
-              <div class="h-40 bg-gray-100 relative">
-                 <div class="absolute inset-0 flex items-center justify-center !text-gray-400 text-sm font-medium">
-                  [Imagen: {servicio.titulo}]
-                 </div>
-              </div>
-
-              <details class="group/mobile-card">
-                <summary class="p-5 flex justify-between items-center cursor-pointer list-none bg-white">
-                  <div class="flex items-center gap-3 pr-4">
-                    <span class="text-3xl">{servicio.icono}</span>
-                    <h3 class:list={["font-bold !text-gray-900 leading-snug", typography.tarjetaMovil.titulo]}>
-                      {servicio.titulo}
-                    </h3>
-                  </div>
-                  <div class="flex-shrink-0 bg-gray-50 p-2 rounded-full text-gray-500 group-open/mobile-card:bg-blue-50 group-open/mobile-card:text-blue-600 transition-colors">
-                    <svg class="w-5 h-5 transition-transform group-open/mobile-card:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                  </div>
-                </summary>
-                
-                <div class="px-5 pb-6 pt-2 bg-white">
-                  <p class:list={["!text-gray-700 mb-5 leading-relaxed", typography.tarjetaMovil.descripcion]}>
-                    {servicio.descripcion}
-                  </p>
-                  <a href={urlServicio} class:list={["inline-flex w-full items-center justify-center px-4 py-2.5 bg-blue-50 !text-blue-700 font-semibold rounded-lg hover:bg-blue-100 transition-colors", typography.tarjetaMovil.boton]}>
-                    Saber más sobre este servicio
-                  </a>
-                </div>
-              </details>
-            </div>
-          </>
-        );
-      })}
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="font-title text-3xl md:text-4xl font-bold text-brand-light mb-4">Nuestros Servicios</h2>
+      <p class="text-brand-blue text-lg font-body">Soluciones técnicas y científicas diseñadas para resolver la complejidad corporativa.</p>
     </div>
     
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {services.map(service => (
+        <div class="bg-brand-dark p-8 rounded-lg border border-brand-gray hover:border-brand-yellow transition-colors duration-300 group">
+          <div class="text-brand-blue text-sm font-bold tracking-wider uppercase mb-2 group-hover:text-brand-yellow transition-colors">{service.subtitle}</div>
+          <h3 class="font-title text-xl font-bold text-brand-light mb-4">{service.title}</h3>
+          <p class="text-brand-light/70 text-sm leading-relaxed">{service.desc}</p>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
-
-<style>
-  /* Limpiar estilos por defecto de details/summary en móvil */
-  summary::-webkit-details-marker {
-    display: none;
-  }
-</style>

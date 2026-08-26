@@ -2,13 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import General from '../layouts/General.astro';
 import Navbar from '../components/NavBar.astro';
-import PortadaLogo from '../components/PortadaLogo.astro';
+//import PortadaLogo from '../components/PortadaLogo.astro';
 import Nosotros from '../components/Nosotros.astro';
 import Servicios from '../components/Servicios.astro';
 //import NuestroEquipo from '../components/NuestroEquipo.astro';
 import ContactoForm from '../components/ContactoForm.astro';
 import QuienesSomos from '../components/QuienesSomos.astro';
 import BtnTerms from '../components/legal/BtnTerms.astro';
+import PortadaLogo from '../components/Portadas/PortadaLogo.astro';
 ---
 
 <Layout title="Havenser - Soluciones Tecnológicas">
@@ -17,6 +18,7 @@ import BtnTerms from '../components/legal/BtnTerms.astro';
   
   <General>
     <PortadaLogo />
+    <!--  <Portada2/>-->
     <QuienesSomos />
     <Servicios />
     <div class="flex flex-row justify-center gap-4 mt-8 mb-16">
