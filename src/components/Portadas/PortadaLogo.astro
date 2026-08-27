@@ -3,12 +3,14 @@
 ---
 
 <header class="hero-circuito">
-  <canvas id="circuitoCanvas"></canvas>
   
   <div class="header-content">
-    <h1>Innovación, Datos y Tecnología</h1>
-    <p>Potenciando el futuro a través de la inteligencia artificial y la nube.</p>
+    <h1>Innovación, Datos y<strong> Tecnología</strong></h1>
+    <p>Innovación inteligente, ejecución impecable</p>
+    
   </div>
+  
+  <canvas id="circuitoCanvas"></canvas>
 </header>
 
 <style>
@@ -16,15 +18,19 @@
   .hero-circuito {
     width: 100%;
     height: 90vh; /* Aumentamos ligeramente la altura para formato hero de escritorio */
-    position: relative;
+    position: sticky;
+    
     overflow: hidden;
     display: flex;
+    
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding-bottom: 60px;
+    padding-bottom: 20px;
     box-sizing: border-box;
     background-color: var(--bg-main);
+    top:0;
+    z-index: 1;
   }
 
   #circuitoCanvas {
@@ -49,7 +55,7 @@
 
   .header-content h1 {
     font-family: 'Georgia', serif;
-    font-size: 2.8rem; /* Tamaño con jerarquía visual */
+    font-size: 3.1rem; /* Tamaño con jerarquía visual */
     font-weight: 700;
     margin: 0 0 15px 0;
     letter-spacing: -0.5px;
@@ -58,7 +64,7 @@
 
   .header-content p {
     font-family: 'Calibri', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: var(--text-muted);
     margin: 0;
     font-weight: 300;
@@ -68,22 +74,45 @@
 
 <script>
   // Astro empaquetará este script automáticamente para el cliente
-  const canvas = document.getElementById('circuitoCanvas');
+    type Punto = {
+        angulo: number;
+        radioOrbita: number;
+        velocidadOrbita: number;
+        distorsion: number;
+        radio: number;
+        alpha: number;
+        x: number;
+        y: number;
+        objetivoX: number | null;
+        objetivoY: number | null;
+    };
+
+    type Nodo = { x: number; y: number };
+    type Linea = { p1: Nodo; p2: Nodo };
+
+    const canvasElement = document.getElementById('circuitoCanvas');
   
-  if (canvas) { // Buena práctica: verificar que el elemento exista antes de ejecutar
-    const ctx = canvas.getContext('2d');
+    if (canvasElement instanceof HTMLCanvasElement) { // Buena práctica: verificar que el elemento exista antes de ejecutar
+        const canvas: HTMLCanvasElement = canvasElement;
+        const ctxResult = canvas.getContext('2d');
+
+        if (!ctxResult || !canvas.parentElement) {
+            throw new Error('No se pudo inicializar el canvas del circuito.');
+        }
+
+        const ctx: CanvasRenderingContext2D = ctxResult;
 
     function resizeCanvas() {
-        canvas.width = canvas.parentElement.offsetWidth;
-        canvas.height = canvas.parentElement.offsetHeight;
+                canvas.width = canvas.parentElement!.offsetWidth;
+                canvas.height = canvas.parentElement!.offsetHeight;
         generarEstructuraH(); 
     }
 
     const numPuntos = 120;
-    const puntos = [];
+        const puntos: Punto[] = [];
 
-    let nodosCircuito = [];
-    let lineasCircuito = [];
+        let nodosCircuito: Nodo[] = [];
+        let lineasCircuito: Linea[] = [];
     let circuitoIniciado = false;
 
     function initPuntos() {

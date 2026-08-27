@@ -1,0 +1,101 @@
+---
+interface Props {
+    listado: string[];
+    titulo?: string;
+}
+
+const { listado, titulo } = Astro.props;
+
+const colores = [
+    "text-amber-400 bg-amber-400",
+    "text-emerald-400 bg-emereld-400",
+    "text-yellow-400 bg-yellow-400",
+    "text-purple-400 bg-purple-400",
+    "text-pink-400 bg-pink-400",
+    "text-indigo-400 bg-indigo-400",]
+---
+
+<!-- Tabla Resumen -->
+<div class="bg-slate-950/60 rounded-xl border border-slate-800 overflow-hidden">
+    <div class="px-5 py-3 bg-slate-800/40 border-b border-slate-800">
+        <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">
+            {titulo}
+        </h4>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+            <thead
+                class="bg-slate-900 text-slate-400 font-semibold border-b border-slate-800"
+                >{
+                    /*
+                
+                <tr>
+                    <th class="p-3">Concepto</th>
+                    <th class="p-3 text-center">%</th>
+                    <th class="p-3 text-right">Monto</th>
+                    <th class="p-3">Criterio de Destino</th>
+                </tr>
+            */
+                }
+            </thead>
+            <tbody class="divide-y divide-slate-800/60">
+                {
+                    listado.map((item: string, index: number) => (
+                        
+                        <tr>
+                            <td class="p-3 font-semibold $colores[index] flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full $colores[index]" />{" "}
+                                {item}
+                            </td>
+                        </tr>
+                    ))
+                }
+                <tr>
+                    <td
+                        class="p-3 font-semibold text-blue-400 flex items-center gap-2"
+                    >
+                        <span class="w-2 h-2 rounded-full bg-blue-400"></span> Fondo
+                        de Empresa
+                    </td>
+                    <td class="p-3 text-center font-mono">10%</td>
+                    <td class="p-3 text-right font-bold text-white"
+                        >$3,200.00</td
+                    >
+                    <td class="p-3 text-slate-400"
+                        >Capitalización y registros STPS</td
+                    >
+                </tr>
+                <tr>
+                    <td
+                        class="p-3 font-semibold text-emerald-400 flex items-center gap-2"
+                    >
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"
+                        ></span> Retorno de Sociedad
+                    </td>
+                    <td class="p-3 text-center font-mono">25%</td>
+                    <td class="p-3 text-right font-bold text-white"
+                        >$8,000.00</td
+                    >
+                    <td class="p-3 text-slate-400"
+                        >$1,333.33 por socio (6 socios)</td
+                    >
+                </tr>
+                <tr>
+                    <td
+                        class="p-3 font-semibold text-purple-400 flex items-center gap-2"
+                    >
+                        <span class="w-2 h-2 rounded-full bg-purple-400"></span> Fondo
+                        Operativo
+                    </td>
+                    <td class="p-3 text-center font-mono">65%</td>
+                    <td class="p-3 text-right font-bold text-white"
+                        >$20,800.00</td
+                    >
+                    <td class="p-3 text-slate-400"
+                        >Asignación por horas/rol de trabajo</td
+                    >
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

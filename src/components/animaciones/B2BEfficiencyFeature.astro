@@ -1,0 +1,189 @@
+---
+// B2BAnimationOnly.astro
+// Componente de visualización SVG puro, 100% adaptable al contenedor padre.
+---
+
+<div class="b2b-viz-wrapper">
+  <svg class="b2b-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Usamos un ID único para el filtro por si se incrusta varias veces -->
+      <filter id="glow-b2b" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="8" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+
+    <!-- RUTAS DE DATOS -->
+    <g class="network-paths" stroke="#1e293b" stroke-width="2" fill="none">
+      <path class="path-tr" d="M300,300 L480,120" />
+      <path class="path-br" d="M300,300 L480,480" />
+      <path class="path-bl" d="M300,300 L120,480" />
+      <path class="path-tl" d="M300,300 L120,120" />
+    </g>
+
+    <!-- SIMULACIONES PREDICTIVAS (Ondas) -->
+    <g class="predictive-waves" transform="translate(150, 50)">
+       <path class="sine-wave" d="M0,50 C50,10 100,90 150,50 C200,10 250,90 300,50" fill="none" stroke="#9d00ff" stroke-width="3" stroke-dasharray="10 5" filter="url(#glow-b2b)"/>
+    </g>
+
+    <!-- ACTIVOS AUTOMATIZADOS (Nodos Externos) -->
+    <g class="assets">
+      <g class="asset-node" transform="translate(480, 120)">
+        <circle r="30" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+        <polygon class="gear" points="0,-15 13,-7 13,7 0,15 -13,7 -13,-7" fill="none" stroke="#3b82f6" stroke-width="2"/>
+        <circle class="asset-pulse" r="5" fill="#3b82f6" filter="url(#glow-b2b)"/>
+      </g>
+      <g class="asset-node" transform="translate(480, 480)">
+        <circle r="30" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+        <polygon class="gear" points="0,-15 13,-7 13,7 0,15 -13,7 -13,-7" fill="none" stroke="#3b82f6" stroke-width="2"/>
+        <circle class="asset-pulse" r="5" fill="#3b82f6" filter="url(#glow-b2b)"/>
+      </g>
+      <g class="asset-node" transform="translate(120, 480)">
+        <circle r="30" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+        <polygon class="gear" points="0,-15 13,-7 13,7 0,15 -13,7 -13,-7" fill="none" stroke="#3b82f6" stroke-width="2"/>
+        <circle class="asset-pulse" r="5" fill="#3b82f6" filter="url(#glow-b2b)"/>
+      </g>
+      <g class="asset-node" transform="translate(120, 120)">
+        <circle r="30" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+        <polygon class="gear" points="0,-15 13,-7 13,7 0,15 -13,7 -13,-7" fill="none" stroke="#3b82f6" stroke-width="2"/>
+        <circle class="asset-pulse" r="5" fill="#3b82f6" filter="url(#glow-b2b)"/>
+      </g>
+    </g>
+
+    <!-- NÚCLEO DE INTELIGENCIA ARTIFICIAL -->
+    <g class="ai-core" transform="translate(300, 300)">
+      <circle class="sec-ring-1" r="80" fill="none" stroke="#00ff88" stroke-width="2" stroke-dasharray="40 20 10 20"/>
+      <circle class="sec-ring-2" r="65" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-dasharray="15 10"/>
+      
+      <circle class="core-bg" r="45" fill="#0f172a" stroke="#00e5ff" stroke-width="3"/>
+      <polygon class="core-shape" points="0,-25 22,-12 22,12 0,25 -22,12 -22,-12" fill="#00e5ff" filter="url(#glow-b2b)"/>
+    </g>
+
+    <!-- PAQUETES DE DATOS B2B -->
+    <circle class="data-packet tr-packet" r="6" fill="#00ff88" filter="url(#glow-b2b)"/>
+    <circle class="data-packet br-packet" r="6" fill="#00e5ff" filter="url(#glow-b2b)"/>
+    <circle class="data-packet bl-packet" r="6" fill="#9d00ff" filter="url(#glow-b2b)"/>
+    <circle class="data-packet tl-packet" r="6" fill="#3b82f6" filter="url(#glow-b2b)"/>
+  </svg>
+</div>
+
+<style>
+  .b2b-viz-wrapper {
+    /* El contenedor se adapta al tamaño del padre donde lo incrustes */
+    width: 110%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Fondo opcional, coméntalo si quieres que sea totalmente transparente */
+    background-color: transparent; 
+  }
+
+  .b2b-svg {
+    width: 100%;
+    height: auto;
+    max-width: 800px; /* Evita que crezca desproporcionadamente en monitores ultra anchos */
+    overflow: visible;
+  }
+</style>
+
+<script>
+  import { animate, createMotionPath, random, stagger } from 'animejs';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Seleccionamos todos los SVGs en caso de que el componente se use múltiples veces
+    const svgs = document.querySelectorAll('.b2b-svg');
+
+    svgs.forEach((svg) => {
+      // 1. Animación de Entrada
+      animate(svg.querySelectorAll('.network-paths path, .sine-wave, .asset-node circle, .gear'), {
+        strokeDashoffset: [1000, 0],
+        ease: 'inOutSine',
+        duration: 2000,
+        delay: stagger(150)
+      });
+
+      // 2. IA Core
+      animate(svg.querySelectorAll('.core-shape'), {
+        scale: [1, 1.2, 1],
+        opacity: [0.8, 1, 0.8],
+        ease: 'inOutSine',
+        duration: 1500,
+        loop: true
+      });
+
+      // 3. Anillos de seguridad
+      animate(svg.querySelectorAll('.sec-ring-1'), {
+        rotate: '1turn',
+        ease: 'linear',
+        duration: 15000,
+        loop: true,
+        transformOrigin: '0px 0px' 
+      });
+
+      animate(svg.querySelectorAll('.sec-ring-2'), {
+        rotate: '-1turn',
+        ease: 'linear',
+        duration: 10000,
+        loop: true,
+        transformOrigin: '0px 0px'
+      });
+
+      // 4. Simulaciones Predictivas
+      animate(svg.querySelectorAll('.sine-wave'), {
+        translateX: [-10, 10],
+        ease: 'inOutSine',
+        duration: 2000,
+        direction: 'alternate',
+        loop: true
+      });
+
+      // 5. Activos Automatizados
+      animate(svg.querySelectorAll('.gear'), {
+        rotate: '1turn',
+        ease: 'linear',
+        duration: 8000,
+        loop: true,
+        transformOrigin: 'center'
+      });
+
+      animate(svg.querySelectorAll('.asset-pulse'), {
+        scale: [0.8, 1.5, 0.8],
+        opacity: [1, 0.2, 1],
+        ease: 'inOutSine',
+        duration: 2000,
+        loop: true,
+        delay: stagger(300)
+      });
+
+      // 6. Eficiencia B2B: Rutas de datos
+      const paths = [
+        svg.querySelector('.path-tr'),
+        svg.querySelector('.path-br'),
+        svg.querySelector('.path-bl'),
+        svg.querySelector('.path-tl')
+      ];
+      
+      const packets = [
+        svg.querySelector('.tr-packet'),
+        svg.querySelector('.br-packet'),
+        svg.querySelector('.bl-packet'),
+        svg.querySelector('.tl-packet')
+      ];
+
+      packets.forEach((packet, index) => {
+        if (!packet || !paths[index]) return;
+        
+        const path = createMotionPath(paths[index]);
+        
+        animate(packet, {
+          ...path,
+          ease: 'linear',
+          duration: random(2500, 3500),
+          loop: true,
+          delay: random(0, 1000)
+        });
+      });
+    });
+  });
+</script>

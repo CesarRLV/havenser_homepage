@@ -1,33 +1,427 @@
 ---
-// src/components/Navbar.astro
+// Navbar.astro
+// Componente de navegación principal para Havenser
+
+const menus = [
+  {
+    title: "Quiénes somos",
+    active:true,
+    href: "#nosotros",
+    submenus: [],
+  },
+  {
+    title: "Nuestros servicios",
+    active:true,
+    href: "#servicios",
+    submenus: [
+      {
+        title: "Conoce nuestros servicios",
+        active:true,
+        href: "#servicios",
+        submenus: [],
+      },
+      {
+        title: "Cursos",
+        href: "",
+        active:true,
+        submenus: [
+          { title: "Bases de datos SQL", href: "#capacitaciones", active: true },
+          { title: "Python para ingenieros", href: "#capacitaciones" ,  active: true },
+          { title: "Uso eficiente de IA Generativa", href: "#capacitaciones" ,  active: true },
+        ],
+      },
+      {
+        title: "Tech",
+        href: "",
+         active: true ,
+        submenus: [
+          { title: "AI & Datos", href: "#ia",active: true , },
+          { title: "Desarrollo, infraestructura e IoT", href: "#ingenieria",active: true , },
+          { title: "RX: Realidad Extendida", href: "ra",active: true , },
+        ],
+      },
+      {
+        title: "Ciencia & logística",
+        href: "",
+        active: true ,
+        submenus: [
+          { title: "BioTech", href: "bio",active: true , },
+          { title: "Logística", href: "log" ,active: true ,},
+        ],
+      },
+    ],
+  },
+  /*{
+    title: "Galería",
+    href: "",
+    submenus: [
+      {
+        title: "Eventos",
+        href: "",
+        submenus:[]
+      },
+      {
+        title: "Imágenes",
+        href: "",
+        submenus:[]
+      },
+      {
+        title: "Recursos",
+        href: "",
+        submenus:[]
+      }
+    ]
+  },*/
+  {
+    title: "Contacto",
+    href: "/#contacto",
+    submenus: [],
+  },
+  {
+    title: "Portal de Cursos",
+    href: "https://cursos.havenser.com",
+    submenus: [],
+  },
+];
+const style = "font-family:'Georgia', 'Arial Black', sans-serif;";
 ---
 
-<nav x-data="{ open: false }" class="bg-[#E6E6F0] shadow-lg sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-6  flex justify-between items-center">
-    
-    <a href="/" class="flex items-center gap-3">
-      <img src="/LOGO1.png" alt="Logo" class="h-18 w-auto" />
-      <span class="text-3xl font-extrabold text-[#121D2F] tracking-tighter uppercase" style="font-family: 'Arial Black', sans-serif;">HAVENSER</span>
-    </a>
+<nav
+  class="bg-[#E6E6F0] border-b border-gray-200 fixed w-full top-0 z-50 shadow-sm "
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-3 lg:px-1">
+    <div class="flex justify-between items-center h-14">
+      {/* Lado Izquierdo: Logo y Título */}
+      <a href="/" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+        <img class="h-14 w-auto" src="/LOGO1.png" alt="Logo Havenser" />
+        <!-- <img class="h-6 w-auto hidden sm:block mt-1" src="/titulo-havenser.svg" alt="Havenser" />>-->
+        <span
+          class="text-3xl font-extrabold text-[#121D2F] tracking-tighter uppercase"
+          style={style}>HAVENSER</span
+        >
+      </a>
 
-    <button @click="open = !open" class="md:hidden text-white focus:outline-none">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-      </svg>
-    </button>
+      {/* Lado Derecho: Menú Desktop */}
+      <div
+        class="hidden lg:flex items-center space-x-2 lg:space-x-6 md:px-4"
+        style={style}
+      >
+        {
+          menus.map((menu) => {
+            // 1. Caso Especial: Menú Contacto
+            if (menu.title === "Contacto" ) {
+              return (
+                <div class="pl-2">
+                  <a
+                    href={menu.href}
+                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
+                    {menu.title}
+                  </a>
+                </div>
+              );
+            }
 
-    <ul 
-      :class="open ? 'flex' : 'hidden md:flex'" 
-      class="absolute md:relative top-full left-0 w-full md:w-auto bg-[#E6E6F0] md:bg-transparent flex-col md:flex-row gap-6 p-6 md:p-0 items-center border-t border-gray-700 md:border-none"
-    >
-      <li><a href="#nosotros" @click="open = false" class="text-gray-800! hover:text-orange-500 font-medium transition-colors text-lg" style="font-family: Calibri, sans-serif;">¿Quiénes somos?</a></li>
-      <li><a href="#servicios" @click="open = false" class="text-gray-800! hover:text-orange-500 font-medium transition-colors text-lg" style="font-family: Calibri, sans-serif;">Nuestros Servicios</a></li>
-      <li><a href="#eventos" @click="open = false" class="text-gray-800! hover:text-orange-500 font-medium transition-colors text-lg" style="font-family: Calibri, sans-serif;">Galería</a></li>
-      <li>
-        <a href="#contacto" @click="open = false" class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition duration-300 font-bold">
-          Contacto
-        </a>
-      </li>
-    </ul>
+            // 1.1 Caso Especial: Menú Portal
+            if (menu.title === "Portal de Cursos" ) {
+              return (
+                <div class="pl-2">
+                  <a
+                    href={menu.href}
+                    target="_blank"
+                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-lg font-semibold text-white bg-orange-600 hover:bg-orange-700 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
+                    {menu.title}
+                  </a>
+                </div>
+              );
+            }
+
+            // 2. Caso: Menú Simple (Sin submenús)
+            if (!menu.submenus || menu.submenus.length === 0) {
+              return (
+                <a
+                  href={menu.href}
+                  class="px-2 py-2 text-lg font-lg !text-gray-800 hover:!text-blue-700 transition-colors"
+                  style={style}
+                >
+                  {menu.title}
+                </a>
+              );
+            }
+
+            // 3. Caso: Dropdown (Con submenús)
+            return (
+              <div class="group relative">
+                <button
+                  class="px-3 py-2 text-lg font-lg     !text-gray-800 hover:!text-blue-700 transition-colors flex items-center gap-1"
+                  style={style}
+                >
+                  {menu.title}
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                {/* Contenedor del Submenú Nivel 1 */}
+                <ul class="absolute left-0 mt-2 w-56 bg-white border border-gray-100 shadow-lg rounded-md invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
+                  {menu.submenus.map((sub1) => {
+                    // 3.1 Submenú simple (Ej. Galería -> Eventos)
+                    if (!sub1.submenus || sub1.submenus?.length === 0) {
+                      return (
+                        <li class="border-b border-gray-50 last:border-0">
+                          <a
+                            href={sub1.href}
+                            class="block px-4 py-3 text-sm !text-gray-800 hover:bg-gray-50 hover:!text-blue-700"
+                          >
+                            {sub1.title}
+                          </a>
+                        </li>
+                      );
+                    }
+
+                    // 3.2 Submenú anidado (Ej. Servicios -> Cursos -> Frontend)
+                    return (
+                      <li class="group/nested relative border-b border-gray-50 last:border-0">
+                        <button class="w-full text-left px-4 py-3 text-sm !text-gray-800 hover:bg-gray-50 flex justify-between items-center">
+                          {sub1.title}
+                          <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </button>
+
+                        {/* Contenedor del Submenú Nivel 2 */}
+                        <ul class="absolute left-full top-0 mt-0 w-48 bg-white border border-gray-100 shadow-lg rounded-md invisible opacity-0 group-hover/nested:visible group-hover/nested:opacity-100 transition-all duration-200">
+                          {sub1.submenus.map((sub2) => (
+                            <li>
+                              <a
+                                href={sub2.href}
+                                class="block px-4 py-2 text-sm !text-gray-800 hover:bg-gray-50 hover:!text-blue-700"
+                              >
+                                {sub2.title}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })
+        }
+      </div>
+
+      {/* Botón Menú Móvil (Hamburguesa) */}
+      <div class="lg:hidden flex items-center">
+        <button
+          id="mobile-menu-btn"
+          class="!text-gray-700 hover:!text-blue-700 focus:outline-none p-2"
+          aria-label="Abrir menú"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              id="menu-icon"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+            <path
+              id="close-icon"
+              class="hidden"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Menú Móvil Desplegable */}
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl max-h-[80vh] overflow-y-auto"
+  >
+    <div class="px-4 pt-2 pb-6 space-y-1">
+      {
+        menus.map((menu) => {
+          // 1. Caso Especial: Menú Contacto en Móvil
+          if (menu.title === "Contacto") {
+            return (
+              <div class="pt-4 pb-2">
+                <a
+                  href={menu.href}
+                  class="block w-full text-center px-5 py-3 rounded-md text-base font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm"
+                >
+                  {menu.title}
+                </a>
+              </div>
+            );
+          }
+
+          // 1.1 Caso Especial: Menú Portal
+            if (menu.title === "Portal de Cursos" ) {
+              return (
+                <div class="pl-2">
+                  <a
+                    href={menu.href}
+                    target="_blank"
+                    class="block w-full text-center px-5 py-3 rounded-md text-base font-bold text-white bg-orange-600 hover:bg-orange-700 shadow-sm"
+                  >
+                    {menu.title}
+                  </a>
+                </div>
+              );
+            }
+
+          // 2. Caso: Menú Simple en Móvil
+          if (!menu.submenus || menu.submenus.length === 0) {
+            return (
+              <a
+                href={menu.href}
+                class="block px-3 py-3 text-base font-medium !text-gray-800 hover:!bg-gray-50 hover:!text-blue-600 rounded-md"
+              >
+                {menu.title}
+              </a>
+            );
+          }
+
+          // 3. Caso: Menú Desplegable en Móvil (Usando details/summary)
+          return (
+            <details class="group/mobile-menu">
+              <summary class="flex justify-between items-center px-3 py-3 text-base font-medium !text-gray-800 hover:!bg-gray-50 cursor-pointer rounded-md list-none">
+                {menu.title}
+                <svg
+                  class="w-5 h-5 transition-transform group-open/mobile-menu:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </summary>
+
+              <div class="pl-4 space-y-1 mt-1 border-l-2 border-gray-100 ml-4">
+                {menu.submenus.map((sub1) => {
+                  // 3.1 Submenú simple en Móvil (Ej. Galería -> Eventos)
+                  if (!sub1.submenus || sub1.submenus.length === 0) {
+                    return (
+                      <a
+                        href={sub1.href}
+                        class="block px-3 py-2 text-sm !text-gray-800 hover:!text-blue-700"
+                      >
+                        {sub1.title}
+                      </a>
+                    );
+                  }
+
+                  // 3.2 Submenú anidado en Móvil (Ej. Servicios -> Cursos -> Frontend)
+                  return (
+                    <details class="group/mobile-nested">
+                      <summary class="flex justify-between items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 cursor-pointer list-none">
+                        {sub1.title}
+                        <svg
+                          class="w-4 h-4 transition-transform group-open/mobile-nested:rotate-180"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </summary>
+                      <div class="pl-4 py-1 space-y-1 border-l border-gray-100 ml-2 mt-1">
+                        {sub1.submenus.map((sub2) => (
+                          <a
+                            href={sub2.href}
+                            class="block px-3 py-2 text-sm !text-gray-800 hover:!text-blue-700"
+                          >
+                            {sub2.title}
+                          </a>
+                        ))}
+                      </div>
+                    </details>
+                  );
+                })}
+              </div>
+            </details>
+          );
+        })
+      }
+    </div>
   </div>
 </nav>
+
+{/* Spacer para evitar que el contenido quede oculto debajo del navbar fijo */}
+<!--<div class="h-20"></div>-->
+
+<script>
+  // Lógica simple para manejar la apertura y cierre del menú en vista móvil
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+  const closeIcon = document.getElementById("close-icon");
+
+  if (btn && menu && menuIcon && closeIcon) {
+    btn.addEventListener("click", closeMobileMenu);
+    menu.addEventListener("click", closeOther);
+  }
+
+  function closeOther(event: { target: any }) {
+    const target = event.target;
+    console.log(target);
+    if (target.tagName === "A") {
+      closeMobileMenu();
+    }
+  }
+
+  function closeMobileMenu() {
+    menu?.classList.toggle("hidden");
+    menuIcon?.classList.toggle("hidden");
+    closeIcon?.classList.toggle("hidden");
+  }
+</script>
+
+<style>
+  /* Ocultar la flecha por defecto de la etiqueta summary en navegadores WebKit */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
