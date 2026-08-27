@@ -25,26 +25,28 @@ const menus = [
         href: "",
         active:true,
         submenus: [
-          { title: "Frontend", href: "", active: true },
-          { title: "Backend", href: "" ,  active: true },
+          { title: "Bases de datos SQL", href: "#capacitaciones", active: true },
+          { title: "Python para ingenieros", href: "#capacitaciones" ,  active: true },
+          { title: "Uso eficiente de IA Generativa", href: "#capacitaciones" ,  active: true },
         ],
       },
       {
-        title: "Innovaciones",
+        title: "Tech",
         href: "",
          active: true ,
         submenus: [
-          { title: "Inteligencia Artificial", href: "",active: true , },
-          { title: "Internet de las Cosas", href: "",active: true , },
+          { title: "AI & Datos", href: "#ia",active: true , },
+          { title: "Desarrollo, infraestructura e IoT", href: "#ingenieria",active: true , },
+          { title: "RX: Realidad Extendida", href: "ra",active: true , },
         ],
       },
       {
-        title: "Redes",
+        title: "Ciencia & logística",
         href: "",
         active: true ,
         submenus: [
-          { title: "Arquitectura", href: "",active: true , },
-          { title: "Seguridad", href: "" ,active: true ,},
+          { title: "BioTech", href: "bio",active: true , },
+          { title: "Logística", href: "log" ,active: true ,},
         ],
       },
     ],
@@ -75,18 +77,23 @@ const menus = [
     href: "/#contacto",
     submenus: [],
   },
+  {
+    title: "Portal de Cursos",
+    href: "https://cursos.havenser.com",
+    submenus: [],
+  },
 ];
 const style = "font-family:'Georgia', 'Arial Black', sans-serif;";
 ---
 
 <nav
-  class="bg-[#E6E6F0] border-b border-gray-200 fixed w-full top-0 z-20 shadow-sm "
+  class="bg-[#E6E6F0] border-b border-gray-200 fixed w-full top-0 z-50 shadow-sm "
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-15">
+  <div class="max-w-7xl mx-auto px-4 sm:px-3 lg:px-1">
+    <div class="flex justify-between items-center h-14">
       {/* Lado Izquierdo: Logo y Título */}
       <a href="/" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
-        <img class="h-15 w-auto" src="/LOGO1.png" alt="Logo Havenser" />
+        <img class="h-14 w-auto" src="/LOGO1.png" alt="Logo Havenser" />
         <!-- <img class="h-6 w-auto hidden sm:block mt-1" src="/titulo-havenser.svg" alt="Havenser" />>-->
         <span
           class="text-3xl font-extrabold text-[#121D2F] tracking-tighter uppercase"
@@ -102,13 +109,27 @@ const style = "font-family:'Georgia', 'Arial Black', sans-serif;";
         {
           menus.map((menu) => {
             // 1. Caso Especial: Menú Contacto
-            if (menu.title === "Contacto") {
+            if (menu.title === "Contacto" ) {
               return (
                 <div class="pl-2">
                   <a
                     href={menu.href}
-                    
-                    class="inline-flex items-center justify-center px-4 py-2 rounded-full text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200"
+                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
+                    {menu.title}
+                  </a>
+                </div>
+              );
+            }
+
+            // 1.1 Caso Especial: Menú Portal
+            if (menu.title === "Portal de Cursos" ) {
+              return (
+                <div class="pl-2">
+                  <a
+                    href={menu.href}
+                    target="_blank"
+                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-lg font-semibold text-white bg-orange-600 hover:bg-orange-700 shadow-md hover:shadow-lg transition-all duration-200"
                   >
                     {menu.title}
                   </a>
@@ -265,6 +286,21 @@ const style = "font-family:'Georgia', 'Arial Black', sans-serif;";
               </div>
             );
           }
+
+          // 1.1 Caso Especial: Menú Portal
+            if (menu.title === "Portal de Cursos" ) {
+              return (
+                <div class="pl-2">
+                  <a
+                    href={menu.href}
+                    target="_blank"
+                    class="block w-full text-center px-5 py-3 rounded-md text-base font-bold text-white bg-orange-600 hover:bg-orange-700 shadow-sm"
+                  >
+                    {menu.title}
+                  </a>
+                </div>
+              );
+            }
 
           // 2. Caso: Menú Simple en Móvil
           if (!menu.submenus || menu.submenus.length === 0) {

@@ -1,0 +1,182 @@
+---
+// TechWave.astro
+// Componente de onda animada. Requiere: npm install animejs
+
+const spheres = [
+  {
+    name: "Inteligencia Artificial", // Cerebro / Nodos
+    svg: `<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />`
+  },
+  {
+    name: "Programación", // Código
+    svg: `<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>`
+  },
+  {
+    name: "IoT", // Conectividad / Dispositivos
+    svg: `<path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line>`
+  },
+  {
+    name: "Matemáticas", // Función / Raíz
+    svg: `<path d="M4 16.5L8 4.5l4 15L20 4.5"></path>`
+  },
+  {
+    name: "Ingeniería", // Engranaje
+    svg: `<circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>`
+  },
+  {
+    name: "Apps Móviles", // Smartphone
+    svg: `<rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line>`
+  },
+  {
+    name: "Apps Web", // Monitor / Navegador
+    svg: `<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>`
+  },
+  {
+    name: "Cloud Computing", // Nube
+    svg: `<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>`
+  },
+  {
+    name: "Redes", // Topología
+    svg: `<circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>`
+  },
+  {
+    name: "Química / Bioquímica", // Matraz
+    svg: `<path d="M9 3v13.53l-4.7 4.7A1 1 0 0 0 5 23h14a1 1 0 0 0 .7-1.7L15 16.53V3"></path><line x1="9" y1="3" x2="15" y2="3"></line><line x1="14" y1="14" x2="10" y2="14"></line>`
+  },
+  {
+    name: "Alimentos", // Hoja / Orgánico
+    svg: `<path d="M11 20A7 7 0 0 1 4 13V6h7a7 7 0 0 1 7 7v7h-7z"></path><line x1="11" y1="20" x2="11" y2="13"></line>`
+  },
+  {
+    name: "Cadena de Producción", // Paquete / Cubo
+    svg: `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line>`
+  }
+];
+---
+
+<div class="wave-container">
+  <div class="spheres-wrapper">
+    {spheres.map((sphere) => (
+      <div class="sphere" title={sphere.name}>
+        <div class="sphere-inner">
+          <svg 
+            class="icon" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="1.5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            set:html={sphere.svg}
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  /* Contenedor principal limitado en altura para no ocupar toda la pantalla */
+  .wave-container {
+    width: 100%;
+    height: 180px; /* Altura tenue y controlada */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Evita scrolls accidentales */
+    background-color: transparent;
+    padding: 0 2rem;
+  }
+
+  .spheres-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem; /* Espaciado entre las esferas */
+    flex-wrap: nowrap;
+  }
+
+  /* La Esfera */
+  .sphere {
+    position: relative;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    /* Estilo Glassmorphism tenue */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      inset 0 0 20px rgba(0, 210, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    /* Sombras base de color tecnológico tenue */
+  }
+
+  /* Efecto Hover para interactividad sutil */
+  .sphere:hover {
+    box-shadow: 
+      0 8px 20px rgba(0, 210, 255, 0.2),
+      inset 0 0 20px rgba(0, 210, 255, 0.2);
+    border: 1px solid rgba(0, 210, 255, 0.4);
+  }
+
+  .sphere-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* El icono SVG */
+  .icon {
+    width: 28px;
+    height: 28px;
+    color: #00d2ff; /* Color cyan tecnológico (adaptable a tu tema) */
+    opacity: 0.85;
+    filter: drop-shadow(0px 0px 4px rgba(0, 210, 255, 0.4));
+  }
+
+  /* Media query para asegurar que se vea bien en móviles */
+  @media (max-width: 900px) {
+    .spheres-wrapper {
+      gap: 0.8rem;
+    }
+    .sphere {
+      width: 45px;
+      height: 45px;
+    }
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>
+
+<script>
+  import { animate, stagger } from 'animejs';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Seleccionamos todas las esferas dentro del contenedor
+    const spheres = document.querySelectorAll('.sphere');
+
+    if (spheres.length > 0) {
+      // Animación suave de ola infinita
+      animate(spheres, {
+        translateY: [-20, 20], // Desplazamiento tenue (arriba y abajo)
+        easing: 'easeInOutSine', // Movimiento fluido de onda
+        duration: 2500, // Lento y tranquilo
+        loop: true,
+        direction: 'alternate',
+        // El secreto de la ola: un retraso escalonado (stagger) para cada esfera
+        delay: stagger(150)
+      });
+    }
+  });
+</script>

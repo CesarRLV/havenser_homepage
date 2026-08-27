@@ -1,4 +1,5 @@
 ---
+import TechWave from "./animaciones/TechWave.astro";
 import PortadaImagen from "./Portadas/PortadaImagen.astro";
 
 // src/components/Servicios.astro
@@ -6,79 +7,86 @@ import PortadaImagen from "./Portadas/PortadaImagen.astro";
 const servicios = [
   {
     icon: "🤖",
-    image: "", // <- Aquí agregarás la ruta de tu imagen después (ej. "/img/ai-data.jpg")
+    image: "/ia.jpeg", 
     title: "AI & Data Operativa",
     desc: "Transformamos flujos manuales en activos de alto rendimiento mediante IA y machine learning.",
-    subs: ["RPA y Web Scraping", "Pipelines de Datos (ETL)", "Modelos Analíticos Predictivos"],
-    link: "#contacto"
+    subs: ["RPA y Agentes autónomos", "Pipelines de Datos (ETL)", "Modelos Analíticos Predictivos & RAGs"],
+    link: "#contacto",
+    anchor: "#ia"
   },
   {
     icon: "☁️",
-    image: "",
+    image: "/web_servicios.jpeg",
     title: "Infraestructura Cloud",
     desc: "Ecosistemas distribuidos y arquitecturas escalables para operaciones transaccionales críticas.",
-    subs: ["Despliegue y Migración AWS", "Alertamiento Serverless", "Arquitectura IoT Segura"],
-    link: "#contacto"
+    subs: ["Despliegue y Desarrollo en la Nube", "Alertamiento Serverless", "Migraciones y optimizaciones"],
+    link: "#contacto",
+    anchor: ""
   },
   {
     icon: "💻",
-    image: "",
+    image: "/software.jpeg",
     title: "Ingeniería de Software",
     desc: "Plataformas tecnológicas full-stack adaptadas a la lógica exacta y rentabilidad de su negocio.",
-    subs: ["Desarrollo Web Custom", "Plataformas LMS y ERP", "Arquitectura de Bases de Datos"],
-    link: "#contacto"
+    subs: ["Desarrollo Web & Mobile", "Plataformas LMS y ERP", "Arquitectura de Bases de Datos"],
+    link: "#contacto",
+    anchor: "#ingenieria"
   },
   {
     icon: "🥽",
-    image: "",
+    image: "/ra.jpeg",
     title: "Realidad Extendida (XR)",
     desc: "Soluciones de Spatial Computing para reducir costos y riesgos mediante inmersión 3D.",
     subs: ["Entrenamiento en VR", "Guiado Industrial con AR", "Colaboración en Realidad Mixta"],
-    link: "#contacto"
+    link: "#contacto",
+    anchor: "ra",
   },
-  {
+  /*{
     icon: "🧬",
     image: "",
     title: "I+D y Simulación",
     desc: "Rigor científico aplicado para resolver los desafíos más complejos de la industria.",
     subs: ["Modelado Físico-Matemático", "Biocomputación Aplicada", "Matemáticas en Ciberseguridad"],
     link: "#contacto"
-  },
+  },*/
   {
     icon: "🔒",
-    image: "",
-    title: "Auditoría y Seguridad",
+    image: "/seguridad_servicies.jpeg",
+    title: "Ciberseguridad",
     desc: "Blindaje absoluto de sistemas contra ataques o fugas de información sensible.",
-    subs: ["Penetration Testing", "Auditoría Cloud/On-Premise", "Marcos Normativos (Políticas)"],
-    link: "#contacto"
+    subs: ["Penetration Testing", "Seguridad Cloud/On-Premise", "Marcos Normativos (Políticas)"],
+    link: "#contacto",
+    anchor: "",
   },
   {
     icon: "🚚",
-    image: "",
+    image: "/logistica.jpeg",
     title: "Logística Predictiva",
     desc: "Optimización de la cadena de suministro para erradicar cuellos de botella y costos extra.",
     subs: ["Modelos de Demanda (ML)", "Optimización de Rutas", "Simulación de Almacenes"],
-    link: "#contacto"
+    link: "#contacto",
+    anchor: "#log"
   },
   {
     icon: "🧪",
-    image: "",
-    title: "Biotech y Regulatoria",
+    image: "/biologia.jpeg",
+    title: "Biotech y Modelado",
     desc: "Validación científica para escalar procesos químicos, médicos y agroalimentarios.",
-    subs: ["Sistemas Biológicos", "Optimización de Fórmulas", "Consultoría en Bioseguridad"],
-    link: "#contacto"
+    subs: ["Biocomputación Aplicada", "Modelos físico-matemáticos", "Consultoría en Bioseguridad y procesos químicos"],
+    link: "#contacto",
+    anchor: "#bio"
   },
-  {
+ /* {
     icon: "🧠",
     image: "",
     title: "IA Generativa Agéntica",
     desc: "Asistentes corporativos autónomos integrados en los flujos internos de su empresa.",
     subs: ["Agentes Autónomos", "Implementación RAG Local", "Extracción Documental"],
     link: "#contacto"
-  },
+  },*/
   {
     icon: "🏢",
-    image: "",
+    image: "/iot.jpeg",
     title: "Gemelos Digitales (IoT)",
     desc: "Monitoreo en tiempo real para plantas de manufactura e infraestructura física.",
     subs: ["Integración de Sensores", "Dashboards Industriales", "Gemelos Digitales 3D"],
@@ -86,16 +94,17 @@ const servicios = [
   },
   {
     icon: "🎓",
-    image: "",
+    image: "/capacitacion.jpeg",
     title: "Capacitación y Mentoría",
     desc: "Transferencia de competencias técnicas para convertir a su equipo en analistas estratégicos.",
-    subs: ["Academias Corporativas", "Entrenamiento SQL/Python", "Metodologías Ágiles"],
-    link: "#contacto"
+    subs: ["Academias Corporativas con cursos personalizados","Cursos online"],
+    link: "#contacto",
+    anchor: "#capacitaciones"
   }
 ];
 ---
 
-<section id="servicios" class="py-24 bg-[#10192d] relative overflow-hidden text-[#e6e6f0] z-10">
+<section class="py-24 bg-[#10192d] relative overflow-hidden text-[#e6e6f0] z-10">
   <PortadaImagen
     alto="70vh"
     urlImagen="/banner_city.jpg"
@@ -103,14 +112,14 @@ const servicios = [
     parrafo="nuevas fronteras."
     direction="left"
   />
-  <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mt-5">
+  <div  id="servicios"  class="absolute inset-0 pointer-events-none z-0 overflow-hidden mt-100">
     <div class="absolute w-150 h-150 bg-[#c9a126] opacity-[0.03] rounded-full blur-[100px] top-32 -left-32"></div>
     <div class="absolute w-200 h-200 bg-[#6e7b90] opacity-[0.03] rounded-full blur-[100px] bottom-10 right-[-20%]"></div>
   </div>
 
   <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 mt-15">
     
-    <div class="text-center max-w-3xl mx-auto mb-20">
+    <div  class="text-center max-w-3xl mx-auto mb-10 mt-15">
       <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#e6e6f0]" style="font-family: Georgia, serif;">
         Portafolio de <span class="text-[#c9a126]">Soluciones</span>
       </h2>
@@ -118,6 +127,10 @@ const servicios = [
         Arquitecturas tecnológicas avanzadas <strong class="text-[#c9a126]/85">diseñadas a la medida </strong>
         para resolver la complejidad operativa y escalar su <strong class="text-[#c9a126]/85"> rentabilidad B2B </strong> .
       </p>
+    </div>
+
+    <div class="my-20">
+      <TechWave/>
     </div>
 
     <!-- Grid Orgánico y Off-Grid -->
@@ -131,7 +144,7 @@ const servicios = [
           ${index % 3 === 2 ? 'lg:mt-32' : ''}
         `}>
           
-          <div class="absolute inset-0 bg-linear-to-br from-[#c9a126]/5 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+          <div id={srv.anchor} class="absolute inset-0 bg-linear-to-br from-[#c9a126]/5 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
           <!-- HEADER DE LA TARJETA (Imagen + Icono + Título + Flecha en móvil) -->
           <div class="accordion-header cursor-pointer md:cursor-auto select-none md:select-auto w-full relative z-10">
@@ -142,15 +155,13 @@ const servicios = [
                 [ Espacio Imagen: {srv.title} ]
               </span>
               <!-- Cuando tengas las imágenes, descomenta la siguiente línea: -->
-              <!-- {srv.image && <img src={srv.image} alt={srv.title} class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />} -->
+             {srv.image && <img src={srv.image} alt={srv.title} class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />} 
             </div>
 
             <!-- Título e Icono -->
             <div class="flex items-center justify-between md:block">
               <div class="flex items-center md:block gap-4">
-                <div class="text-4xl md:text-5xl md:mb-6 transform md:group-hover:scale-110 transition-transform duration-300 origin-left">
-                  {srv.icon}
-                </div>
+                
                 <h3 class="text-xl md:text-3xl font-bold text-[#e6e6f0] md:group-hover:text-[#c9a126] transition-colors duration-300" style="font-family: Georgia, serif;">
                   {srv.title}
                 </h3>

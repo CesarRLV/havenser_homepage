@@ -74,22 +74,45 @@
 
 <script>
   // Astro empaquetará este script automáticamente para el cliente
-  const canvas = document.getElementById('circuitoCanvas');
+    type Punto = {
+        angulo: number;
+        radioOrbita: number;
+        velocidadOrbita: number;
+        distorsion: number;
+        radio: number;
+        alpha: number;
+        x: number;
+        y: number;
+        objetivoX: number | null;
+        objetivoY: number | null;
+    };
+
+    type Nodo = { x: number; y: number };
+    type Linea = { p1: Nodo; p2: Nodo };
+
+    const canvasElement = document.getElementById('circuitoCanvas');
   
-  if (canvas) { // Buena práctica: verificar que el elemento exista antes de ejecutar
-    const ctx = canvas.getContext('2d');
+    if (canvasElement instanceof HTMLCanvasElement) { // Buena práctica: verificar que el elemento exista antes de ejecutar
+        const canvas: HTMLCanvasElement = canvasElement;
+        const ctxResult = canvas.getContext('2d');
+
+        if (!ctxResult || !canvas.parentElement) {
+            throw new Error('No se pudo inicializar el canvas del circuito.');
+        }
+
+        const ctx: CanvasRenderingContext2D = ctxResult;
 
     function resizeCanvas() {
-        canvas.width = canvas.parentElement.offsetWidth;
-        canvas.height = canvas.parentElement.offsetHeight;
+                canvas.width = canvas.parentElement!.offsetWidth;
+                canvas.height = canvas.parentElement!.offsetHeight;
         generarEstructuraH(); 
     }
 
     const numPuntos = 120;
-    const puntos = [];
+        const puntos: Punto[] = [];
 
-    let nodosCircuito = [];
-    let lineasCircuito = [];
+        let nodosCircuito: Nodo[] = [];
+        let lineasCircuito: Linea[] = [];
     let circuitoIniciado = false;
 
     function initPuntos() {
