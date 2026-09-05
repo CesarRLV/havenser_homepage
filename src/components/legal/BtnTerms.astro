@@ -1,0 +1,41 @@
+---
+// Puedes colocar esto en el componente donde necesites el enlace, como Footer.astro
+const {url, titulo} = Astro.props;
+---
+
+<div class="legal-link-container">
+  <a href={url} class="legal-link">
+    {titulo}
+  </a>
+</div>
+
+<style>
+  /* Contenedor opcional para alinear */
+  .legal-link-container {
+    margin-top: 2rem;
+    text-align: center;
+    z-index: 20;
+  }
+
+  /* Estilos del elemento anchor (a) */
+  .legal-link {
+    /* Usamos la fuente Calibri para textos corporativos */
+    font-family: "Calibri", "Segoe UI", Roboto, sans-serif;
+    font-size: 1.5rem;
+    /* Usamos el color gris azulado para que sea sutil pero visible */
+    color: var(--text-muted, #8d94a1); 
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    /* Transición suave para dar esa sensación premium */
+    transition: all 0.3s ease; 
+  }
+
+  /* Efecto interactivo de alta gama */
+  .legal-link:hover {
+    /* Al pasar el mouse, resalta en el color claro principal */
+    color: var(--text-light, #e6e6f0); 
+    /* Aparece una línea inferior con el color de acento corporativo */
+    border-bottom: 1px solid var(--accent, #3e4b61); 
+  }
+</style>

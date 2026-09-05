@@ -1,0 +1,238 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CardContent from "../../components/capacitaciones/CardContent.astro";
+import TablaContenidos from "../../components/capacitaciones/TablaContenidos.astro";
+
+import "../../styles/global.css";
+---
+
+<Layout title="Curso Bases de Datos SQL">
+    <main
+        class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6"
+    >
+        <!-- Container Principal -->
+        <div
+            id="capture-area"
+            class="max-w-4xl w-full bg-slate-900 rounded-2xl shadow-2xl border border-slate-800 overflow-hidden my-6"
+        >
+            <!-- Encabezado -->
+            <div
+                class="bg-slate-800/80 p-6 sm:p-8 border-b border-slate-700/60 relative overflow-hidden"
+            >
+                <div
+                    class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
+                >
+                </div>
+                <div
+                    class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10"
+                >
+                    <div>
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2 border border-blue-500/20"
+                        >
+                            <i class="fa-solid fa-chart-pie"></i> CAPACITACIÓN CORPORATIVA
+                        </div>
+                        <h1
+                            class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-georgia"
+                        >
+                            BASES DE DATOS – SQL
+                        </h1>
+                        <p class="text-slate-400 text-sm mt-1">
+                            Automatización con SQL y Power Platform
+                        </p>
+                    </div>
+
+                    <!-- Total Card -->
+                    <div
+                        class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 text-right min-w-[220px]"
+                    >
+                        <span class="text-xs text-slate-400 font-medium block"
+                            ><a href="/cursos">www.havenser.com</a></span
+                        >
+                        <span
+                            class="text-2xl font-black text-emerald-400 tracking-tight"
+                            >HAVENSER<span
+                                class="text-xs font-normal text-slate-400"
+                                >.</span
+                            ></span
+                        >
+                        <div class="text-[11px] text-slate-500 mt-0.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-8 space-y-8">
+                <!-- Sección 2: Repartición del Ingreso Neto -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3
+                            class="text-lg font-bold text-white flex items-center gap-2"
+                        >
+                            <i class="fa-solid fa-scale-balanced text-blue-400"
+                            ></i>
+                            Elimina cruces manuales y tareas repetitivas para siempre
+                        </h3>
+                        {
+                            /* <span
+                            class="text-sm font-semibold text-slate-400 bg-slate-800 px-3 py-1 rounded-lg border border-slate-700"
+                        >
+                            Base: <strong class="text-white"
+                                >$32,000.00 MXN</strong
+                            >
+                        </span>*/
+                        }
+                    </div>
+
+                    <!-- Grid de 3 Pilares -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Pilar A: 10% Empresa -->
+                        <div
+                            class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-colors"
+                        >
+                            <div>
+                                <div
+                                    class="flex items-center justify-between mb-3"
+                                >
+                                    <span
+                                        class="text-xs font-extrabold px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                                        >1</span
+                                    >
+                                    <i
+                                        class="fa-solid fa-building-columns text-blue-400"
+                                    ></i>
+                                </div>
+                                <h4 class="font-bold text-white text-sm mb-1">
+                                    DURACIÓN - CUPO
+                                </h4>
+                                <div
+                                    class="text-2xl font-black text-blue-400 mb-3"
+                                >
+                                    20 horas - 8 participantes <span
+                                        class="text-xs text-slate-400 font-normal"
+                                    ></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pilar B: 25% Socios -->
+                        <div
+                            class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 flex flex-col justify-between hover:border-emerald-500/50 transition-colors"
+                        >
+                            <div>
+                                <div
+                                    class="flex items-center justify-between mb-3"
+                                >
+                                    <span
+                                        class="text-xs font-extrabold px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                        >2</span
+                                    >
+                                    <i
+                                        class="fa-solid fa-users text-emerald-400"
+                                    ></i>
+                                </div>
+                                <h4 class="font-bold text-white text-sm mb-1">
+                                    INVERSIÓN
+                                </h4>
+                                <div
+                                    class="text-2xl font-black text-emerald-400 mb-3"
+                                >
+                                    $32,000.00 + IVA <span
+                                        class="text-xs text-slate-400 font-normal"
+                                    ></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pilar C: 65% Fondo Operativo -->
+                        <div
+                            class="bg-slate-800/50 border border-slate-700 rounded-xl p-5 flex flex-col justify-between hover:border-purple-500/50 transition-colors"
+                        >
+                            <div>
+                                <div
+                                    class="flex items-center justify-between mb-3"
+                                >
+                                    <span
+                                        class="text-xs font-extrabold px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                                        >3</span
+                                    >
+                                    <i
+                                        class="fa-solid fa-laptop-code text-purple-400"
+                                    ></i>
+                                </div>
+                                <h4 class="font-bold text-white text-sm mb-1">
+                                    MODALIDAD
+                                </h4>
+                                <div
+                                    class="text-2xl font-black text-purple-400 mb-3"
+                                >
+                                    En línea
+                                    <span
+                                        class="text-xs text-slate-400 font-normal"
+                                    ></span>
+                                </div>
+                                <p
+                                    class="text-xs text-slate-400 leading-relaxed mb-3"
+                                >
+                                    (En vivo + Grabación de sesiones)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Resumen y objetivos -->
+                <CardContent color="ember" titulo="Resumen y objetivos">
+                    El <strong>Curso de Bases de Datos – SQL </strong> lleva a los
+                    equipos de trabajo del caos de las hojas de cálculo a un entorno
+                    de información estructurada, centralizada y automatizada. En este
+                    programa, el participante transforma la mentalidad tradicional
+                    de "celdas" para dominar el modelo relacional y el lenguaje SQL,
+                    logrando consultar, cruzar y analizar grandes volúmenes de datos.
+                    Finalmente, integra estas bases de datos con Microsoft Power Platform,
+                    estableciendo un entorno de comunicación directo que facilita
+                    la entrega y visualización de los resultados para toda el área.
+                </CardContent>
+
+                <TablaContenidos
+                titulo="MÓDULO 1 —  Fundamentos: del Excel a las bases de datos" 
+                    listado={[
+                        "Cambio de mentalidad: de \“celdas\” a \“entidades lógicas\”",
+                        "Equivalencias clave: libro = base de datos, hoja = tabla, columna = campo, fila = registro. ",
+                        "Modelo relacional: llaves primarias y foráneas, y relaciones entre tablas. ",
+                        "Recorrido por el entorno de trabajo y la base de datos del curso. ",
+                    ]}
+                />
+            </div>
+
+            <!-- Pie de página -->
+            <div
+                class="bg-slate-950 p-4 border-t border-slate-800 text-center text-slate-500 text-xs"
+            >
+                Consultoría de Servicios Tecnológicos &bull; Documento
+                informativo interno para socios
+            </div>
+        </div>
+
+        <!-- Botón de acción para guardar / imprimir -->
+        <div class="flex gap-3">
+            <button
+                onclick="window.print()"
+                class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm rounded-xl shadow-lg transition-all flex items-center gap-2"
+            >
+                <i class="fa-solid fa-print"></i> Imprimir / Guardar en PDF
+            </button>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+    body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+    }
+    .gradient-border {
+        background: linear-gradient(135deg, #3b82f6, #10b981, #6366f1);
+    }
+</style>
