@@ -2,6 +2,7 @@
 // 1. Necesitas este bloque (frontmatter) para poder importar archivos.
 // 2. Importa tu archivo CSS global de Tailwind. 
 // (Asegúrate de que la ruta coincida con donde guardaste tu global.css)
+import Footer from '../components/Footer.astro';
 import '../styles/global.css'; 
 
 // (Opcional pero recomendado) Recibir el título como una variable
@@ -22,5 +23,7 @@ const { title = "Havenser" } = Astro.props;
 	</head>
 	<body > {/* class="bg-[#111b2c] text-white" */}
 		<slot />
+		
+	<Footer/>
 	</body>
 </html>

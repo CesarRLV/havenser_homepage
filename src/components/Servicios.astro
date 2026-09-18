@@ -2,7 +2,34 @@
 import TechWave from "./animaciones/TechWave.astro";
 import PortadaImagen from "./Portadas/PortadaImagen.astro";
 
-// src/components/Servicios.astro
+// NOTA: estas imágenes reutilizan las que ya existen en /public.
+// Sustitúyelas por fotos propias cuando las tengas (ideal 1600x1200 o mayor).
+const slides = [
+  {
+    imagen: '/software.jpeg',
+    etiqueta: 'Datos',
+    titulo: 'Un solo catálogo, toda la operación',
+    texto: 'Unificamos y depuramos la información de tus sucursales para que cada equipo trabaje sobre datos confiables.',
+  },
+  {
+    imagen: '/ia.jpeg',
+    etiqueta: 'Inteligencia artificial',
+    titulo: 'Automatización que sí se usa',
+    texto: 'Aplicamos IA a procesos concretos del negocio, no como demo: captura, validación y reglas que corren solas.',
+  },
+  {
+    imagen: '/web_servicios.jpeg',
+    etiqueta: 'Desarrollo a medida',
+    titulo: 'Software construido para tu operación',
+    texto: 'Plataformas y apps diseñadas alrededor de cómo trabaja tu equipo, no al revés.',
+  },
+  {
+    imagen: '/iot.jpeg',
+    etiqueta: 'Acompañamiento',
+    titulo: 'Soporte que continúa después del lanzamiento',
+    texto: 'Damos seguimiento técnico continuo para que cada solución evolucione con tu negocio.',
+  },
+];
 
 const servicios = [
   {
@@ -104,7 +131,7 @@ const servicios = [
 ];
 ---
 
-<section class="py-24 bg-[#10192d] relative overflow-hidden text-[#e6e6f0] z-10">
+<section class=" bg-[#e6e6f0] relative overflow-hidden text-[#10192d] z-10 pb-24">
   <PortadaImagen
     alto="70vh"
     urlImagen="/banner_city.jpg"
@@ -117,24 +144,87 @@ const servicios = [
     <div class="absolute w-200 h-200 bg-[#6e7b90] opacity-[0.03] rounded-full blur-[100px] bottom-10 right-[-20%]"></div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 mt-15">
+  <div class=" mx-auto px-3 lg:px-4 relative z-10 mt-15">
     
-    <div  class="text-center max-w-3xl mx-auto mb-10 mt-15">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#e6e6f0]" style="font-family: Georgia, serif;">
-        Portafolio de <span class="text-[#c9a126]">Soluciones</span>
-      </h2>
-      <p class="text-lg md:text-xl text-[#e6e6f0]/80 leading-relaxed" style="font-family: Calibri, sans-serif;">
-        Arquitecturas tecnológicas avanzadas <strong class="text-[#c9a126]/85">diseñadas a la medida </strong>
-        para resolver la complejidad operativa y escalar su <strong class="text-[#c9a126]/85"> rentabilidad B2B </strong> .
-      </p>
+    <section class="w-full min-h-[50vh] grid grid-cols-1 md:grid-cols-2 bg-[#dfe0e1] font-sans">  
+
+        <!-- PANEL IZQUIERDO: texto -->
+    <div
+      class="relative flex flex-col items-center md:items-start justify-center
+            min-h-[56vh] md:min-h-screen px-6 md:px-16 py-16
+            text-center md:text-left
+            md:border-r md:border-gray-100"
+    >
+      <div id="panel-contenido" class="max-w-xl opacity-0 translate-y-4 transition-all duration-700 ease-out">
+        <h1 class="font-serif font-semibold text-4xl md:text-5xl leading-[1.12] tracking-tight text-[#152036] mb-4">
+          Portafolio de <span class="text-[#c9a126]">Soluciones</span>
+        </h1>
+  
+        <p class="text-base md:text-lg font-normal text-[#3e4b61] mb-8 max-w-md mx-auto md:mx-0">
+          Arquitecturas tecnológicas avanzadas <span class="text-[#c9a126]">diseñadas a la medida</span> para resolver la complejidad operativa y escalar su <span class="text-[#c9a126]">rentabilidad B2B</span>.
+        </p>
+  
+        <a
+          href="#contacto"
+          class="inline-flex items-center px-7 py-3 bg-[#c9a126] text-[#152036]
+                font-semibold text-sm rounded-sm
+                hover:bg-[#e0b62c] hover:-translate-y-0.5
+                transition-all duration-300"
+        >
+          Contáctanos
+        </a>
+      </div>
+    </div>
+  
+    <!-- PANEL DERECHO: carrusel de servicios -->
+    <div class="relative overflow-hidden min-h-[44vh] md:min-h-screen ">
+      <div class="carrusel relative w-full h-full">
+        {slides.map((slide, i) => (
+          <article
+            class="slide absolute inset-0 flex flex-col justify-end
+                  p-8 md:p-16 pb-20 md:pb-28
+                  bg-cover bg-center
+                  opacity-0 pointer-events-none
+                  transition-opacity duration-700 ease-in-out"
+            data-index={i}
+            style={`background-image: linear-gradient(180deg, rgba(16,25,45,0.15) 0%, rgba(16,25,45,0.82) 100%), url(${slide.imagen});`}
+          >
+            <span class="text-[#c9a126] text-sm font-semibold mb-2">{slide.etiqueta}</span>
+            <h2 class="font-serif font-semibold text-2xl md:text-3xl text-white mb-2 max-w-[22ch]">
+              {slide.titulo}
+            </h2>
+            <p class="text-white text-base leading-relaxed max-w-[42ch]">{slide.texto}</p>
+          </article>
+        ))}
+      </div>
+  
+      <div
+        class="absolute bottom-7 right-6 md:right-16 z-10 flex gap-2.5"
+        role="tablist"
+        aria-label="Seleccionar servicio"
+      >
+        {slides.map((slide, i) => (
+          <button
+            type="button"
+            class="punto w-6 h-[3px] bg-white/40 transition-colors duration-300 data-[activo=true]:bg-[#c9a126]"
+            data-index={i}
+            data-activo={i === 0 ? 'true' : 'false'}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            role="tab"
+            aria-label={`Ver: ${slide.titulo}`}
+          />
+        ))}
+      </div>
     </div>
 
-    <div class="my-20">
+  </section>
+
+    <div class="my-8">
       <TechWave/>
     </div>
 
     <!-- Grid Orgánico y Off-Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start pb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start pb-10 mb-2">
       {servicios.map((srv, index) => (
         <div class={`
           bg-[#152036] p-6 md:p-8 rounded-2xl border border-[#3e4b61] shadow-xl 
@@ -241,4 +331,73 @@ const servicios = [
       });
     });
   });
+
+   // Sin canvas y sin librería de animación externa: solo transiciones CSS
+  // (clases de Tailwind) activadas por JS.
+  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ 
+  // Entrada del bloque de texto
+  const panelContenido = document.getElementById('panel-contenido');
+  requestAnimationFrame(() => {
+    setTimeout(
+      () => {
+        panelContenido?.classList.remove('opacity-0', 'translate-y-4');
+      },
+      prefiereMenosMovimiento ? 0 : 150,
+    );
+  });
+ 
+  // Carrusel de servicios: crossfade con clases de Tailwind, autoplay + control por puntos.
+  const slidesEls = Array.from(document.querySelectorAll<HTMLElement>('.slide'));
+  const puntosEls = Array.from(document.querySelectorAll<HTMLButtonElement>('.punto'));
+  let indiceActual = 0;
+  let temporizador: ReturnType<typeof setInterval> | null = null;
+ 
+  function mostrarSlide(indice: number) {
+    if (indice === indiceActual) return;
+ 
+    const anterior = slidesEls[indiceActual];
+    const siguiente = slidesEls[indice];
+ 
+    anterior.classList.add('opacity-0', 'pointer-events-none');
+    siguiente.classList.remove('opacity-0', 'pointer-events-none');
+ 
+    puntosEls[indiceActual]?.setAttribute('data-activo', 'false');
+    puntosEls[indiceActual]?.setAttribute('aria-selected', 'false');
+    puntosEls[indice]?.setAttribute('data-activo', 'true');
+    puntosEls[indice]?.setAttribute('aria-selected', 'true');
+ 
+    indiceActual = indice;
+  }
+ 
+  function siguienteSlide() {
+    mostrarSlide((indiceActual + 1) % slidesEls.length);
+  }
+ 
+  function iniciarAutoplay() {
+    if (prefiereMenosMovimiento) return;
+    temporizador = setInterval(siguienteSlide, 5000);
+  }
+ 
+  function detenerAutoplay() {
+    if (temporizador) clearInterval(temporizador);
+  }
+ 
+  if (slidesEls.length) {
+    slidesEls[0].classList.remove('opacity-0', 'pointer-events-none');
+ 
+    puntosEls.forEach((boton, i) => {
+      boton.addEventListener('click', () => {
+        detenerAutoplay();
+        mostrarSlide(i);
+        iniciarAutoplay();
+      });
+    });
+ 
+    const panelCarrusel = document.querySelector('.carrusel')?.parentElement;
+    panelCarrusel?.addEventListener('mouseenter', detenerAutoplay);
+    panelCarrusel?.addEventListener('mouseleave', iniciarAutoplay);
+ 
+    iniciarAutoplay();
+  }
 </script>

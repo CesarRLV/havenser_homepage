@@ -1,0 +1,159 @@
+---
+// src/components/PruebaSocial.astro
+// Sección de prueba social: métricas, empresas, forma de trabajo y testimonios.
+//
+// >>> TODO CONTENIDO ES PLACEHOLDER <<<
+// Sustituye cifras, nombres de empresa y testimonios por información real y
+// verificable antes de publicar. No publiques testimonios o logos que no
+// tengas autorización de usar.
+
+const metricas = [
+  { valor: "+40", etiqueta: "Proyectos técnicos entregados" },
+  { valor: "8", etiqueta: "Áreas de especialidad" },
+  { valor: "100%", etiqueta: "Proyectos con acompañamiento posterior" },
+  { valor: "15+", etiqueta: "Años de experiencia combinada del equipo" },
+];
+
+const pasos = [
+  {
+    n: "01",
+    titulo: "Diagnóstico",
+    desc: "Mapeamos tu operación, identificamos los cuellos de botella y definimos qué se puede resolver con tecnología y qué no.",
+  },
+  {
+    n: "02",
+    titulo: "Diseño de la solución",
+    desc: "Proponemos una arquitectura concreta con alcance, tiempos y criterios de éxito medibles antes de escribir una línea de código.",
+  },
+  {
+    n: "03",
+    titulo: "Implementación",
+    desc: "Construimos en iteraciones cortas, con entregas revisables y tu equipo involucrado en cada avance.",
+  },
+  {
+    n: "04",
+    titulo: "Acompañamiento",
+    desc: "Damos seguimiento técnico continuo y transferimos el conocimiento para que la solución evolucione con tu negocio.",
+  },
+];
+
+// Placeholder — reemplazar por testimonios reales (con nombre, cargo y empresa).
+const testimonios = [
+  {
+    texto: "[ Testimonio de cliente pendiente. Describe brevemente el problema que tenían, qué implementó Havenser y el resultado medible que obtuvieron. ]",
+    autor: "Nombre del contacto",
+    cargo: "Cargo · Empresa",
+  },
+  {
+    texto: "[ Testimonio de cliente pendiente. Idealmente incluye una cifra: tiempo ahorrado, errores reducidos, procesos automatizados. ]",
+    autor: "Nombre del contacto",
+    cargo: "Cargo · Empresa",
+  },
+];
+---
+
+<section id="resultados" class="bg-[#10192d] text-[#e6e6f0] py-20 md:py-24 relative z-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
+    <!-- Encabezado -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-[0.18em] mb-4" style="font-family: Calibri, sans-serif;">
+        Por qué elegirnos
+      </p>
+      <h2 class="text-3xl md:text-5xl font-bold mb-5" style="font-family: Georgia, serif;">
+        Resultados que respaldan cada proyecto
+      </h2>
+      <p class="text-lg text-[#e6e6f0]/80 leading-relaxed" style="font-family: Calibri, sans-serif;">
+        No entregamos demos ni presentaciones. Entregamos sistemas que tu equipo
+        usa todos los días y que siguen funcionando después de que nos vamos.
+      </p>
+    </div>
+
+    <!-- Métricas -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+      {metricas.map((m) => (
+        <div class="bg-[#152036] border border-[#3e4b61] rounded-2xl p-8 text-center">
+          <div class="text-4xl md:text-5xl font-bold text-[#c9a126] mb-3" style="font-family: Georgia, serif;">
+            {m.valor}
+          </div>
+          <p class="text-sm md:text-base text-[#e6e6f0]/75 leading-snug" style="font-family: Calibri, sans-serif;">
+            {m.etiqueta}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Empresas -->
+    <div class="mb-20">
+      <p class="text-center text-[#8d94a1] text-sm uppercase tracking-[0.18em] mb-8" style="font-family: Calibri, sans-serif;">
+        Empresas que confían en nosotros
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        {Array.from({ length: 5 }).map(() => (
+          <div class="h-20 rounded-xl border border-dashed border-[#3e4b61] bg-[#152036]/50 flex items-center justify-center">
+            <span class="text-[#6e7b90]/60 text-xs font-bold uppercase tracking-widest" style="font-family: Calibri, sans-serif;">
+              Logo cliente
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Cómo trabajamos -->
+    <div class="mb-20">
+      <h3 class="text-2xl md:text-3xl font-bold text-center mb-12" style="font-family: Georgia, serif;">
+        Cómo trabajamos
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {pasos.map((p) => (
+          <div class="bg-[#152036] border border-[#3e4b61] rounded-2xl p-7 h-full hover:border-[#c9a126]/50 transition-colors duration-300">
+            <div class="text-[#c9a126]/60 text-2xl font-bold mb-4" style="font-family: Georgia, serif;">
+              {p.n}
+            </div>
+            <h4 class="text-lg font-bold text-[#e6e6f0] mb-3" style="font-family: Georgia, serif;">
+              {p.titulo}
+            </h4>
+            <p class="text-sm text-[#e6e6f0]/70 leading-relaxed" style="font-family: Calibri, sans-serif;">
+              {p.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Testimonios -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+      {testimonios.map((t) => (
+        <figure class="bg-[#152036] border border-[#3e4b61] rounded-2xl p-8 flex flex-col">
+          <div class="text-[#c9a126] text-5xl leading-none mb-4" style="font-family: Georgia, serif;">&ldquo;</div>
+          <blockquote class="text-[#e6e6f0]/85 text-lg leading-relaxed grow" style="font-family: Calibri, sans-serif;">
+            {t.texto}
+          </blockquote>
+          <figcaption class="mt-6 pt-6 border-t border-[#3e4b61]/50">
+            <div class="font-bold text-[#e6e6f0]" style="font-family: Georgia, serif;">{t.autor}</div>
+            <div class="text-sm text-[#8d94a1]" style="font-family: Calibri, sans-serif;">{t.cargo}</div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-br from-[#152036] to-[#10192d] border border-[#3e4b61] rounded-2xl p-10 md:p-14 text-center">
+      <h3 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: Georgia, serif;">
+        ¿Tienes un desafío técnico que nadie ha podido resolver?
+      </h3>
+      <p class="text-[#e6e6f0]/80 text-lg mb-8 max-w-2xl mx-auto" style="font-family: Calibri, sans-serif;">
+        Agenda una consultoría sin costo. Revisamos tu caso y te decimos con
+        honestidad si podemos ayudarte y cómo.
+      </p>
+      <a
+        href="#contacto"
+        class="inline-flex items-center justify-center bg-[#c9a126] text-[#10192d] font-bold px-9 py-4 rounded-xl hover:bg-[#e0b62c] hover:-translate-y-0.5 transition-all duration-300 shadow-lg"
+        style="font-family: Calibri, sans-serif; letter-spacing: 0.3px;"
+      >
+        Agenda tu consultoría
+      </a>
+    </div>
+
+  </div>
+</section>
