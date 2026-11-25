@@ -1,0 +1,254 @@
+---
+// DoctoralExpertiseViz.astro
+// Componente de visualización SVG modular (Sin texto, 100% embeddable)
+---
+
+<div class="expertise-viz-wrapper">
+  <svg class="expertise-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Filtro de resplandor unificado -->
+      <filter id="glow-expertise" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+
+    <!-- CONEXIONES (Flujos de conocimiento) -->
+    <g class="knowledge-paths" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5" fill="none">
+      <path class="path-math" d="M150,150 L300,300" />
+      <path class="path-chem" d="M450,150 L300,300" />
+      <path class="path-auto" d="M150,450 L300,300" />
+      <path class="path-sys" d="M450,450 L300,300" />
+    </g>
+
+    <!-- NODOS INTERDISCIPLINARIOS -->
+    <g class="expert-nodes">
+      
+      <!-- 1. Matemáticas (Arriba Izquierda) - Geometría Sagrada / Fractales -->
+      <g class="node math-node" transform="translate(150, 150)">
+        <circle r="35" fill="#0f172a" stroke="#00d2ff" stroke-width="1.5" stroke-dasharray="4 4" class="orbit-math"/>
+        <g class="math-geometry" stroke="#00d2ff" stroke-width="2" fill="none" filter="url(#glow-expertise)">
+          <polygon points="0,-15 13,7 -13,7" />
+          <polygon points="0,15 13,-7 -13,-7" />
+        </g>
+      </g>
+
+      <!-- 2. Química (Arriba Derecha) - Enlaces Moleculares -->
+      <g class="node chem-node" transform="translate(450, 150)">
+        <circle r="35" fill="#0f172a" stroke="#00ff88" stroke-width="1.5" opacity="0.3"/>
+        <g class="chem-molecule" stroke="#00ff88" stroke-width="2" filter="url(#glow-expertise)">
+          <line x1="0" y1="0" x2="-15" y2="-15" />
+          <line x1="0" y1="0" x2="15" y2="-5" />
+          <line x1="0" y1="0" x2="0" y2="18" />
+          <circle cx="-15" cy="-15" r="4" fill="#0f172a" />
+          <circle cx="15" cy="-5" r="5" fill="#0f172a" />
+          <circle cx="0" cy="18" r="6" fill="#0f172a" />
+          <circle cx="0" cy="0" r="3" fill="#00ff88" />
+        </g>
+      </g>
+
+      <!-- 3. Ingeniería Automotriz (Abajo Izquierda) - Engranaje / Turbina -->
+      <g class="node auto-node" transform="translate(150, 450)">
+        <circle r="35" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5" opacity="0.3"/>
+        <g class="auto-gear" stroke="#f59e0b" stroke-width="2" fill="none" filter="url(#glow-expertise)">
+          <circle r="12" />
+          <path d="M0,-12 L0,-18 M10.4,-6 L15.6,-9 M10.4,6 L15.6,9 M0,12 L0,18 M-10.4,6 L-15.6,9 M-10.4,-6 L-15.6,-9" />
+          <circle r="4" fill="#f59e0b" />
+        </g>
+      </g>
+
+      <!-- 4. Sistemas (Abajo Derecha) - Microchip / Red -->
+      <g class="node sys-node" transform="translate(450, 450)">
+        <circle r="35" fill="#0f172a" stroke="#b14fff" stroke-width="1.5" opacity="0.3"/>
+        <g class="sys-chip" stroke="#b14fff" stroke-width="2" fill="none" filter="url(#glow-expertise)">
+          <rect x="-12" y="-12" width="24" height="24" rx="2" />
+          <line x1="-12" y1="-6" x2="-18" y2="-6" />
+          <line x1="-12" y1="6" x2="-18" y2="6" />
+          <line x1="12" y1="-6" x2="18" y2="-6" />
+          <line x1="12" y1="6" x2="18" y2="6" />
+          <line x1="-6" y1="-12" x2="-6" y2="-18" />
+          <line x1="6" y1="-12" x2="6" y2="-18" />
+          <line x1="-6" y1="12" x2="-6" y2="18" />
+          <line x1="6" y1="12" x2="6" y2="18" />
+          <circle cx="0" cy="0" r="2" fill="#b14fff" />
+        </g>
+      </g>
+    </g>
+
+    <!-- PAQUETES DE DATOS (Conocimiento viajando al núcleo) -->
+    <circle class="packet pkt-math" r="4" fill="#00d2ff" filter="url(#glow-expertise)" />
+    <circle class="packet pkt-chem" r="4" fill="#00ff88" filter="url(#glow-expertise)" />
+    <circle class="packet pkt-auto" r="4" fill="#f59e0b" filter="url(#glow-expertise)" />
+    <circle class="packet pkt-sys" r="4" fill="#b14fff" filter="url(#glow-expertise)" />
+
+    <!-- NÚCLEO CENTRAL (Modelos de Negocio y Soluciones) -->
+    <g class="solution-core" transform="translate(300, 300)">
+      <!-- Ondas expansivas de la solución -->
+      <circle class="core-wave" r="50" fill="none" stroke="#ffffff" stroke-width="1" opacity="0" />
+      <circle class="core-wave-2" r="50" fill="none" stroke="#00d2ff" stroke-width="1" opacity="0" />
+      
+      <!-- Cristal geométrico (Estructura de datos) -->
+      <polygon class="core-hexagon" points="0,-45 39,-22.5 39,22.5 0,45 -39,22.5 -39,-22.5" fill="rgba(15, 23, 42, 0.8)" stroke="#ffffff" stroke-width="2" filter="url(#glow-expertise)" />
+      
+      <!-- Conexiones internas del modelo -->
+      <g class="core-inner-lines" stroke="rgba(255,255,255,0.4)" stroke-width="1">
+        <line x1="0" y1="-45" x2="0" y2="0" />
+        <line x1="39" y1="-22.5" x2="0" y2="0" />
+        <line x1="39" y1="22.5" x2="0" y2="0" />
+        <line x1="0" y1="45" x2="0" y2="0" />
+        <line x1="-39" y1="22.5" x2="0" y2="0" />
+        <line x1="-39" y1="-22.5" x2="0" y2="0" />
+      </g>
+
+      <!-- Centro pulsante -->
+      <circle class="core-center" r="8" fill="#ffffff" filter="url(#glow-expertise)" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .expertise-viz-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    pointer-events: none; /* Permite que los clicks pasen a través si se superpone a otro contenido */
+  }
+
+  .expertise-svg {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    overflow: visible;
+  }
+</style>
+
+<script>
+  import { animate, createMotionPath, createTimeline, random } from 'animejs';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Buscar todos los componentes renderizados para aislar animaciones
+    const svgs = document.querySelectorAll('.expertise-svg');
+
+    svgs.forEach((svg) => {
+      
+      // 1. Animaciones constantes de los 4 Nodos (Disciplinas)
+      // Matemáticas: Estrella rotando
+      animate(svg.querySelector<SVGElement>('.math-geometry')!, {
+        rotate: '1turn',
+        ease: 'linear',
+        duration: 10000,
+        loop: true,
+        transformOrigin: '0px 0px'
+      });
+      // Matemáticas: Órbita externa rotando invertida
+      animate(svg.querySelector<SVGElement>('.orbit-math')!, {
+        rotate: '-1turn',
+        ease: 'linear',
+        duration: 15000,
+        loop: true,
+        transformOrigin: '0px 0px'
+      });
+
+      // Química: Molécula flotando levemente
+      animate(svg.querySelector<SVGElement>('.chem-molecule')!, {
+        translateY: [-3, 3],
+        rotate: [-5, 5],
+        ease: 'inOutSine',
+        duration: 2500,
+        direction: 'alternate',
+        loop: true,
+        transformOrigin: '0px 0px'
+      });
+
+      // Automotriz: Engranaje girando
+      animate(svg.querySelector<SVGElement>('.auto-gear')!, {
+        rotate: '1turn',
+        ease: 'linear',
+        duration: 6000,
+        loop: true,
+        transformOrigin: '0px 0px'
+      });
+
+      // Sistemas: Pulsación del chip
+      animate(svg.querySelector<SVGElement>('.sys-chip')!, {
+        scale: [0.95, 1.05],
+        opacity: [0.7, 1],
+        ease: 'inOutSine',
+        duration: 1500,
+        direction: 'alternate',
+        loop: true,
+        transformOrigin: '0px 0px'
+      });
+
+      // 2. Flujo de conocimiento (Paquetes viajando al centro)
+      const dataPaths = [
+        { path: '.path-math', packet: '.pkt-math', duration: 2500 },
+        { path: '.path-chem', packet: '.pkt-chem', duration: 3200 },
+        { path: '.path-auto', packet: '.pkt-auto', duration: 2800 },
+        { path: '.path-sys', packet: '.pkt-sys', duration: 3000 }
+      ];
+
+      dataPaths.forEach((config) => {
+        const pathEl = svg.querySelector(config.path);
+        const packetEl = svg.querySelector(config.packet);
+        
+        if (pathEl && packetEl) {
+          const path = createMotionPath(pathEl);
+          animate(packetEl, {
+            ...path,
+            ease: 'linear',
+            duration: config.duration,
+            loop: true,
+            // Pequeña pausa antes de enviar el siguiente "paquete de conocimiento"
+            delay: random(0, 1500) 
+          });
+        }
+      });
+
+      // 3. Animación del Núcleo (Procesando modelos de negocio)
+      // Rotación muy lenta del cristal central
+      animate(svg.querySelector<SVGElement>('.core-hexagon')!, {
+        rotate: '1turn',
+        ease: 'linear',
+        duration: 30000,
+        loop: true,
+        transformOrigin: '0px 0px'
+      });
+
+      // Latido del centro del núcleo
+      animate(svg.querySelector<SVGElement>('.core-center')!, {
+        scale: [0.8, 1.4],
+        opacity: [0.8, 1],
+        ease: 'inOutSine',
+        duration: 1000,
+        direction: 'alternate',
+        loop: true
+      });
+
+      // 4. Ondas expansivas de "Desafíos Resueltos"
+      const tlWaves = createTimeline({
+        loop: true,
+        defaults: {
+          ease: 'outExpo'
+        }
+      });
+
+      tlWaves
+        .add(svg.querySelector<SVGElement>('.core-wave')!, {
+          r: [40, 100],
+          opacity: [0.6, 0],
+          strokeWidth: [2, 0],
+          duration: 2000
+        })
+        .add(svg.querySelector<SVGElement>('.core-wave-2')!, {
+          r: [40, 120],
+          opacity: [0.4, 0],
+          strokeWidth: [2, 0],
+          duration: 2500
+        }, '-=1500'); // Solapa las animaciones para un efecto continuo
+    });
+  });
+</script>

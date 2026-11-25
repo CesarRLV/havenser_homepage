@@ -1,0 +1,124 @@
+---
+// src/components/Nosotros.astro
+import '../styles/global.css';
+// Arreglo con la información de los 6 socios de Havenser
+const teamMembers = [
+    {
+        name: "Socio Fundador",
+        role: "Redes, IoT & Cloud Computing",
+        description:
+            "Licenciada en ciencias computacionales. Especialista en arquitecturas de nube, sistemas abiertos y despliegue de soluciones IoT.",
+    },
+    {
+        name: "Socio Fundador",
+        role: "Ingeniería de Datos",
+        description:
+            "Maestro en matemáticas y física. Experto en el procesamiento, limpieza y análisis masivo de datos.",
+    },
+    {
+        name: "Socio Fundador",
+        role: "Ciencias Exactas & Análisis",
+        description:
+            "Doctor en bioquímica. Aporta un rigor científico excepcional en modelado matemático y resolución de problemas complejos.",
+    },
+    {
+        name: "Socia Fundadora",
+        role: "Inteligencia Artificial",
+        description:
+            "Ingeniera especialista en IA. Diseña e implementa modelos de machine learning, deep learning y automatización avanzada.",
+    },
+    {
+        name: "Socia Fundadora",
+        role: "Ingeniería Automotriz",
+        description:
+            "Ingeniera experta en procesos industriales, mecánica y optimización estratégica de la cadena de suministro.",
+    },
+    {
+        name: "Socio Fundador",
+        role: "Cloud & Sistemas Críticos",
+        description:
+            "Egresado en ciencias computacionales. Especialista en soporte transaccional y despliegue de arquitecturas en AWS.",
+    },
+];
+---
+
+<section id="nosotros" class="py-20 px-6 bg-[#111b2c] text-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2
+                class="text-4xl md:text-5xl font-bold mb-4"
+                style="font-family: Georgia, serif;"
+            >
+                Havenser
+            </h2>
+            <p
+                class="text-xl md:text-2xl text-blue-400 mb-6 italic"
+                style="font-family: Georgia, serif;"
+            >
+                "Ingeniería de vanguardia, eficiencia absoluta."
+            </p>
+            <p
+                class="text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed"
+                style="font-family: Calibri, sans-serif;"
+            >
+                Somos una firma de consultoría tecnológica que transforma la
+                complejidad en soluciones ágiles y precisas. Nuestro equipo
+                multidisciplinario combina la ciencia de datos, inteligencia
+                artificial, desarrollo cloud y ciencias exactas para diseñar
+                arquitecturas corporativas que optimizan el presente y programan
+                tu futuro.
+            </p>
+        </div>
+
+        <div class="text-center mb-12">
+            <h3
+                class="text-3xl font-semibold mb-3"
+                style="font-family: Georgia, serif;"
+            >
+                Nuestros Socios
+            </h3>
+            <div
+                class="w-24 h-1 bg-gradient-to-r from-blue-500 to-green-400 mx-auto rounded"
+            >
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {
+                teamMembers.map((member) => (
+                    <div class="bg-gray-800/40 p-8 rounded-xl border border-gray-700 shadow-xl hover:border-blue-500 hover:bg-gray-800/60 transition-all duration-300 flex flex-col items-center text-center group">
+                        <div class="w-20 h-20 bg-gradient-to-tr from-gray-700 to-gray-600 rounded-full mb-5 flex items-center justify-center shadow-inner group-hover:from-blue-600 group-hover:to-green-500 transition-colors duration-300">
+                            <svg
+                                class="w-10 h-10 text-gray-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                            </svg>
+                        </div>
+
+                        <h4 class="text-xl font-bold mb-1 text-gray-100">
+                            {member.name}
+                        </h4>
+                        <h5 class="text-blue-400 font-semibold mb-4 text-sm uppercase tracking-wider">
+                            {member.role}
+                        </h5>
+                        <p
+                            class="text-gray-400 text-sm leading-relaxed"
+                            style="font-family: Calibri, sans-serif;"
+                        >
+                            {member.description}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

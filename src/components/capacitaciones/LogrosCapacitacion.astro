@@ -1,0 +1,29 @@
+---
+// src/components/LogrosCapacitacion.astro
+
+const {listado, titulo, subtitulo} = Astro.props;
+---
+
+<section class="px-20 py-16 bg-white text-[#111b2c]">
+  <div class=" mx-auto">
+    
+    <h2 class="text-3xl font-bold mb-8"></h2>
+    <h3 class="text-4xl font-black text-slate-800 mb-8 flex items-center gap-4">
+                <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                {titulo}
+            </h3>
+    
+    <div class=" h-2 bg-orange-500 mb-10"></div>
+
+    <ul class="space-y-6">
+      {listado.map((item: unknown) => (
+        <li class="flex items-start text-lg leading-relaxed" >
+          <span class="mr-3 text-orange-500 font-bold">•</span>
+          <p class="text-3xl text-slate-600 leading-relaxed font-light">{item}</p>
+        </li>
+      ))}
+    </ul>
+
+
+  </div>
+</section>

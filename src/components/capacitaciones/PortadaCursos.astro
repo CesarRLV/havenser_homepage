@@ -1,0 +1,51 @@
+---
+// src/components/PortadaCursos.astro
+---
+
+<section
+  class="h-[90vh] flex flex-col items-center justify-center bg-[#111b2c] text-white"
+>
+  <div class="relative w-32 h-32 mb-8">
+    <div
+      class="absolute inset-0 rounded-full border-4 border-blue-500 animate-pulse"
+    >
+    </div>
+    <div
+      class="absolute inset-2 rounded-full border-2 border-green-400 animate-spin-slow"
+    >
+    </div>
+    <div
+      class="w-full h-full bg-gradient-to-br from-blue-900 to-green-900 rounded-full opacity-80"
+    >
+    </div>
+  </div>
+
+  <h1 class="text-5xl text-center font-bold mb-4" style="font-family: Georgia, serif;">
+    Capacitación Especializada
+  </h1>
+  <p
+    class="max-w-2xl text-center text-gray-300 text-lg"
+    style="font-family: Calibri, sans-serif;"
+  >
+    Diseñamos programas formativos corporativos y consultoría técnica
+    personalizada de alto nivel.
+  </p>
+</section>
+
+<style>
+  h1{
+    justify-content: center;
+    align-items: center;
+  }
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  color: string;
+  titulo: string;
+  textoPostic?: string;
+  textoEsquina?: string;
+}
+
+const { titulo, color, textoPostic, textoEsquina } = Astro.props;
+---
+
+<!-- Sección 1: Reserva Fiscal -->
+<div
+    class="bg-${color}-950/20 border border-${color}-500/30 rounded-xl p-5 relative overflow-hidden"
+>
+    <div class="flex items-start gap-4">
+        <div
+            class="p-3 bg-${color}-500/10 rounded-lg text-${color}-400 border border-${color}-500/20 shrink-0"
+        >
+            <i class="fa-solid fa-shield-halved text-xl"></i>
+        </div>
+        <div class="flex-1">
+            <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1"
+            >
+                <h3
+                    class="font-bold text-${color}-200 text-base flex items-center gap-2"
+                >
+                    {titulo}
+                    <span
+                        class="text-xs font-semibold px-2 py-0.5 rounded bg-${color}-500/20 text-${color}-300 border border-${color}-500/30"
+                        >{textoPostic}</span
+                    >
+                </h3>
+                <span class="text-lg font-bold text-${color}-400"
+                    >{textoEsquina}</span
+                >
+            </div>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <slot/> 
+            </p>
+        </div>
+    </div>
+</div>
