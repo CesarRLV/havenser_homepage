@@ -1,0 +1,25 @@
+---
+// src/pages/cursos/[id].astro
+//
+// Genera una página estática real por cada curso del catálogo (Astro
+// `getStaticPaths`). Para agregar/quitar un curso de aquí, edita
+// src/data/cursos.ts — esta página no necesita cambios.
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+import PlantillaCurso from "../../components/cursos/PlantillaCurso.astro";
+import { CURSOS } from "../../data/cursos";
+
+export function getStaticPaths() {
+  return CURSOS.map((curso) => ({
+    params: { id: String(curso.id) },
+    props: { curso },
+  }));
+}
+
+const { curso } = Astro.props;
+---
+
+<Layout title={`${curso.titulo} | Cursos Havenser`}>
+  <NavBar />
+  <PlantillaCurso curso={curso} />
+</Layout>

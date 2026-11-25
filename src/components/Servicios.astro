@@ -1,9 +1,9 @@
 ---
-import TechWave from "./animaciones/TechWave.astro";
 import PortadaImagen from "./Portadas/PortadaImagen.astro";
 
 // NOTA: estas imágenes reutilizan las que ya existen en /public.
 // Sustitúyelas por fotos propias cuando las tengas (ideal 1600x1200 o mayor).
+// Este arreglo alimenta el carrusel circular de abajo.
 const slides = [
   {
     imagen: '/software.jpeg',
@@ -31,107 +31,88 @@ const slides = [
   },
 ];
 
+// Tarjetas de servicio. `link` manda a la subpágina real del área cuando
+// existe (ver src/pages/tech/ y src/pages/ciencia/); si no hay subpágina
+// dedicada, manda a contacto.
 const servicios = [
   {
     icon: "🤖",
-    image: "/ia.jpeg", 
     title: "AI & Data Operativa",
     desc: "Transformamos flujos manuales en activos de alto rendimiento mediante IA y machine learning.",
     subs: ["RPA y Agentes autónomos", "Pipelines de Datos (ETL)", "Modelos Analíticos Predictivos & RAGs"],
-    link: "#contacto",
-    anchor: "#ia"
+    link: "/tech/data",
+    anchor: "ia",
   },
   {
     icon: "☁️",
-    image: "/web_servicios.jpeg",
     title: "Infraestructura Cloud",
     desc: "Ecosistemas distribuidos y arquitecturas escalables para operaciones transaccionales críticas.",
     subs: ["Despliegue y Desarrollo en la Nube", "Alertamiento Serverless", "Migraciones y optimizaciones"],
-    link: "#contacto",
-    anchor: ""
+    link: "/tech/dev",
+    anchor: "",
   },
   {
     icon: "💻",
-    image: "/software.jpeg",
     title: "Ingeniería de Software",
     desc: "Plataformas tecnológicas full-stack adaptadas a la lógica exacta y rentabilidad de su negocio.",
     subs: ["Desarrollo Web & Mobile", "Plataformas LMS y ERP", "Arquitectura de Bases de Datos"],
-    link: "#contacto",
-    anchor: "#ingenieria"
+    link: "/tech/dev",
+    anchor: "ingenieria",
   },
   {
     icon: "🥽",
-    image: "/ra.jpeg",
     title: "Realidad Extendida (XR)",
     desc: "Soluciones de Spatial Computing para reducir costos y riesgos mediante inmersión 3D.",
     subs: ["Entrenamiento en VR", "Guiado Industrial con AR", "Colaboración en Realidad Mixta"],
-    link: "#contacto",
+    link: "/tech/virtual",
     anchor: "ra",
   },
-  /*{
-    icon: "🧬",
-    image: "",
-    title: "I+D y Simulación",
-    desc: "Rigor científico aplicado para resolver los desafíos más complejos de la industria.",
-    subs: ["Modelado Físico-Matemático", "Biocomputación Aplicada", "Matemáticas en Ciberseguridad"],
-    link: "#contacto"
-  },*/
   {
     icon: "🔒",
-    image: "/seguridad_servicies.jpeg",
     title: "Ciberseguridad",
     desc: "Blindaje absoluto de sistemas contra ataques o fugas de información sensible.",
     subs: ["Penetration Testing", "Seguridad Cloud/On-Premise", "Marcos Normativos (Políticas)"],
-    link: "#contacto",
+    link: "/contactanos",
     anchor: "",
   },
   {
     icon: "🚚",
-    image: "/logistica.jpeg",
     title: "Logística Predictiva",
     desc: "Optimización de la cadena de suministro para erradicar cuellos de botella y costos extra.",
     subs: ["Modelos de Demanda (ML)", "Optimización de Rutas", "Simulación de Almacenes"],
-    link: "#contacto",
-    anchor: "#log"
+    link: "/ciencia/logistica",
+    anchor: "log",
   },
   {
     icon: "🧪",
-    image: "/biologia.jpeg",
     title: "Biotech y Modelado",
     desc: "Validación científica para escalar procesos químicos, médicos y agroalimentarios.",
     subs: ["Biocomputación Aplicada", "Modelos físico-matemáticos", "Consultoría en Bioseguridad y procesos químicos"],
-    link: "#contacto",
-    anchor: "#bio"
+    link: "/ciencia/biotech",
+    anchor: "bio",
   },
- /* {
-    icon: "🧠",
-    image: "",
-    title: "IA Generativa Agéntica",
-    desc: "Asistentes corporativos autónomos integrados en los flujos internos de su empresa.",
-    subs: ["Agentes Autónomos", "Implementación RAG Local", "Extracción Documental"],
-    link: "#contacto"
-  },*/
   {
     icon: "🏢",
-    image: "/iot.jpeg",
     title: "Gemelos Digitales (IoT)",
     desc: "Monitoreo en tiempo real para plantas de manufactura e infraestructura física.",
     subs: ["Integración de Sensores", "Dashboards Industriales", "Gemelos Digitales 3D"],
-    link: "#contacto"
+    link: "/ciencia/innova",
+    anchor: "",
   },
   {
     icon: "🎓",
-    image: "/capacitacion.jpeg",
     title: "Capacitación y Mentoría",
     desc: "Transferencia de competencias técnicas para convertir a su equipo en analistas estratégicos.",
-    subs: ["Academias Corporativas con cursos personalizados","Cursos online"],
-    link: "#contacto",
-    anchor: "#capacitaciones"
-  }
+    subs: ["Academias Corporativas con cursos personalizados", "Cursos online"],
+    link: "/cursos",
+    anchor: "capacitaciones",
+  },
 ];
+
+const anguloPorSlide = 360 / slides.length;
 ---
 
-<section class=" bg-[#e6e6f0] relative overflow-hidden text-[#10192d] z-10 pb-24">
+<section class="bg-[var(--bg-light)] relative overflow-hidden text-[var(--text-heading)] z-10 pb-24">
   <PortadaImagen
     alto="70vh"
     urlImagen="/banner_city.jpg"
@@ -139,265 +120,339 @@ const servicios = [
     parrafo="nuevas fronteras."
     direction="left"
   />
-  <div  id="servicios"  class="absolute inset-0 pointer-events-none z-0 overflow-hidden mt-100">
-    <div class="absolute w-150 h-150 bg-[#c9a126] opacity-[0.03] rounded-full blur-[100px] top-32 -left-32"></div>
-    <div class="absolute w-200 h-200 bg-[#6e7b90] opacity-[0.03] rounded-full blur-[100px] bottom-10 right-[-20%]"></div>
+  <div id="servicios" class="absolute inset-0 pointer-events-none z-0 overflow-hidden mt-100">
+    <div class="absolute w-150 h-150 bg-[#c9a126] opacity-[0.05] rounded-full blur-[100px] top-32 -left-32"></div>
+    <div class="absolute w-200 h-200 bg-[#3e4b61] opacity-[0.04] rounded-full blur-[100px] bottom-10 right-[-20%]"></div>
   </div>
 
-  <div class=" mx-auto px-3 lg:px-4 relative z-10 mt-15">
-    
-    <section class="w-full min-h-[50vh] grid grid-cols-1 md:grid-cols-2 bg-[#dfe0e1] font-sans">  
+  <div class="mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-24 max-w-7xl">
 
-        <!-- PANEL IZQUIERDO: texto -->
-    <div
-      class="relative flex flex-col items-center md:items-start justify-center
-            min-h-[56vh] md:min-h-screen px-6 md:px-16 py-16
-            text-center md:text-left
-            md:border-r md:border-gray-100"
-    >
-      <div id="panel-contenido" class="max-w-xl opacity-0 translate-y-4 transition-all duration-700 ease-out">
-        <h1 class="font-serif font-semibold text-4xl md:text-5xl leading-[1.12] tracking-tight text-[#152036] mb-4">
-          Portafolio de <span class="text-[#c9a126]">Soluciones</span>
-        </h1>
-  
-        <p class="text-base md:text-lg font-normal text-[#3e4b61] mb-8 max-w-md mx-auto md:mx-0">
-          Arquitecturas tecnológicas avanzadas <span class="text-[#c9a126]">diseñadas a la medida</span> para resolver la complejidad operativa y escalar su <span class="text-[#c9a126]">rentabilidad B2B</span>.
-        </p>
-  
-        <a
-          href="#contacto"
-          class="inline-flex items-center px-7 py-3 bg-[#c9a126] text-[#152036]
-                font-semibold text-sm rounded-sm
-                hover:bg-[#e0b62c] hover:-translate-y-0.5
-                transition-all duration-300"
-        >
-          Contáctanos
-        </a>
-      </div>
-    </div>
-  
-    <!-- PANEL DERECHO: carrusel de servicios -->
-    <div class="relative overflow-hidden min-h-[44vh] md:min-h-screen ">
-      <div class="carrusel relative w-full h-full">
-        {slides.map((slide, i) => (
-          <article
-            class="slide absolute inset-0 flex flex-col justify-end
-                  p-8 md:p-16 pb-20 md:pb-28
-                  bg-cover bg-center
-                  opacity-0 pointer-events-none
-                  transition-opacity duration-700 ease-in-out"
-            data-index={i}
-            style={`background-image: linear-gradient(180deg, rgba(16,25,45,0.15) 0%, rgba(16,25,45,0.82) 100%), url(${slide.imagen});`}
-          >
-            <span class="text-[#c9a126] text-sm font-semibold mb-2">{slide.etiqueta}</span>
-            <h2 class="font-serif font-semibold text-2xl md:text-3xl text-white mb-2 max-w-[22ch]">
-              {slide.titulo}
-            </h2>
-            <p class="text-white text-base leading-relaxed max-w-[42ch]">{slide.texto}</p>
-          </article>
-        ))}
-      </div>
-  
-      <div
-        class="absolute bottom-7 right-6 md:right-16 z-10 flex gap-2.5"
-        role="tablist"
-        aria-label="Seleccionar servicio"
+    <!-- ENCABEZADO -->
+    <div id="panel-contenido" class="max-w-2xl mx-auto text-center mb-16 opacity-0 translate-y-4 transition-all duration-700 ease-out">
+      <h2 class="font-serif font-semibold text-4xl md:text-5xl leading-[1.12] tracking-tight text-[#10192d] mb-4" style="font-family: Georgia, serif;">
+        Portafolio de <span class="text-[#c9a126]">Soluciones</span>
+      </h2>
+      <p class="text-base md:text-lg font-normal text-[#3e4b61] mb-8">
+        Arquitecturas tecnológicas avanzadas <span class="text-[#c9a126] font-semibold">diseñadas a la medida</span> para resolver la complejidad operativa y escalar su <span class="text-[#c9a126] font-semibold">rentabilidad B2B</span>.
+      </p>
+      <a
+        href="#contacto"
+        class="inline-flex items-center px-7 py-3 bg-[#10192d] text-white font-semibold text-sm rounded-lg hover:bg-[#1c2c47] hover:-translate-y-0.5 transition-all duration-300"
       >
-        {slides.map((slide, i) => (
-          <button
-            type="button"
-            class="punto w-6 h-[3px] bg-white/40 transition-colors duration-300 data-[activo=true]:bg-[#c9a126]"
-            data-index={i}
-            data-activo={i === 0 ? 'true' : 'false'}
-            aria-selected={i === 0 ? 'true' : 'false'}
-            role="tab"
-            aria-label={`Ver: ${slide.titulo}`}
-          />
-        ))}
+        Contáctanos
+      </a>
+    </div>
+
+    <!-- CARRUSEL CIRCULAR (glassmorphism) -->
+    <div class="orbit-carousel" role="region" aria-label="Casos de uso de Havenser">
+      <div class="orbit-stage">
+        <div class="orbit-ring" id="orbitRing">
+          {slides.map((slide, i) => (
+            <article
+              class="orbit-card"
+              data-index={i}
+              style={`--angulo:${i * anguloPorSlide}deg; background-image: linear-gradient(180deg, rgba(16,25,45,0.15) 0%, rgba(16,25,45,0.86) 100%), url(${slide.imagen});`}
+            >
+              <span class="orbit-tag">{slide.etiqueta}</span>
+              <h3 class="orbit-titulo">{slide.titulo}</h3>
+              <p class="orbit-texto">{slide.texto}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="orbit-controles">
+        <button type="button" class="orbit-flecha" id="orbitPrev" aria-label="Caso anterior">‹</button>
+        <div class="orbit-puntos" role="tablist" aria-label="Seleccionar caso">
+          {slides.map((slide, i) => (
+            <button
+              type="button"
+              class="punto"
+              data-index={i}
+              data-activo={i === 0 ? 'true' : 'false'}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              role="tab"
+              aria-label={`Ver: ${slide.titulo}`}
+            />
+          ))}
+        </div>
+        <button type="button" class="orbit-flecha" id="orbitNext" aria-label="Caso siguiente">›</button>
       </div>
     </div>
 
-  </section>
+    <!-- TARJETAS DE SERVICIO -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
+      {servicios.map((srv) => (
+        <a
+          href={srv.link}
+          id={srv.anchor || undefined}
+          class="servicio-card group bg-white/70 backdrop-blur-sm border border-[var(--border-soft)] rounded-2xl p-8 shadow-[0_10px_30px_rgba(16,25,45,0.05)] hover:shadow-[0_20px_45px_rgba(16,25,45,0.12)] hover:-translate-y-1.5 transition-all duration-500 flex flex-col h-full relative overflow-hidden"
+        >
+          <span class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#c9a126] via-[#c9a126]/40 to-transparent"></span>
 
-    <div class="my-8">
-      <TechWave/>
-    </div>
-
-    <!-- Grid Orgánico y Off-Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start pb-10 mb-2">
-      {servicios.map((srv, index) => (
-        <div class={`
-          bg-[#152036] p-6 md:p-8 rounded-2xl border border-[#3e4b61] shadow-xl 
-          transition-all duration-500 group md:hover:-translate-y-4 md:hover:shadow-[0_15px_40px_rgba(201,161,38,0.12)] md:hover:border-[#c9a126]
-          flex flex-col h-full relative overflow-hidden
-          ${index % 3 === 1 ? 'lg:mt-16' : ''} 
-          ${index % 3 === 2 ? 'lg:mt-32' : ''}
-        `}>
-          
-          <div id={srv.anchor} class="absolute inset-0 bg-linear-to-br from-[#c9a126]/5 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-
-          <!-- HEADER DE LA TARJETA (Imagen + Icono + Título + Flecha en móvil) -->
-          <div class="accordion-header cursor-pointer md:cursor-auto select-none md:select-auto w-full relative z-10">
-            
-            <!-- Espacio para la Imagen -->
-            <div class="w-full h-36 md:h-44 mb-6 bg-[#10192d] border border-[#3e4b61]/50 rounded-xl flex items-center justify-center overflow-hidden relative group-hover:border-[#c9a126]/40 transition-colors duration-300">
-              <span class="text-[#6e7b90]/50 text-xs font-bold uppercase tracking-widest text-center px-4" style="font-family: Calibri, sans-serif;">
-                [ Espacio Imagen: {srv.title} ]
-              </span>
-              <!-- Cuando tengas las imágenes, descomenta la siguiente línea: -->
-             {srv.image && <img src={srv.image} alt={srv.title} class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />} 
-            </div>
-
-            <!-- Título e Icono -->
-            <div class="flex items-center justify-between md:block">
-              <div class="flex items-center md:block gap-4">
-                
-                <h3 class="text-xl md:text-3xl font-bold text-[#e6e6f0] md:group-hover:text-[#c9a126] transition-colors duration-300" style="font-family: Georgia, serif;">
-                  {srv.title}
-                </h3>
-              </div>
-              <!-- Flecha (Solo visible en Móvil) -->
-              <div class="md:hidden text-[#c9a126] transition-transform duration-300 chevron">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-              </div>
-            </div>
+          <div class="w-14 h-14 rounded-xl bg-[#10192d] text-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+            {srv.icon}
           </div>
-          
-          <!-- CUERPO DE LA TARJETA (Acordeón oculto en móvil, siempre visible en escritorio) -->
-          <div class="accordion-body hidden opacity-0 md:flex md:opacity-100 flex-col grow mt-4 md:mt-0 transition-opacity duration-300 relative z-10">
-            <p class="text-[#e6e6f0]/90 mb-3 mt-2 md:mt-4 text-[1.05rem] leading-relaxed grow" style="font-family: Calibri, sans-serif;">
-              {srv.desc}
-            </p>
 
-            <ul class="space-y-3 mb-8 border-t border-[#3e4b61]/50 pt-6">
-              {srv.subs.map((sub) => (
-                <li class="flex items-start text-sm text-[#e6e6f0]/80 group/item" style="font-family: Calibri, sans-serif;">
-                  <svg class="w-5 h-5 text-[#6e7b90] mr-3 mt-0.5 md:group-hover/item:text-[#c9a126] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  <span class="text-sm md:text-lg md:group-hover/item:text-[#e6e6f0] transition-colors">{sub}</span>
-                </li>
-              ))}
-            </ul>
+          <h3 class="text-xl md:text-2xl font-bold text-[#10192d] mb-3" style="font-family: Georgia, serif;">
+            {srv.title}
+          </h3>
 
-            <div class="mt-auto pt-2 pb-2 md:pb-0">
-              <a href={srv.link} class="inline-flex items-center text-[#c9a126] font-bold text-sm hover:text-[#e6e6f0] transition-colors duration-300" style="font-family: Calibri, sans-serif; letter-spacing: 0.5px;">
-                Agendar Consultoría
-                <svg class="w-4 h-4 ml-2 transform md:group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-              </a>
-            </div>
+          <p class="text-[#3e4b61] mb-5 text-base leading-relaxed grow">
+            {srv.desc}
+          </p>
+
+          <ul class="space-y-2.5 mb-6">
+            {srv.subs.map((sub) => (
+              <li class="flex items-start text-sm text-[#3e4b61]">
+                <svg class="w-4 h-4 text-[#c9a126] mr-2.5 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>{sub}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-auto pt-2 flex items-center text-[#c9a126] font-bold text-sm group-hover:text-[#10192d] transition-colors duration-300" style="letter-spacing: 0.4px;">
+            Saber más
+            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
           </div>
-          
-        </div>
+        </a>
       ))}
     </div>
 
   </div>
 </section>
 
-<!-- Script Vanilla JS nativo de Astro para el Acordeón Móvil -->
-<script>
+<script define:vars={{ total: slides.length, anguloPorSlide }}>
   document.addEventListener('DOMContentLoaded', () => {
-    const headers = document.querySelectorAll('.accordion-header');
-    
-    headers.forEach(header => {
-      header.addEventListener('click', () => {
-        // Ejecutar animación de acordeón SOLO si estamos en una pantalla móvil (< 768px de Tailwind)
-        if (window.innerWidth < 768) {
-          const body = header.nextElementSibling;
-          const chevron = header.querySelector('.chevron');
+    const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-          if (!(body instanceof HTMLElement) || !(chevron instanceof HTMLElement)) return;
-          
-          if (body.classList.contains('hidden')) {
-            // Acción: Desplegar
-            body.classList.remove('hidden');
-            body.classList.add('flex');
-            // Pequeño retraso para que Tailwind procese el 'flex' antes de transicionar la opacidad
-            setTimeout(() => {
-              body.classList.remove('opacity-0');
-              body.classList.add('opacity-100');
-            }, 10);
-            chevron.classList.add('rotate-180');
-          } else {
-            // Acción: Ocultar
-            body.classList.remove('opacity-100');
-            body.classList.add('opacity-0');
-            chevron.classList.remove('rotate-180');
-            setTimeout(() => {
-              body.classList.remove('flex');
-              body.classList.add('hidden');
-            }, 300); // 300ms equivale a duration-300 de Tailwind
-          }
-        }
-      });
-    });
-  });
-
-   // Sin canvas y sin librería de animación externa: solo transiciones CSS
-  // (clases de Tailwind) activadas por JS.
-  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- 
-  // Entrada del bloque de texto
-  const panelContenido = document.getElementById('panel-contenido');
-  requestAnimationFrame(() => {
-    setTimeout(
-      () => {
+    // Entrada del bloque de texto
+    const panelContenido = document.getElementById('panel-contenido');
+    requestAnimationFrame(() => {
+      setTimeout(() => {
         panelContenido?.classList.remove('opacity-0', 'translate-y-4');
-      },
-      prefiereMenosMovimiento ? 0 : 150,
-    );
-  });
- 
-  // Carrusel de servicios: crossfade con clases de Tailwind, autoplay + control por puntos.
-  const slidesEls = Array.from(document.querySelectorAll<HTMLElement>('.slide'));
-  const puntosEls = Array.from(document.querySelectorAll<HTMLButtonElement>('.punto'));
-  let indiceActual = 0;
-  let temporizador: ReturnType<typeof setInterval> | null = null;
- 
-  function mostrarSlide(indice: number) {
-    if (indice === indiceActual) return;
- 
-    const anterior = slidesEls[indiceActual];
-    const siguiente = slidesEls[indice];
- 
-    anterior.classList.add('opacity-0', 'pointer-events-none');
-    siguiente.classList.remove('opacity-0', 'pointer-events-none');
- 
-    puntosEls[indiceActual]?.setAttribute('data-activo', 'false');
-    puntosEls[indiceActual]?.setAttribute('aria-selected', 'false');
-    puntosEls[indice]?.setAttribute('data-activo', 'true');
-    puntosEls[indice]?.setAttribute('aria-selected', 'true');
- 
-    indiceActual = indice;
-  }
- 
-  function siguienteSlide() {
-    mostrarSlide((indiceActual + 1) % slidesEls.length);
-  }
- 
-  function iniciarAutoplay() {
-    if (prefiereMenosMovimiento) return;
-    temporizador = setInterval(siguienteSlide, 5000);
-  }
- 
-  function detenerAutoplay() {
-    if (temporizador) clearInterval(temporizador);
-  }
- 
-  if (slidesEls.length) {
-    slidesEls[0].classList.remove('opacity-0', 'pointer-events-none');
- 
-    puntosEls.forEach((boton, i) => {
-      boton.addEventListener('click', () => {
-        detenerAutoplay();
-        mostrarSlide(i);
-        iniciarAutoplay();
-      });
+      }, prefiereMenosMovimiento ? 0 : 150);
     });
- 
-    const panelCarrusel = document.querySelector('.carrusel')?.parentElement;
-    panelCarrusel?.addEventListener('mouseenter', detenerAutoplay);
-    panelCarrusel?.addEventListener('mouseleave', iniciarAutoplay);
- 
+
+    // --- Carrusel circular (glassmorphism) ---
+    const stage = document.querySelector('.orbit-stage');
+    const ring = document.getElementById('orbitRing');
+    const tarjetas = Array.from(document.querySelectorAll('.orbit-card'));
+    const puntos = Array.from(document.querySelectorAll('.orbit-puntos .punto'));
+    const btnPrev = document.getElementById('orbitPrev');
+    const btnNext = document.getElementById('orbitNext');
+
+    if (!stage || !ring || tarjetas.length === 0) return;
+
+    let radio = 0;
+    let indiceActual = 0;
+    let anguloActual = 0;
+    let temporizador = null;
+
+    function calcularRadio() {
+      // El radio se deriva del ancho visible del escenario para que el
+      // anillo se vea proporcionado en cualquier tamaño de pantalla.
+      const ancho = stage.clientWidth;
+      radio = Math.max(180, Math.min(ancho * 0.62, 460));
+      tarjetas.forEach((tarjeta) => {
+        const angulo = tarjeta.style.getPropertyValue('--angulo');
+        tarjeta.style.transform = `rotateY(${angulo}) translateZ(${radio}px)`;
+      });
+    }
+
+    function aplicarRotacion() {
+      ring.style.transform = `translateZ(-${radio}px) rotateY(${-anguloActual}deg)`;
+    }
+
+    function actualizarEstadoActivo() {
+      tarjetas.forEach((tarjeta, i) => {
+        tarjeta.classList.toggle('activa', i === indiceActual);
+      });
+      puntos.forEach((punto, i) => {
+        punto.setAttribute('data-activo', i === indiceActual ? 'true' : 'false');
+        punto.setAttribute('aria-selected', i === indiceActual ? 'true' : 'false');
+      });
+    }
+
+    function irA(indice) {
+      indiceActual = ((indice % total) + total) % total;
+      anguloActual = indiceActual * anguloPorSlide;
+      aplicarRotacion();
+      actualizarEstadoActivo();
+    }
+
+    function siguiente() {
+      irA(indiceActual + 1);
+    }
+    function anterior() {
+      irA(indiceActual - 1);
+    }
+
+    function iniciarAutoplay() {
+      if (prefiereMenosMovimiento) return;
+      detenerAutoplay();
+      temporizador = setInterval(siguiente, 4500);
+    }
+    function detenerAutoplay() {
+      if (temporizador) clearInterval(temporizador);
+    }
+
+    calcularRadio();
+    irA(0);
     iniciarAutoplay();
-  }
+
+    window.addEventListener('resize', calcularRadio);
+
+    btnNext?.addEventListener('click', () => { detenerAutoplay(); siguiente(); iniciarAutoplay(); });
+    btnPrev?.addEventListener('click', () => { detenerAutoplay(); anterior(); iniciarAutoplay(); });
+
+    puntos.forEach((punto, i) => {
+      punto.addEventListener('click', () => { detenerAutoplay(); irA(i); iniciarAutoplay(); });
+    });
+    tarjetas.forEach((tarjeta, i) => {
+      tarjeta.addEventListener('click', () => { detenerAutoplay(); irA(i); iniciarAutoplay(); });
+    });
+
+    stage.addEventListener('mouseenter', detenerAutoplay);
+    stage.addEventListener('mouseleave', iniciarAutoplay);
+  });
 </script>
+
+<style>
+  .orbit-carousel {
+    position: relative;
+    padding: 0 0 2rem 0;
+  }
+
+  .orbit-stage {
+    position: relative;
+    height: 380px;
+    perspective: 1400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orbit-ring {
+    position: relative;
+    width: 1px;
+    height: 1px;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .orbit-card {
+    position: absolute;
+    top: -150px;
+    left: -155px;
+    width: 310px;
+    height: 300px;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 20px 45px rgba(16, 25, 45, 0.18);
+    backdrop-filter: blur(2px);
+    cursor: pointer;
+    opacity: 0.45;
+    filter: blur(2px) saturate(0.7);
+    transform-style: preserve-3d;
+    transition: opacity 0.6s ease, filter 0.6s ease;
+  }
+
+  .orbit-card.activa {
+    opacity: 1;
+    filter: blur(0) saturate(1);
+    box-shadow: 0 30px 60px rgba(16, 25, 45, 0.28);
+  }
+
+  .orbit-tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #c9a126;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .orbit-titulo {
+    font-family: Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+
+  .orbit-texto {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .orbit-controles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .orbit-flecha {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    color: #10192d;
+    font-size: 1.4rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .orbit-flecha:hover {
+    background: #10192d;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .orbit-puntos {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .punto {
+    width: 22px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(16, 25, 45, 0.15);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  .punto[data-activo="true"] {
+    background: #c9a126;
+  }
+
+  @media (max-width: 768px) {
+    .orbit-stage {
+      height: 300px;
+      perspective: 900px;
+    }
+    .orbit-card {
+      width: 230px;
+      height: 250px;
+      top: -125px;
+      left: -115px;
+      padding: 1.25rem;
+    }
+    .orbit-titulo {
+      font-size: 1.1rem;
+    }
+  }
+</style>

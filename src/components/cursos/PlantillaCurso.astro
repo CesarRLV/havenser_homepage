@@ -1,0 +1,145 @@
+---
+// PlantillaCurso.astro
+//
+// Componente ÚNICO y reutilizable para renderizar cualquier curso del
+// catálogo (src/data/cursos.ts). No crees una página nueva por curso: la
+// ruta dinámica src/pages/cursos/[id].astro ya usa este componente para
+// los 22 cursos publicados/en revisión.
+//
+// La prop `curso.variante` ("A" | "B" | "C", asignada automáticamente en
+// cursos.ts) controla el layout para que no todos los cursos se vean
+// idénticos aunque compartan el mismo componente:
+//   A -> imagen a la izquierda, contenido a la derecha
+//   B -> imagen a la derecha, contenido a la izquierda
+//   C -> imagen a todo lo ancho arriba, contenido debajo
+import type { Curso } from "../../data/cursos";
+import { getImagenCurso } from "../../data/cursos";
+import AvisoEnRevision from "./AvisoEnRevision.astro";
+
+interface Props {
+  curso: Curso;
+}
+
+const { curso } = Astro.props;
+const imagen = getImagenCurso(curso);
+
+const info = [
+  { etiqueta: "Nivel", valor: curso.nivel },
+  { etiqueta: "Modalidad", valor: curso.modalidades },
+  { etiqueta: "Industria sugerida", valor: curso.industria },
+  { etiqueta: "Audiencia", valor: curso.audiencia },
+];
+---
+
+<article class="curso-detalle bg-[var(--bg-light)] pt-28 pb-24">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+
+    <a href="/cursos" class="inline-flex items-center gap-2 text-sm font-semibold text-[#3e4b61] hover:text-[#c9a126] transition-colors mb-8" data-animar="fade-up">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      Volver al catálogo
+    </a>
+
+    <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-[0.18em] mb-3" data-animar="fade-up">
+      {curso.eje}
+    </p>
+
+    {curso.estatus === "en_revision" && (
+      <div class="mb-8" data-animar="fade-up">
+        <AvisoEnRevision />
+      </div>
+    )}
+
+    <div class:list={[
+      "grid grid-cols-1 gap-10 lg:gap-14 items-center mb-14",
+      curso.variante === "C" ? "" : "lg:grid-cols-2",
+    ]}>
+      {curso.variante !== "B" && (
+        <div
+          class:list={["curso-imagen", curso.variante === "C" && "order-first lg:col-span-2"]}
+          data-animar={curso.variante === "C" ? "fade-up" : "fade-right"}
+        >
+          <img src={imagen} alt={curso.titulo} class:list={["rounded-2xl shadow-xl object-cover w-full", curso.variante === "C" ? "h-64 md:h-96" : "h-72 md:h-[420px]"]} />
+        </div>
+      )}
+
+      <div data-animar={curso.variante === "B" ? "fade-left" : "fade-up"}>
+        <h1 class="text-3xl md:text-5xl font-bold text-[#10192d] mb-5 leading-tight" style="font-family: Georgia, serif;">
+          {curso.titulo}
+        </h1>
+        <p class="text-lg text-[#3e4b61] leading-relaxed mb-8">
+          {curso.descripcion}
+        </p>
+        <a
+          href="/contactanos"
+          class="inline-flex items-center justify-center bg-[#10192d] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#1c2c47] hover:-translate-y-0.5 transition-all duration-300"
+        >
+          Me interesa este curso
+        </a>
+      </div>
+
+      {curso.variante === "B" && (
+        <div class="curso-imagen lg:order-last" data-animar="fade-left">
+          <img src={imagen} alt={curso.titulo} class="rounded-2xl shadow-xl object-cover w-full h-72 md:h-[420px]" />
+        </div>
+      )}
+    </div>
+
+    <!-- Ficha técnica -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14" data-animar="fade-up">
+      {info.map((item) => (
+        <div class="bg-white border border-[var(--border-soft)] rounded-xl p-5">
+          <p class="text-xs uppercase tracking-wide text-[#8d94a1] font-semibold mb-1">{item.etiqueta}</p>
+          <p class="text-sm md:text-base font-semibold text-[#10192d]">{item.valor}</p>
+        </div>
+      ))}
+    </div>
+
+    {curso.valorDiferenciador && (
+      <div class="bg-gradient-to-br from-[#152036] to-[#10192d] rounded-2xl p-8 md:p-10 mb-14" data-animar="fade-up">
+        <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-wide mb-3">Qué lo hace diferente</p>
+        <p class="text-white text-xl md:text-2xl leading-relaxed" style="font-family: Georgia, serif;">
+          {curso.valorDiferenciador}
+        </p>
+      </div>
+    )}
+
+    <div class="text-center bg-white border border-[var(--border-soft)] rounded-2xl p-10 md:p-14" data-animar="fade-up">
+      <h3 class="text-2xl md:text-3xl font-bold text-[#10192d] mb-4" style="font-family: Georgia, serif;">
+        ¿Este curso es para tu equipo?
+      </h3>
+      <p class="text-[#3e4b61] text-lg mb-8 max-w-xl mx-auto">
+        Cuéntanos el tamaño de tu grupo y tus tiempos. Te respondemos con una propuesta a la medida.
+      </p>
+      <a
+        href="/contactanos"
+        class="inline-flex items-center justify-center bg-[#c9a126] text-[#10192d] font-bold px-9 py-4 rounded-xl hover:bg-[#e0b62c] hover:-translate-y-0.5 transition-all duration-300 shadow-lg"
+      >
+        Solicitar información
+      </a>
+    </div>
+
+  </div>
+</article>
+
+<script>
+  import { animate, inView } from 'motion';
+
+  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const efectos: Record<string, [Record<string, any>, Record<string, any>]> = {
+    'fade-up': [{ opacity: 0, y: 24 }, { opacity: 1, y: 0 }],
+    'fade-left': [{ opacity: 0, x: 24 }, { opacity: 1, x: 0 }],
+    'fade-right': [{ opacity: 0, x: -24 }, { opacity: 1, x: 0 }],
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-animar]').forEach((el) => {
+    const tipo = el.dataset.animar || 'fade-up';
+    const [desde, hasta] = efectos[tipo] || efectos['fade-up'];
+
+    if (prefiereMenosMovimiento) return;
+
+    Object.assign(el.style, { opacity: '0' });
+    inView(el, () => {
+      animate(el, { ...desde, ...hasta }, { duration: 0.6, easing: [0.22, 1, 0.36, 1] });
+    }, { margin: '-10% 0px -10% 0px' });
+  });
+</script>

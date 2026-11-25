@@ -1,17 +1,33 @@
 ---
 // src/components/PruebaSocial.astro
-// Sección de prueba social: métricas, empresas, forma de trabajo y testimonios.
+// Antes se llamaba "Resultados que respaldan cada proyecto" y mostraba
+// métricas, logos de clientes y testimonios inventados. Se quitó todo eso
+// a propósito: Havenser es una empresa de reciente creación y presentar
+// cifras/clientes/testimonios falsos sería deshonesto. Lo único que se
+// conserva es "Cómo trabajamos" (proceso real de la consultora) y se
+// agrega un bloque de diferenciadores reales, tomados directamente del
+// brief de marca (equipo interdisciplinario, nivel doctoral, rigor
+// científico) — cosas que sí son ciertas hoy, sin necesidad de historial.
 //
-// >>> TODO CONTENIDO ES PLACEHOLDER <<<
-// Sustituye cifras, nombres de empresa y testimonios por información real y
-// verificable antes de publicar. No publiques testimonios o logos que no
-// tengas autorización de usar.
+// Cuando existan casos de éxito reales y autorizados, este es el lugar
+// para volver a agregar métricas/testimonios verificables.
 
-const metricas = [
-  { valor: "+40", etiqueta: "Proyectos técnicos entregados" },
-  { valor: "8", etiqueta: "Áreas de especialidad" },
-  { valor: "100%", etiqueta: "Proyectos con acompañamiento posterior" },
-  { valor: "15+", etiqueta: "Años de experiencia combinada del equipo" },
+const diferenciadores = [
+  {
+    icon: "🎓",
+    titulo: "Conocimiento de nivel doctoral",
+    desc: "Nuestro equipo interdisciplinario combina matemáticas, química, ingeniería automotriz y sistemas para diseñar soluciones que van más allá de lo genérico.",
+  },
+  {
+    icon: "🧬",
+    titulo: "Rigor científico, no solo código",
+    desc: "Cada arquitectura y modelo predictivo se sustenta en metodología validada, no en prueba y error sobre el sistema del cliente.",
+  },
+  {
+    icon: "🤝",
+    titulo: "Acompañamiento después del lanzamiento",
+    desc: "No entregamos un proyecto y desaparecemos: damos seguimiento técnico para que la solución evolucione con tu operación.",
+  },
 ];
 
 const pasos = [
@@ -36,23 +52,9 @@ const pasos = [
     desc: "Damos seguimiento técnico continuo y transferimos el conocimiento para que la solución evolucione con tu negocio.",
   },
 ];
-
-// Placeholder — reemplazar por testimonios reales (con nombre, cargo y empresa).
-const testimonios = [
-  {
-    texto: "[ Testimonio de cliente pendiente. Describe brevemente el problema que tenían, qué implementó Havenser y el resultado medible que obtuvieron. ]",
-    autor: "Nombre del contacto",
-    cargo: "Cargo · Empresa",
-  },
-  {
-    texto: "[ Testimonio de cliente pendiente. Idealmente incluye una cifra: tiempo ahorrado, errores reducidos, procesos automatizados. ]",
-    autor: "Nombre del contacto",
-    cargo: "Cargo · Empresa",
-  },
-];
 ---
 
-<section id="resultados" class="bg-[#10192d] text-[#e6e6f0] py-20 md:py-24 relative z-10">
+<section id="como-trabajamos" class="bg-[var(--bg-light)] text-[var(--text-heading)] py-20 md:py-24 relative z-10">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
 
     <!-- Encabezado -->
@@ -60,60 +62,47 @@ const testimonios = [
       <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-[0.18em] mb-4" style="font-family: Calibri, sans-serif;">
         Por qué elegirnos
       </p>
-      <h2 class="text-3xl md:text-5xl font-bold mb-5" style="font-family: Georgia, serif;">
-        Resultados que respaldan cada proyecto
+      <h2 class="text-3xl md:text-5xl font-bold mb-5 text-[#10192d]" style="font-family: Georgia, serif;">
+        Ciencia, ingeniería y acompañamiento real
       </h2>
-      <p class="text-lg text-[#e6e6f0]/80 leading-relaxed" style="font-family: Calibri, sans-serif;">
-        No entregamos demos ni presentaciones. Entregamos sistemas que tu equipo
-        usa todos los días y que siguen funcionando después de que nos vamos.
+      <p class="text-lg text-[#3e4b61] leading-relaxed" style="font-family: Calibri, sans-serif;">
+        No entregamos demos ni presentaciones. Diseñamos sistemas que tu equipo
+        usa todos los días y que seguimos acompañando después de que se lanzan.
       </p>
     </div>
 
-    <!-- Métricas -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-      {metricas.map((m) => (
-        <div class="bg-[#152036] border border-[#3e4b61] rounded-2xl p-8 text-center">
-          <div class="text-4xl md:text-5xl font-bold text-[#c9a126] mb-3" style="font-family: Georgia, serif;">
-            {m.valor}
+    <!-- Diferenciadores -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+      {diferenciadores.map((d) => (
+        <div class="bg-white border border-[var(--border-soft)] rounded-2xl p-8 text-center shadow-[0_10px_30px_rgba(16,25,45,0.05)] hover:shadow-[0_20px_40px_rgba(201,161,38,0.1)] hover:-translate-y-1 transition-all duration-300">
+          <div class="w-14 h-14 mx-auto mb-5 rounded-full bg-[#10192d] flex items-center justify-center text-2xl">
+            {d.icon}
           </div>
-          <p class="text-sm md:text-base text-[#e6e6f0]/75 leading-snug" style="font-family: Calibri, sans-serif;">
-            {m.etiqueta}
+          <h3 class="text-lg font-bold text-[#10192d] mb-3" style="font-family: Georgia, serif;">
+            {d.titulo}
+          </h3>
+          <p class="text-sm text-[#3e4b61] leading-relaxed" style="font-family: Calibri, sans-serif;">
+            {d.desc}
           </p>
         </div>
       ))}
     </div>
 
-    <!-- Empresas -->
-    <div class="mb-20">
-      <p class="text-center text-[#8d94a1] text-sm uppercase tracking-[0.18em] mb-8" style="font-family: Calibri, sans-serif;">
-        Empresas que confían en nosotros
-      </p>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        {Array.from({ length: 5 }).map(() => (
-          <div class="h-20 rounded-xl border border-dashed border-[#3e4b61] bg-[#152036]/50 flex items-center justify-center">
-            <span class="text-[#6e7b90]/60 text-xs font-bold uppercase tracking-widest" style="font-family: Calibri, sans-serif;">
-              Logo cliente
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-
     <!-- Cómo trabajamos -->
     <div class="mb-20">
-      <h3 class="text-2xl md:text-3xl font-bold text-center mb-12" style="font-family: Georgia, serif;">
+      <h3 class="text-2xl md:text-3xl font-bold text-center mb-12 text-[#10192d]" style="font-family: Georgia, serif;">
         Cómo trabajamos
       </h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {pasos.map((p) => (
-          <div class="bg-[#152036] border border-[#3e4b61] rounded-2xl p-7 h-full hover:border-[#c9a126]/50 transition-colors duration-300">
-            <div class="text-[#c9a126]/60 text-2xl font-bold mb-4" style="font-family: Georgia, serif;">
+          <div class="bg-white border border-[var(--border-soft)] rounded-2xl p-7 h-full hover:border-[#c9a126]/60 shadow-[0_10px_30px_rgba(16,25,45,0.05)] transition-colors duration-300">
+            <div class="text-[#c9a126] text-2xl font-bold mb-4" style="font-family: Georgia, serif;">
               {p.n}
             </div>
-            <h4 class="text-lg font-bold text-[#e6e6f0] mb-3" style="font-family: Georgia, serif;">
+            <h4 class="text-lg font-bold text-[#10192d] mb-3" style="font-family: Georgia, serif;">
               {p.titulo}
             </h4>
-            <p class="text-sm text-[#e6e6f0]/70 leading-relaxed" style="font-family: Calibri, sans-serif;">
+            <p class="text-sm text-[#3e4b61] leading-relaxed" style="font-family: Calibri, sans-serif;">
               {p.desc}
             </p>
           </div>
@@ -121,25 +110,9 @@ const testimonios = [
       </div>
     </div>
 
-    <!-- Testimonios -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-      {testimonios.map((t) => (
-        <figure class="bg-[#152036] border border-[#3e4b61] rounded-2xl p-8 flex flex-col">
-          <div class="text-[#c9a126] text-5xl leading-none mb-4" style="font-family: Georgia, serif;">&ldquo;</div>
-          <blockquote class="text-[#e6e6f0]/85 text-lg leading-relaxed grow" style="font-family: Calibri, sans-serif;">
-            {t.texto}
-          </blockquote>
-          <figcaption class="mt-6 pt-6 border-t border-[#3e4b61]/50">
-            <div class="font-bold text-[#e6e6f0]" style="font-family: Georgia, serif;">{t.autor}</div>
-            <div class="text-sm text-[#8d94a1]" style="font-family: Calibri, sans-serif;">{t.cargo}</div>
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-
     <!-- CTA -->
     <div class="bg-gradient-to-br from-[#152036] to-[#10192d] border border-[#3e4b61] rounded-2xl p-10 md:p-14 text-center">
-      <h3 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: Georgia, serif;">
+      <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white" style="font-family: Georgia, serif;">
         ¿Tienes un desafío técnico que nadie ha podido resolver?
       </h3>
       <p class="text-[#e6e6f0]/80 text-lg mb-8 max-w-2xl mx-auto" style="font-family: Calibri, sans-serif;">
@@ -147,7 +120,7 @@ const testimonios = [
         honestidad si podemos ayudarte y cómo.
       </p>
       <a
-        href="#contacto"
+        href="/contactanos"
         class="inline-flex items-center justify-center bg-[#c9a126] text-[#10192d] font-bold px-9 py-4 rounded-xl hover:bg-[#e0b62c] hover:-translate-y-0.5 transition-all duration-300 shadow-lg"
         style="font-family: Calibri, sans-serif; letter-spacing: 0.3px;"
       >

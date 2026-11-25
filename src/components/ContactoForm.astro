@@ -5,50 +5,60 @@ import IconoLinkedin from "./IconosRedesSociales/IconoLinkedin.astro";
 import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
 
 // src/components/ContactoForm.astro
+//
+// Formulario multi-step (wizard) de 4 pasos:
+//   1. Qué necesita el visitante (interés)
+//   2. Datos de contacto
+//   3. Su reto / mensaje
+//   4. Confirmación y envío
+//
+// Los 4 pasos viven en el mismo <form>, solo se muestra uno a la vez con
+// JS (ver <script> al final). El envío real (fetch al endpoint, honeypot,
+// mensajes de estado) es el mismo que ya funcionaba, solo se disparó ahora
+// desde el botón del último paso en vez de un único botón "Enviar".
+//
+// Este componente se reutiliza tal cual en src/pages/contactanos.astro.
+
+const intereses = [
+  "IA & Datos",
+  "Desarrollo de software",
+  "Infraestructura Cloud",
+  "Cursos y capacitación",
+  "Otro / no estoy seguro",
+];
 ---
 
-<section id="contacto" class="py-12 bg-[#10192d] relative z-20">
-  <div class="max-w-8xl mx-auto px-6 lg:px-8">
-    
-    <!-- Contenedor Principal (Color de Superficie Havenser) -->
-    <div class="relative bg-[#152036] border border-[#3e4b61] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[700px]">
-      
+<section id="contacto" class="py-16 md:py-24 bg-[var(--bg-light)] relative z-20">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+
+    <div class="relative bg-white border border-[var(--border-soft)] rounded-2xl shadow-[0_20px_60px_rgba(16,25,45,0.08)] overflow-hidden flex flex-col md:flex-row min-h-[680px]">
+
       <!-- Lado Izquierdo: Imagen con Corte Diagonal -->
-      <div class="w-full h-72 md:h-full md:absolute md:inset-y-0 md:left-0 md:w-[56%] diagonal-split z-0 bg-[#7985a0]">
-        <!-- Placeholder premium para la imagen (Reemplaza el src cuando tengas la foto) -->
-        <img 
-          src="/contactForm.jpg" 
-          alt="Consultoría Tecnológica Havenser" 
-          class="w-full h-full object-cover  mix-blend-overlay"
+      <div class="w-full h-56 md:h-full md:absolute md:inset-y-0 md:left-0 md:w-[44%] diagonal-split z-0 bg-[#10192d]">
+        <img
+          src="/contactForm.jpg"
+          alt="Consultoría Tecnológica Havenser"
+          class="w-full h-full object-cover opacity-80"
         />
-        <!-- Gradiente para fundir sutilmente la imagen con la interfaz -->
-        <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#10192d]/90 to-transparent pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#10192d] via-[#10192d]/70 to-transparent pointer-events-none"></div>
+        <div class="absolute inset-0 hidden md:flex flex-col justify-end p-10 text-white pointer-events-none">
+          <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-[0.18em] mb-3">Hablemos</p>
+          <h2 class="text-3xl font-bold mb-3" style="font-family: Georgia, serif;">Transformemos su Operación</h2>
+          <p class="text-white/80" style="font-family: Calibri, sans-serif;">¿Tiene un desafío técnico complejo? En 4 pasos rápidos nos cuenta y le contactamos.</p>
+        </div>
       </div>
 
-      <!-- Lado Derecho: Formulario y Logo -->
-      <div class="w-full md:w-[50%] md:ml-auto p-8 md:p-14 relative z-10 flex flex-col justify-end">
-        
-        <div class="mb-8 text-right flex flex-col items-end">
-          <!-- Logo de Havenser -->
-          <img src="/LOGO1.png" alt="Havenser Logo" class="h-14 md:h-16 w-auto mb-6 rounded" />
-          
-          <h2 class="text-3xl md:text-4xl font-bold text-[#e6e6f0] mb-2" style="font-family: Georgia, serif;">
-            Transformemos su Operación
-          </h2>
-          <p class="text-[#8d94a1] text-lg" style="font-family: Calibri, sans-serif;">
-            ¿Tiene un desafío técnico complejo? Hablemos.
-          </p>
+      <!-- Lado Derecho: Wizard -->
+      <div class="w-full md:w-[56%] md:ml-auto p-6 sm:p-10 md:p-14 relative z-10 flex flex-col">
+
+        <!-- Progreso -->
+        <div class="flex items-center gap-2 mb-8" role="progressbar" aria-valuemin="1" aria-valuemax="4" id="progreso-wizard">
+          {[1, 2, 3, 4].map((n) => (
+            <div class="progreso-paso flex-1 h-1.5 rounded-full bg-[var(--border-soft)]" data-paso={n}></div>
+          ))}
         </div>
 
-        <!-- Redes Sociales -->
-        <div class="flex gap-4 justify-center mb-4">
-          <IconoLinkedin/>
-          <IconoFacebook/>
-          <IconoWhatsApp/>
-          <IconoGmail/>
-        </div>
-
-        <form id="contacto-form" class="space-y-5">
+        <form id="contacto-form" class="flex flex-col grow">
 
           <!-- Honeypot anti-spam: oculto para humanos, tentador para bots -->
           <div class="absolute w-px h-px overflow-hidden -m-px p-0 border-0" aria-hidden="true">
@@ -56,100 +66,90 @@ import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
             <input type="text" id="empresa-web" name="empresa_web" tabindex="-1" autocomplete="off" />
           </div>
 
-          <!-- Input: Nombre -->
-          <div class="flex flex-col gap-1.5 group">
-            <label for="nombre" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
-              Nombre Completo
-            </label>
-            <input 
-              type="text" 
-              id="nombre" 
-              name="nombre"
-              placeholder="Ingresa tu nombre" 
-              required
-              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300"
-              style="font-family: Calibri, sans-serif;" 
-            />
-          </div>
-          
-          <!-- Input: Email -->
-          <div class="flex flex-col gap-1.5 group">
-            <label for="email" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
-              Correo Corporativo
-            </label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email"
-              placeholder="nombre@empresa.com" 
-              required
-              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300"
-              style="font-family: Calibri, sans-serif;" 
-            />
-          </div>
-          
-          <!-- Input: Telefono -->
-          <div class="flex flex-col gap-1.5 group">
-            <label for="tel" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
-              Teléfono de contacto <span class="font-normal text-[#6e7b90]">(opcional)</span>
-            </label>
-            <input
-              type="tel"
-              id="tel"
-              name="telefono"
-              placeholder="+52 77668843"
-              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300"
-              style="font-family: Calibri, sans-serif;"
-            />
+          <!-- PASO 1: Interés -->
+          <div class="wizard-step" data-step="1">
+            <p class="text-sm font-semibold text-[#c9a126] uppercase tracking-wide mb-1">Paso 1 de 4</p>
+            <h3 class="text-2xl font-bold text-[#10192d] mb-6" style="font-family: Georgia, serif;">¿Qué necesita su empresa?</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {intereses.map((op) => (
+                <label class="interes-opcion cursor-pointer border border-[var(--border-soft)] rounded-xl px-4 py-3 text-sm font-medium text-[#3e4b61] hover:border-[#c9a126] transition-colors duration-200 flex items-center gap-2">
+                  <input type="radio" name="interes" value={op} class="accent-[#c9a126]" required />
+                  {op}
+                </label>
+              ))}
+            </div>
           </div>
 
-          <!-- Input: Asunto -->
-          <div class="flex flex-col gap-1.5 group">
-            <label for="asunto" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
-              Asunto
-            </label>
-            <input 
-              type="text" 
-              id="asunto" 
-              name="asunto"
-              placeholder="Motivo de tu mensaje"
-              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300"
-              style="font-family: Calibri, sans-serif;" 
-            />
+          <!-- PASO 2: Datos de contacto -->
+          <div class="wizard-step hidden" data-step="2">
+            <p class="text-sm font-semibold text-[#c9a126] uppercase tracking-wide mb-1">Paso 2 de 4</p>
+            <h3 class="text-2xl font-bold text-[#10192d] mb-6" style="font-family: Georgia, serif;">Sus datos de contacto</h3>
+            <div class="space-y-4">
+              <div class="campo">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="campo">
+                  <label for="email">Correo Corporativo</label>
+                  <input type="email" id="email" name="email" placeholder="nombre@empresa.com" required />
+                </div>
+                <div class="campo">
+                  <label for="empresa">Empresa <span class="opcional">(opcional)</span></label>
+                  <input type="text" id="empresa" name="empresa" placeholder="Nombre de tu empresa" />
+                </div>
+              </div>
+              <div class="campo">
+                <label for="tel">Teléfono de contacto <span class="opcional">(opcional)</span></label>
+                <input type="tel" id="tel" name="telefono" placeholder="+52 77668843" />
+              </div>
+            </div>
           </div>
 
-          <!-- Textarea: Mensaje -->
-          <div class="flex flex-col gap-1.5 group">
-            <label for="mensaje" class="text-sm font-semibold text-[#8d94a1] group-focus-within:text-[#e6e6f0] transition-colors" style="font-family: Calibri, sans-serif;">
-              Mensaje
-            </label>
-            <textarea 
-              id="mensaje" 
-              name="mensaje"
-              rows="4" 
-              placeholder="Cuéntanos sobre los cuellos de botella de tu organización..." 
-              
-              class="w-full bg-[#10192d] border border-[#3e4b61] text-[#e6e6f0] rounded-lg px-4 py-3 focus:outline-none focus:border-[#e6e6f0] focus:shadow-[0_0_8px_rgba(230,230,240,0.1)] transition-all duration-300 resize-none"
-              style="font-family: Calibri, sans-serif;"
-            ></textarea>
+          <!-- PASO 3: Su reto -->
+          <div class="wizard-step hidden" data-step="3">
+            <p class="text-sm font-semibold text-[#c9a126] uppercase tracking-wide mb-1">Paso 3 de 4</p>
+            <h3 class="text-2xl font-bold text-[#10192d] mb-6" style="font-family: Georgia, serif;">Cuéntenos su reto</h3>
+            <div class="space-y-4">
+              <div class="campo">
+                <label for="asunto">Asunto <span class="opcional">(opcional)</span></label>
+                <input type="text" id="asunto" name="asunto" placeholder="Motivo de tu mensaje" />
+              </div>
+              <div class="campo">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos sobre los cuellos de botella de tu organización..." required></textarea>
+              </div>
+            </div>
           </div>
 
-          <!-- Botón de Envío -->
-          <button 
-            type="submit" 
-            class="w-full mt-4 bg-[#3e4b61] border border-transparent text-[#e6e6f0] font-bold text-lg rounded-lg px-6 py-4 hover:bg-transparent hover:border-[#e6e6f0] hover:text-[#e6e6f0] transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
-            style="font-family: Calibri, sans-serif;"
-          >
-            Enviar Solicitud
-          </button>
+          <!-- PASO 4: Confirmación -->
+          <div class="wizard-step hidden" data-step="4">
+            <p class="text-sm font-semibold text-[#c9a126] uppercase tracking-wide mb-1">Paso 4 de 4</p>
+            <h3 class="text-2xl font-bold text-[#10192d] mb-6" style="font-family: Georgia, serif;">Confirme y envíe</h3>
+            <div id="resumen-wizard" class="bg-[var(--bg-light)] border border-[var(--border-soft)] rounded-xl p-5 text-sm text-[#3e4b61] space-y-1.5 mb-6"></div>
+
+            <div class="flex gap-4 justify-center mb-2">
+              <IconoLinkedin/>
+              <IconoFacebook/>
+              <IconoWhatsApp/>
+              <IconoGmail/>
+            </div>
+          </div>
+
+          <!-- Navegación del wizard -->
+          <div class="mt-auto pt-8 flex items-center justify-between gap-4">
+            <button type="button" id="btn-atras" class="btn-secundario hidden">Atrás</button>
+            <div class="grow"></div>
+            <button type="button" id="btn-siguiente" class="btn-primario">Siguiente</button>
+            <button type="submit" id="btn-enviar" class="btn-primario hidden">Enviar Solicitud</button>
+          </div>
 
           <!-- Mensaje de estado (éxito / error) -->
           <p
             id="form-status"
             role="status"
             aria-live="polite"
-            class="hidden text-center text-sm rounded-lg px-4 py-3"
-            style="font-family: Calibri, sans-serif;"
+            class="hidden text-center text-sm rounded-lg px-4 py-3 mt-4"
           >
           </p>
 
@@ -161,27 +161,109 @@ import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
 </section>
 
 <script>
+  import { animate } from 'motion';
+
   const form = document.querySelector<HTMLFormElement>('#contacto-form');
   const endpoint = 'https://r8xpf2mp58.execute-api.us-east-2.amazonaws.com/prod/contacto';
   const statusEl = document.querySelector<HTMLParagraphElement>('#form-status');
+  const pasos = Array.from(document.querySelectorAll<HTMLElement>('.wizard-step'));
+  const progresoPasos = Array.from(document.querySelectorAll<HTMLElement>('.progreso-paso'));
+  const btnAtras = document.querySelector<HTMLButtonElement>('#btn-atras');
+  const btnSiguiente = document.querySelector<HTMLButtonElement>('#btn-siguiente');
+  const btnEnviar = document.querySelector<HTMLButtonElement>('#btn-enviar');
+  const resumenEl = document.querySelector<HTMLDivElement>('#resumen-wizard');
+  const totalPasos = pasos.length;
+  let pasoActual = 1;
+  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function mostrarEstado(mensaje: string, tipo: 'ok' | 'error') {
     if (!statusEl) return;
     statusEl.textContent = mensaje;
     statusEl.classList.remove('hidden');
     if (tipo === 'ok') {
-      statusEl.style.cssText =
-        'background:#152036;color:#c9a126;border:1px solid rgba(201,161,38,0.4);';
+      statusEl.style.cssText = 'background:#f2f8f1;color:#2f6f3e;border:1px solid rgba(47,111,62,0.25);';
     } else {
-      statusEl.style.cssText =
-        'background:#3a1d1d;color:#f0b4b4;border:1px solid rgba(240,180,180,0.4);';
+      statusEl.style.cssText = 'background:#fbeeee;color:#a23c3c;border:1px solid rgba(162,60,60,0.25);';
     }
   }
+
+  function validarPaso(paso: HTMLElement): boolean {
+    const campos = Array.from(paso.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea'));
+    for (const campo of campos) {
+      if (!campo.checkValidity()) {
+        campo.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function actualizarProgreso() {
+    progresoPasos.forEach((barra, i) => {
+      barra.style.backgroundColor = i < pasoActual ? '#c9a126' : '';
+    });
+  }
+
+  function construirResumen() {
+    if (!form || !resumenEl) return;
+    const data = new FormData(form);
+    const filas = [
+      ['Interés', data.get('interes')],
+      ['Nombre', data.get('nombre')],
+      ['Correo', data.get('email')],
+      ['Empresa', data.get('empresa') || '—'],
+      ['Teléfono', data.get('telefono') || '—'],
+      ['Mensaje', data.get('mensaje')],
+    ];
+    resumenEl.innerHTML = filas
+      .map(([etiqueta, valor]) => `<p><strong class="text-[#10192d]">${etiqueta}:</strong> ${String(valor ?? '').slice(0, 200)}</p>`)
+      .join('');
+  }
+
+  function irAPaso(n: number) {
+    const anterior = pasos[pasoActual - 1];
+    const siguiente = pasos[n - 1];
+    if (!siguiente) return;
+
+    if (n === totalPasos) construirResumen();
+
+    // El cambio de paso (mostrar/ocultar) es SIEMPRE inmediato y síncrono:
+    // la funcionalidad del wizard nunca debe depender de que una animación
+    // termine (una pestaña en segundo plano puede pausar las animaciones
+    // indefinidamente). `animate()` de abajo es solo un efecto visual de
+    // acompañamiento, no controla el estado.
+    anterior?.classList.add('hidden');
+    siguiente.classList.remove('hidden');
+
+    if (!prefiereMenosMovimiento) {
+      animate(siguiente, { opacity: [0, 1], x: [12, 0] }, { duration: 0.3 });
+    }
+
+    pasoActual = n;
+    btnAtras?.classList.toggle('hidden', pasoActual === 1);
+    btnSiguiente?.classList.toggle('hidden', pasoActual === totalPasos);
+    btnEnviar?.classList.toggle('hidden', pasoActual !== totalPasos);
+    actualizarProgreso();
+  }
+
+  btnSiguiente?.addEventListener('click', () => {
+    const pasoEl = pasos[pasoActual - 1];
+    if (pasoEl && !validarPaso(pasoEl)) return;
+    irAPaso(pasoActual + 1);
+  });
+
+  btnAtras?.addEventListener('click', () => {
+    irAPaso(pasoActual - 1);
+  });
+
+  actualizarProgreso();
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const ultimoPaso = pasos[totalPasos - 1];
+    if (ultimoPaso && !validarPaso(ultimoPaso)) return;
+
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries()) as Record<string, string>;
 
@@ -195,17 +277,15 @@ import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
 
     statusEl?.classList.add('hidden');
 
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Enviando...';
+    if (btnEnviar) {
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = 'Enviando...';
     }
 
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
@@ -215,6 +295,7 @@ import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
 
       form.reset();
       mostrarEstado('Tu solicitud fue enviada correctamente. Te contactaremos pronto.', 'ok');
+      irAPaso(1);
     } catch (error) {
       console.error('Error al enviar el formulario de contacto:', error);
       mostrarEstado(
@@ -222,25 +303,98 @@ import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
         'error',
       );
     } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Enviar Solicitud';
+      if (btnEnviar) {
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = 'Enviar Solicitud';
       }
     }
   });
 </script>
 
 <style>
-  /* === MAGIA DEL CORTE DIAGONAL === */
   .diagonal-split {
-    /* Por defecto (móviles): Corte diagonal en la parte inferior para que apunte hacia el formulario */
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
   }
-  
   @media (min-width: 768px) {
     .diagonal-split {
-      /* En escritorio: Corte diagonal severo en el lado derecho, revelando el formulario */
-      clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+      clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
     }
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .campo label {
+    font-family: 'Calibri', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #3e4b61;
+  }
+  .campo .opcional {
+    font-weight: 400;
+    color: #8d94a1;
+  }
+  .campo input,
+  .campo textarea {
+    font-family: 'Calibri', sans-serif;
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    color: #10192d;
+    border-radius: 0.6rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.25s ease;
+  }
+  .campo input:focus,
+  .campo textarea:focus {
+    outline: none;
+    border-color: #c9a126;
+    box-shadow: 0 0 0 3px rgba(201, 161, 38, 0.15);
+  }
+  .campo textarea {
+    resize: none;
+  }
+
+  .interes-opcion:has(input:checked) {
+    border-color: #c9a126;
+    background: rgba(201, 161, 38, 0.08);
+    color: #10192d;
+  }
+
+  .btn-primario {
+    font-family: 'Calibri', sans-serif;
+    background: #10192d;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.6rem;
+    padding: 0.9rem 2rem;
+    transition: all 0.25s ease;
+  }
+  .btn-primario:hover:not(:disabled) {
+    background: #1c2c47;
+    transform: translateY(-1px);
+  }
+  .btn-primario:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .btn-secundario {
+    font-family: 'Calibri', sans-serif;
+    background: transparent;
+    color: #3e4b61;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-soft);
+    border-radius: 0.6rem;
+    padding: 0.85rem 1.5rem;
+    transition: all 0.25s ease;
+  }
+  .btn-secundario:hover {
+    border-color: #10192d;
+    color: #10192d;
   }
 </style>

@@ -4,3 +4,76 @@
 @theme {
   --font-georgia: "Georgia", serif;
 }
+
+/*
+  Tokens y resets globales del sitio Havenser.
+  IMPORTANTE: este archivo se importa desde Layout.astro, que TODAS las
+  páginas usan — por eso es el lugar correcto para definir variables de
+  color globales (antes vivían en General.astro, pero General solo lo usa
+  la home, así que páginas como /cursos o /contactanos no las veían).
+*/
+:root {
+  /* ==========================================
+     SISTEMA DE COLORES HAVENSER — TEMA OSCURO
+     ==========================================
+     Reservado a propósito solo para el Hero y el Footer (el "ancla de
+     marca" oscura del sitio). Todo lo demás usa el tema claro de abajo. */
+  --bg-main: #111b2c;
+  --bg-surface: #192232;
+  --accent: #3e4b61;
+  --text-muted: #8d94a1;
+  --text-light: #e6e6f0;
+
+  /* ==========================================
+     TEMA CLARO (usado en ~80% del sitio)
+     ==========================================
+     Servicios, Quiénes Somos, Cursos, Tech/Ciencia, Contacto, legales. */
+  --bg-light: #f4f5f8;
+  --surface-white: #ffffff;
+  --text-heading: #10192d;
+  --text-body: #3e4b61;
+  --border-soft: #d8dce3;
+  --gold: #c9a126;
+  --gold-hover: #e0b62c;
+}
+
+/* ==========================================
+   RESETS Y TIPOGRAFÍA BASE
+   ========================================== */
+html {
+  scroll-behavior: smooth; /* Para que el menú navegue suavemente a las secciones */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-light);
+  font-family: "Calibri", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   TIPOGRAFÍA DE TÍTULOS (GEORGIA)
+   ========================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Georgia", serif;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================
+   ELEMENTOS COMUNES
+   ========================================== */
+p {
+  margin-bottom: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  transition: all 0.3s ease; /* Transiciones suaves de tecnología de alta gama */
+}

@@ -1,0 +1,150 @@
+---
+/**
+ * OlaPuntos.astro
+ * ------------------------------------------------------------------
+ * Fondo animado: una malla de puntos que se mueve como una ola (cada
+ * punto sube/baja y cambia de brillo siguiendo una onda senoidal que
+ * viaja por el lienzo). Pensado para fondo OSCURO (los puntos son de
+ * color dorado de marca sobre transparente).
+ *
+ * No impone tamaño propio: ocupa 100% del contenedor padre, y vuelve a
+ * calcular la malla cuando el contenedor cambia de tamaño — por eso es
+ * responsivo sin configuración adicional.
+ *
+ * Respeta `prefers-reduced-motion`: si está activo, dibuja un solo
+ * cuadro estático (la ola "congelada") en vez de animar en bucle.
+ *
+ * PROPS (todas opcionales)
+ *   color        color de los puntos (hex). Default: dorado de marca "#c9a126"
+ *   spacing      separación entre puntos en px. Default: 26
+ *   amplitude    qué tanto sube/baja cada punto, en px. Default: 10
+ *   speed        velocidad de la ola. Default: 1 (más alto = más rápido)
+ *   ariaLabel    texto accesible para lectores de pantalla
+ */
+
+interface Props {
+  class?: string;
+  color?: string;
+  spacing?: number;
+  amplitude?: number;
+  speed?: number;
+  ariaLabel?: string;
+}
+
+const {
+  class: className = "",
+  color = "#c9a126",
+  spacing = 26,
+  amplitude = 10,
+  speed = 1,
+  ariaLabel = "Animación decorativa de una ola de puntos",
+} = Astro.props;
+
+const uid = `op-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class:list={["ola-puntos", className]} id={uid} role="img" aria-label={ariaLabel}>
+  <canvas class="ola-puntos__canvas"></canvas>
+</div>
+
+<style>
+  .ola-puntos {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ola-puntos__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+  }
+</style>
+
+<script define:vars={{ uid, color, spacing, amplitude, speed }}>
+  (function initOlaPuntos() {
+    const root = document.getElementById(uid);
+    if (!root || root.dataset.opInit === "1") return;
+    root.dataset.opInit = "1";
+
+    const canvas = root.querySelector(".ola-puntos__canvas");
+    const ctx = canvas.getContext("2d");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function hexToRgb(hex) {
+      const m = hex.replace("#", "").match(/.{1,2}/g) || ["c9", "a1", "26"];
+      return [parseInt(m[0], 16), parseInt(m[1], 16), parseInt(m[2], 16)];
+    }
+    const [r, g, b] = hexToRgb(color);
+
+    let cw = 0, ch = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let cols = 0, rows = 0;
+    let rafId = null;
+
+    function dimensionar() {
+      cw = root.clientWidth || 1;
+      ch = root.clientHeight || 1;
+      canvas.width = Math.round(cw * dpr);
+      canvas.height = Math.round(ch * dpr);
+      canvas.style.width = cw + "px";
+      canvas.style.height = ch + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(cw / spacing) + 2;
+      rows = Math.ceil(ch / spacing) + 2;
+    }
+
+    function dibujar(t) {
+      ctx.clearRect(0, 0, cw, ch);
+
+      for (let row = 0; row < rows; row++) {
+        const y = row * spacing;
+        for (let col = 0; col < cols; col++) {
+          const x = col * spacing;
+
+          // Onda diagonal: combina la posición horizontal y vertical para
+          // que la ola viaje en diagonal por la malla, con una segunda
+          // onda más lenta superpuesta para que no se vea mecánica.
+          const fase = x * 0.045 + y * 0.03 + t * 0.0012 * speed;
+          const onda = Math.sin(fase) * 0.6 + Math.sin(fase * 0.5 + y * 0.02) * 0.4;
+
+          const offsetY = onda * amplitude;
+          const brillo = (onda + 1) / 2; // 0..1
+          const radio = 0.9 + brillo * 1.6;
+          const alpha = 0.08 + brillo * 0.55;
+
+          ctx.beginPath();
+          ctx.arc(x, y + offsetY, radio, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+          ctx.fill();
+        }
+      }
+    }
+
+    function animar(t) {
+      dibujar(t);
+      rafId = requestAnimationFrame(animar);
+    }
+
+    window.addEventListener("resize", dimensionar);
+    dimensionar();
+
+    if (reducedMotion) {
+      dibujar(0);
+    } else {
+      rafId = requestAnimationFrame(animar);
+    }
+
+    // Si el elemento se quita del DOM (navegación entre páginas con
+    // astro:page-load, por ejemplo), detenemos el bucle para no dejar
+    // trabajo corriendo en segundo plano.
+    new MutationObserver(() => {
+      if (!document.body.contains(root) && rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    }).observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
