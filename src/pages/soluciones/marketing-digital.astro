@@ -1,0 +1,202 @@
+---
+// /soluciones/marketing-digital — paquetes, calculadora y condiciones.
+// Precios y reglas: src/data/marketing.ts. Textos y FAQ: src/data/soluciones.ts.
+import PlantillaSolucion from "../../components/soluciones/PlantillaSolucion.astro";
+import CalculadoraMarketing from "../../components/soluciones/CalculadoraMarketing";
+import { getSolucion } from "../../data/soluciones";
+import { PAQUETES, CONDICIONES, COMISION_EXCEDENTE, mxn } from "../../data/marketing";
+import { SITIO } from "../../data/sitio";
+
+const solucion = getSolucion("marketing-digital");
+
+const catalogo = {
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  name: "Paquetes de marketing digital Havenser",
+  url: `${SITIO.url}/soluciones/marketing-digital`,
+  itemListElement: PAQUETES.map((p) => ({
+    "@type": "Offer",
+    name: `Paquete ${p.nombre}`,
+    description: p.perfil,
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price: p.precio,
+      priceCurrency: "MXN",
+      unitText: "MES",
+      valueAddedTaxIncluded: false,
+    },
+    seller: { "@id": `${SITIO.url}/#organizacion` },
+  })),
+};
+---
+
+<PlantillaSolucion solucion={solucion} ctaTexto="Arma tu paquete" ctaHref="#calculadora" extraJsonLd={[catalogo]}>
+  <!-- Comparativa -->
+  <section class="py-20 md:py-24 bg-white" aria-labelledby="paquetes-titulo">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-2xl mb-12" data-animar="fade-up">
+        <p class="eyebrow">Paquetes mensuales</p>
+        <h2 id="paquetes-titulo" class="text-3xl md:text-5xl font-bold text-[var(--text-heading)]">
+          De {mxn(PAQUETES[0].precio)} a {mxn(PAQUETES[PAQUETES.length - 1].precio)} + IVA al mes
+        </h2>
+        <p class="text-lg text-[var(--text-body)] m-0">
+          Cada paquete incluye todo lo del anterior y suma más contenido, más atención y un reporte más completo. Cada pieza lleva 2 rondas de revisión.
+        </p>
+      </div>
+
+      <ul class="grid gap-5 md:grid-cols-2 xl:grid-cols-4 list-none p-0 m-0" data-stagger>
+        {PAQUETES.map((p) => (
+          <li class="paquete">
+            <p class="text-sm font-bold uppercase tracking-[0.14em] text-[#8a6d12] mb-1">{p.paraQue}</p>
+            <h3 class="text-2xl font-bold text-[var(--text-heading)] mb-2">{p.nombre}</h3>
+            <p class="mb-1">
+              <span class="text-4xl font-bold text-[var(--text-heading)]" style="font-family: Georgia, serif;">{mxn(p.precio)}</span>
+              <span class="text-[var(--text-body)]"> + IVA al mes</span>
+            </p>
+            <p class="text-sm text-[var(--text-body)] min-h-[1.5em]">
+              {p.arranque > 0 ? `más ${mxn(p.arranque)} + IVA de arranque` : `Contrato mínimo ${p.contratoMeses} meses`}
+            </p>
+
+            <dl class="cifras">
+              <div><dt>Redes</dt><dd>{p.redes}</dd></div>
+              <div><dt>Publicaciones</dt><dd>{p.publicaciones}</dd></div>
+              <div><dt>Historias</dt><dd>{p.historias}</dd></div>
+              <div><dt>Reels</dt><dd>{p.reels}</dd></div>
+            </dl>
+
+            <ul class="incluye">
+              {p.incluye.map((i) => <li>{i}</li>)}
+            </ul>
+            <p class="text-sm text-[var(--text-body)]"><strong class="text-[var(--text-heading)]">Al arrancar:</strong> {p.alArrancar}</p>
+
+            <a href="#calculadora" class="btn-borde mt-auto text-[var(--text-heading)]" data-paquete={p.id}>
+              Calcular con {p.nombre}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Calculadora (zona oscura) -->
+  <section id="calculadora" class="zona-oscura py-20 md:py-28 scroll-mt-16" aria-labelledby="calc-titulo">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-2xl mb-12" data-animar="fade-up">
+        <p class="eyebrow">Calculadora</p>
+        <h2 id="calc-titulo" class="text-3xl md:text-5xl font-bold text-white">Arme su paquete en 3 pasos</h2>
+        <p class="text-lg text-[#b9c0cc] m-0">
+          Elija un paquete, sume complementos y defina su inversión en anuncios. Verá el estimado al instante y podrá enviárnoslo por WhatsApp.
+        </p>
+      </div>
+      <CalculadoraMarketing client:visible />
+    </div>
+  </section>
+
+  <!-- Anuncios y condiciones -->
+  <section class="py-20 md:py-24 bg-[var(--bg-light)]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+      <div data-animar="fade-right">
+        <p class="eyebrow">Inversión en anuncios</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--text-heading)]">Cada peso de su pauta, bajo control</h2>
+        <p class="text-[var(--text-body)]">
+          Los paquetes con campañas incluyen una inversión mensual en anuncios que pagamos nosotros con su mensualidad.
+          Si quiere invertir más, usted paga el excedente a Meta o Google con su tarjeta y Havenser cobra una comisión de gestión del {COMISION_EXCEDENTE * 100}% sobre ese excedente, más IVA.
+        </p>
+        <p class="ejemplo">
+          <strong>Ejemplo.</strong> En Visibilidad, con una inversión deseada de $1,000 al mes, $500 van incluidos. Usted paga $500 a la plataforma y $50 + IVA de comisión a Havenser.
+        </p>
+      </div>
+      <ul class="grid gap-4 sm:grid-cols-2 list-none p-0 m-0" data-stagger>
+        {CONDICIONES.map((c) => (
+          <li class="condicion">
+            <h3 class="text-lg font-bold text-[var(--text-heading)] mb-1">{c.titulo}</h3>
+            <p class="text-[var(--text-body)] m-0 text-[0.95rem]">{c.texto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <p class="max-w-7xl mx-auto px-6 lg:px-8 mt-10 text-sm text-[var(--text-body)]">
+      <strong>No incluido en los paquetes:</strong> inversión en anuncios por encima de lo incluido, fotografía o video en sitio, branding completo, reconfiguración de su CRM, desarrollos a medida y el agente de IA en WhatsApp. Podemos cotizarlos por separado.
+    </p>
+  </section>
+
+  <!-- Venta cruzada: chatbot -->
+  <section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <a href="/soluciones/chatbot-whatsapp" class="cruzada group" data-animar="zoom">
+        <div>
+          <p class="eyebrow">¿Quiere atención las 24 horas?</p>
+          <h2 class="text-2xl md:text-3xl font-bold text-white m-0">Sume un chatbot con IA para WhatsApp y Telegram</h2>
+          <p class="text-[#b9c0cc] m-0 mt-2">Sus campañas traen mensajes; el chatbot los responde al instante, incluso de noche y en fin de semana.</p>
+        </div>
+        <span class="btn-oro flex-none">Ver la demo</span>
+      </a>
+    </div>
+  </section>
+</PlantillaSolucion>
+
+<script>
+  // Las tarjetas comparativas eligen el paquete en la calculadora (isla React).
+  document.querySelectorAll<HTMLAnchorElement>('[data-paquete]').forEach((a) => {
+    a.addEventListener('click', () => {
+      (window as Window & { havenserPaquete?: string }).havenserPaquete = a.dataset.paquete;
+      window.dispatchEvent(new CustomEvent('havenser:paquete', { detail: a.dataset.paquete }));
+    });
+  });
+</script>
+
+<style>
+  .paquete {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    background: var(--bg-light);
+    border: 1px solid var(--border-soft);
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .paquete:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .cifras {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin: 1.25rem 0;
+    padding: 1rem 0;
+    border-block: 1px solid var(--border-soft);
+    text-align: center;
+  }
+  .cifras dt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: #6e7b90; }
+  .cifras dd { margin: 0; font-size: 1.4rem; font-weight: 700; color: var(--text-heading); font-family: Georgia, serif; }
+  .incluye { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.6rem; }
+  .incluye li { position: relative; padding-left: 1.5rem; color: var(--text-body); font-size: 0.95rem; line-height: 1.45; }
+  .incluye li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 0.7rem;
+    height: 0.4rem;
+    border-left: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    transform: rotate(-45deg);
+  }
+  .ejemplo {
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(201, 161, 38, 0.35);
+    background: rgba(201, 161, 38, 0.06);
+    border-radius: 0.75rem;
+    color: var(--text-body);
+  }
+  .condicion { padding: 1.25rem; border-radius: 1rem; background: var(--surface-white); border: 1px solid var(--border-soft); }
+  .cruzada {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 2.25rem;
+    border-radius: 1.5rem;
+    background: radial-gradient(120% 140% at 0% 0%, #1f3050 0%, #10192d 70%);
+  }
+  .cruzada .eyebrow { color: var(--gold); }
+</style>

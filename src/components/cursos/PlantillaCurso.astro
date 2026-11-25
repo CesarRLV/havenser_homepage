@@ -120,26 +120,3 @@ const info = [
 
   </div>
 </article>
-
-<script>
-  import { animate, inView } from 'motion';
-
-  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const efectos: Record<string, [Record<string, any>, Record<string, any>]> = {
-    'fade-up': [{ opacity: 0, y: 24 }, { opacity: 1, y: 0 }],
-    'fade-left': [{ opacity: 0, x: 24 }, { opacity: 1, x: 0 }],
-    'fade-right': [{ opacity: 0, x: -24 }, { opacity: 1, x: 0 }],
-  };
-
-  document.querySelectorAll<HTMLElement>('[data-animar]').forEach((el) => {
-    const tipo = el.dataset.animar || 'fade-up';
-    const [desde, hasta] = efectos[tipo] || efectos['fade-up'];
-
-    if (prefiereMenosMovimiento) return;
-
-    Object.assign(el.style, { opacity: '0' });
-    inView(el, () => {
-      animate(el, { ...desde, ...hasta }, { duration: 0.6, easing: [0.22, 1, 0.36, 1] });
-    }, { margin: '-10% 0px -10% 0px' });
-  });
-</script>

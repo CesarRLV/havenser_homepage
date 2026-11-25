@@ -2,20 +2,37 @@
 import Layout from '../layouts/Layout.astro';
 import General from '../layouts/General.astro';
 import Navbar from '../components/NavBar.astro';
-import Servicios from '../components/Servicios.astro';
-import ContactoForm from '../components/ContactoForm.astro';
-import QuienesSomos from '../components/QuienesSomos.astro';
-import PruebaSocial from '../components/PruebaSocial.astro';
-import BtnTerms from '../components/legal/BtnTerms.astro';
 import PortadaLogo from '../components/Portadas/PortadaLogo.astro';
+import SolucionesDestacadas from '../components/SolucionesDestacadas.astro';
+import ProcesoScroll from '../components/ProcesoScroll.astro';
+import Servicios from '../components/Servicios.astro';
+import PruebaSocial from '../components/PruebaSocial.astro';
+import QuienesSomos from '../components/QuienesSomos.astro';
+import ContactoForm from '../components/ContactoForm.astro';
+import BtnTerms from '../components/legal/BtnTerms.astro';
+import { SITIO } from '../data/sitio';
+
+const webSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITIO.nombre,
+  url: SITIO.url,
+  inLanguage: 'es-MX',
+  publisher: { '@id': `${SITIO.url}/#organizacion` },
+};
 ---
 
-<Layout title="Havenser - Soluciones Tecnológicas">
-
+<Layout
+  title="Havenser | Consultoría en IA, automatización, software y marketing digital"
+  description="Consultora de ingeniería y ciencias exactas en México: agentes de IA y automatización de procesos, chatbots para WhatsApp, marketing digital, software a la medida, cloud y ciberseguridad para empresas B2B."
+  jsonLd={webSite}
+>
   <Navbar />
 
   <General>
     <PortadaLogo />
+    <SolucionesDestacadas />
+    <ProcesoScroll />
     <Servicios />
     <PruebaSocial />
     <QuienesSomos />
@@ -29,5 +46,4 @@ import PortadaLogo from '../components/Portadas/PortadaLogo.astro';
 
     <ContactoForm />
   </General>
-
 </Layout>

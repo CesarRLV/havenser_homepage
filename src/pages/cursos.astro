@@ -9,9 +9,9 @@ import { getCursosPorEje, getImagenCurso } from "../data/cursos";
 const grupos = getCursosPorEje();
 ---
 
-<Layout title="Cursos y Capacitación | Havenser">
+<Layout title="Cursos y Capacitación | Havenser" description="Catálogo de cursos de Havenser: programación, datos, IA, ingeniería y ciencias aplicadas para equipos corporativos. Academias y programas de upskilling a la medida.">
   <NavBar />
-  <main class="bg-[var(--bg-light)] pt-28 pb-24">
+  <main id="contenido" class="bg-[var(--bg-light)] pt-28 pb-24">
     <div class="max-w-6xl mx-auto px-6 lg:px-8">
 
       <div class="text-center max-w-3xl mx-auto mb-16" data-animar="fade-up">
@@ -89,18 +89,6 @@ const grupos = getCursosPorEje();
 </Layout>
 
 <script>
-  import { animate, inView } from 'motion';
-
-  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!prefiereMenosMovimiento) {
-    document.querySelectorAll<HTMLElement>('[data-animar]').forEach((el) => {
-      el.style.opacity = '0';
-      inView(el, () => {
-        animate(el, { opacity: [0, 1], y: [24, 0] }, { duration: 0.6, easing: [0.22, 1, 0.36, 1] });
-      }, { margin: '-10% 0px -10% 0px' });
-    });
-  }
-
   // Compatibilidad con el patrón cursos?id=<id> (redirige a /cursos/<id>,
   // que es la ruta real y estática del curso).
   const params = new URLSearchParams(window.location.search);

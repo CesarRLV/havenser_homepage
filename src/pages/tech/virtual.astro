@@ -7,7 +7,7 @@ import { AREAS } from "../../data/areasEspecialidad";
 const area = AREAS["tech-virtual"];
 ---
 
-<Layout title={`${area.titulo} | Havenser`}>
+<Layout title={`${area.titulo} | Havenser`} description={area.resumen.slice(0, 158)}>
   <NavBar />
   <PlantillaArea area={area} />
 </Layout>

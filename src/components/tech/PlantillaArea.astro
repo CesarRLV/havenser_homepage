@@ -17,7 +17,7 @@ interface Props {
 const { area } = Astro.props;
 ---
 
-<main class="bg-[var(--bg-light)] pt-28 pb-24">
+<main id="contenido" class="bg-[var(--bg-light)] pt-28 pb-24">
   <div class="max-w-6xl mx-auto px-6 lg:px-8">
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-16" data-animar="fade-up">
@@ -79,17 +79,3 @@ const { area } = Astro.props;
 
   </div>
 </main>
-
-<script>
-  import { animate, inView } from 'motion';
-
-  const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!prefiereMenosMovimiento) {
-    document.querySelectorAll<HTMLElement>('[data-animar]').forEach((el) => {
-      el.style.opacity = '0';
-      inView(el, () => {
-        animate(el, { opacity: [0, 1], y: [24, 0] }, { duration: 0.6, easing: [0.22, 1, 0.36, 1] });
-      }, { margin: '-10% 0px -10% 0px' });
-    });
-  }
-</script>

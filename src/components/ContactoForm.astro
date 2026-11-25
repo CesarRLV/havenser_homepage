@@ -20,6 +20,9 @@ import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
 // Este componente se reutiliza tal cual en src/pages/contactanos.astro.
 
 const intereses = [
+  "Marketing digital",
+  "Agentes IA y automatización",
+  "Chatbot WhatsApp / Telegram",
   "IA & Datos",
   "Desarrollo de software",
   "Infraestructura Cloud",
@@ -161,7 +164,8 @@ const intereses = [
 </section>
 
 <script>
-  import { animate } from 'motion';
+  import { gsap } from 'gsap';
+  import { CLAVE_PRECARGA_CONTACTO } from '../data/sitio';
 
   const form = document.querySelector<HTMLFormElement>('#contacto-form');
   const endpoint = 'https://r8xpf2mp58.execute-api.us-east-2.amazonaws.com/prod/contacto';
@@ -236,7 +240,7 @@ const intereses = [
     siguiente.classList.remove('hidden');
 
     if (!prefiereMenosMovimiento) {
-      animate(siguiente, { opacity: [0, 1], x: [12, 0] }, { duration: 0.3 });
+      gsap.fromTo(siguiente, { autoAlpha: 0, x: 12 }, { autoAlpha: 1, x: 0, duration: 0.3, ease: 'power2.out' });
     }
 
     pasoActual = n;
@@ -257,6 +261,24 @@ const intereses = [
   });
 
   actualizarProgreso();
+
+  // Precarga desde las calculadoras (/soluciones/*): solo viaja la
+  // configuración elegida (paquete, complementos, horas), nunca datos
+  // personales. Se consume una sola vez.
+  try {
+    const precarga = JSON.parse(sessionStorage.getItem(CLAVE_PRECARGA_CONTACTO) || 'null');
+    if (precarga && form) {
+      sessionStorage.removeItem(CLAVE_PRECARGA_CONTACTO);
+      const radio = form.querySelector<HTMLInputElement>(`input[name="interes"][value="${CSS.escape(precarga.interes)}"]`);
+      if (radio) radio.checked = true;
+      const asunto = form.querySelector<HTMLInputElement>('#asunto');
+      const mensaje = form.querySelector<HTMLTextAreaElement>('#mensaje');
+      if (asunto && precarga.asunto) asunto.value = precarga.asunto;
+      if (mensaje && precarga.mensaje) mensaje.value = precarga.mensaje;
+    }
+  } catch {
+    // sessionStorage bloqueado (modo privado, etc.): el formulario funciona igual.
+  }
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();

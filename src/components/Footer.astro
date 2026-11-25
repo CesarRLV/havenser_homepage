@@ -6,8 +6,17 @@ import IconoLinkedin from "./IconosRedesSociales/IconoLinkedin.astro";
 import IconoWhatsApp from "./IconosRedesSociales/IconoWhatsApp.astro";
 
 // src/components/Footer.astro
+import { SITIO, linkWhatsApp } from "../data/sitio";
+import { SOLUCIONES } from "../data/soluciones";
 
 const currentYear = new Date().getFullYear();
+const enlaces = [
+  { href: "/#nosotros", texto: "¿Quiénes somos?" },
+  { href: "/#servicios", texto: "Portafolio de servicios" },
+  ...SOLUCIONES.map((s) => ({ href: `/soluciones/${s.slug}`, texto: s.nombreCorto })),
+  { href: "/cursos", texto: "Cursos" },
+  { href: "/contactanos", texto: "Agendar consultoría" },
+];
 ---
 
 <footer class="bg-[#152036] border-t border-[#3e4b61] pt-16 pb-8 relative z-20">
@@ -18,7 +27,7 @@ const currentYear = new Date().getFullYear();
       
       <!-- Columna 1: Marca y Eslogan -->
       <div class="flex flex-col">
-        <a href="#" class="flex items-center gap-3 mb-4 group">
+        <a href="/" class="flex items-center gap-3 mb-4 group">
           <!-- Si tienes el isotipo separado, puedes inyectarlo aquí. Por ahora, un icono premium: -->
           <div class="w-10 h-10 bg-[#10192d] border border-[#3e4b61] rounded-lg flex items-center justify-center text-[#c9a126] group-hover:scale-105 transition-transform">
             <span class="text-xl font-bold" style="font-family: Georgia, serif;">H</span>
@@ -42,22 +51,25 @@ const currentYear = new Date().getFullYear();
 
       <!-- Columna 2: Mapa del Sitio -->
       <div>
-        <h4 class="text-lg font-bold text-[#e6e6f0] mb-6" style="font-family: Georgia, serif;">Navegación</h4>
+        <h2 class="text-lg font-bold text-[#e6e6f0] mb-6" style="font-family: Georgia, serif;">Navegación</h2>
         <ul class="space-y-3" style="font-family: Calibri, sans-serif;">
-          <li><a href="#nosotros" class="text-[#8d94a1] hover:text-[#c9a126] transition-colors duration-300 text-md">¿Quiénes Somos?</a></li>
-          <li><a href="#servicios" class="text-[#8d94a1] hover:text-[#c9a126] transition-colors duration-300 text-md">Portafolio de Soluciones</a></li>
-          <li><a href="#equipo" class="text-[#8d94a1] hover:text-[#c9a126] transition-colors duration-300 text-md">Nuestro Equipo</a></li>
-          <li><a href="#contacto" class="text-[#8d94a1] hover:text-[#c9a126] transition-colors duration-300 text-md">Agendar Consultoría</a></li>
+          {enlaces.map((e) => (
+            <li><a href={e.href} class="text-[#8d94a1] hover:text-[#c9a126] transition-colors duration-300 text-md">{e.texto}</a></li>
+          ))}
         </ul>
       </div>
 
       <!-- Columna 3: Contacto Operativo -->
       <div>
-        <h4 class="text-lg font-bold text-[#e6e6f0] mb-6" style="font-family: Georgia, serif;">Contacto Corporativo</h4>
+        <h2 class="text-lg font-bold text-[#e6e6f0] mb-6" style="font-family: Georgia, serif;">Contacto Corporativo</h2>
         <ul class="space-y-4" style="font-family: Calibri, sans-serif;">
           <li class="flex items-start text-[#8d94a1] text-md">
             <svg class="w-5 h-5 text-[#6e7b90] mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            <a href="mailto:consultoria@havenser.com" class="hover:text-[#e6e6f0] transition-colors">consultoria@havenser.com</a>
+            <a href={`mailto:${SITIO.email}`} class="hover:text-[#e6e6f0] transition-colors">{SITIO.email}</a>
+          </li>
+          <li class="flex items-start text-[#8d94a1] text-md">
+            <svg class="w-5 h-5 text-[#6e7b90] mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-2.26 1.13a11.04 11.04 0 005.52 5.52l1.13-2.26a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z"></path></svg>
+            <a href={linkWhatsApp("Hola Havenser, me gustaría más información.")} target="_blank" rel="noopener noreferrer" class="hover:text-[#e6e6f0] transition-colors">WhatsApp {SITIO.telefonoVisible}</a>
           </li>
           <li class="flex items-start text-[#8d94a1] text-md">
             <svg class="w-5 h-5 text-[#6e7b90] mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -68,7 +80,7 @@ const currentYear = new Date().getFullYear();
 
       <!-- Columna 4: Legal -->
       <div>
-        <h4 class="text-lg font-bold text-[#e6e6f0] mb-6" style="font-family: Georgia, serif;">Marco Legal</h4>
+        <h2 class="text-lg font-bold text-[#e6e6f0] mb-6" style="font-family: Georgia, serif;">Marco Legal</h2>
         <ul class="space-y-3" style="font-family: Calibri, sans-serif;">
           <li>
             <a href="/TerminosCondiciones" class="text-[#8d94a1] hover:text-[#c9a126] transition-colors duration-300 text-md flex items-center group">

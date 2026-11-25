@@ -1,0 +1,23 @@
+---
+// /soluciones/chatbot-whatsapp — chatbot con IA para WhatsApp y Telegram.
+// Sin precio publicado: el CTA es "Agenda una demo".
+import PlantillaSolucion from "../../components/soluciones/PlantillaSolucion.astro";
+import DemoChatbot from "../../components/soluciones/DemoChatbot";
+import { getSolucion } from "../../data/soluciones";
+import { linkWhatsApp } from "../../data/sitio";
+
+const solucion = getSolucion("chatbot-whatsapp");
+const demo = linkWhatsApp("Hola Havenser, me gustaría agendar una demo del chatbot con IA para WhatsApp.");
+---
+
+<PlantillaSolucion solucion={solucion} ctaTexto="Agenda una demo" ctaHref={demo}>
+  <section id="demo" class="zona-oscura py-20 md:py-28" aria-labelledby="demo-titulo">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-2xl mb-12" data-animar="fade-up">
+        <p class="eyebrow">Véalo en acción</p>
+        <h2 id="demo-titulo" class="text-3xl md:text-5xl font-bold text-white">Una conversación vale más que mil promesas</h2>
+      </div>
+      <DemoChatbot client:visible />
+    </div>
+  </section>
+</PlantillaSolucion>

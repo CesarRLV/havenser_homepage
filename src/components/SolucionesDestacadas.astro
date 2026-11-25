@@ -1,0 +1,106 @@
+---
+// Home: las 3 soluciones nuevas (marketing, agentes IA, chatbot).
+// El contenido sale de src/data/soluciones.ts.
+import { SOLUCIONES } from "../data/soluciones";
+import { PAQUETES, mxn } from "../data/marketing";
+
+const iconos: Record<string, string> = {
+  // Megáfono / gráfica ascendente
+  "marketing-digital": "M3 11v2a1 1 0 001 1h2l5 4V6L6 10H4a1 1 0 00-1 1zm13.5-3.5a5 5 0 010 9M19 5a9 9 0 010 14",
+  // Engranes / flujo
+  "automatizacion-ia": "M12 8a4 4 0 100 8 4 4 0 000-8zm0-5v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1m0-12.8l-2.1 2.1m-8.6 8.6l-2.1 2.1",
+  // Burbuja de chat
+  "chatbot-whatsapp": "M8 10h8M8 14h5m-9 6l2.5-3.5A8 8 0 1120 12a8 8 0 01-12.2 6.8L4 20z",
+};
+const desdeMarketing = mxn(Math.min(...PAQUETES.map((p) => p.precio)));
+---
+
+<section id="soluciones" class="soluciones">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-2xl mb-14" data-animar="fade-up">
+      <p class="eyebrow">Lo nuevo en Havenser</p>
+      <h2 class="text-3xl md:text-5xl font-bold text-[var(--text-heading)] leading-tight">
+        Soluciones listas para hacer crecer su empresa
+      </h2>
+      <p class="text-lg text-[var(--text-body)] m-0">
+        Automatice el trabajo repetitivo, atienda a sus clientes a cualquier hora y convierta su presencia digital en solicitudes de cotización.
+      </p>
+    </div>
+
+    <ul class="grid gap-6 md:grid-cols-3 list-none p-0 m-0" data-stagger>
+      {SOLUCIONES.map((s) => (
+        <li>
+          <a href={`/soluciones/${s.slug}`} class="tarjeta group">
+            <span class="icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d={iconos[s.slug]} />
+              </svg>
+            </span>
+            <h3 class="text-2xl font-bold text-[var(--text-heading)] mb-3">{s.nombreCorto}</h3>
+            <p class="text-[var(--text-body)] grow">{s.resumen}</p>
+            {s.slug === "marketing-digital" && (
+              <p class="chip">Desde {desdeMarketing} + IVA al mes</p>
+            )}
+            <span class="mas">
+              Conocer más
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" /></svg>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .soluciones {
+    position: relative;
+    background: var(--bg-light);
+    padding: 6rem 0;
+  }
+  .tarjeta {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    background: var(--surface-white);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 1px 2px rgba(16, 25, 45, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .tarjeta:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 24px 48px rgba(16, 25, 45, 0.1);
+  }
+  .icono {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 1.5rem;
+    border-radius: 14px;
+    background: var(--text-heading);
+    color: var(--gold);
+  }
+  .icono svg { width: 26px; height: 26px; }
+  .chip {
+    align-self: flex-start;
+    margin: 0 0 1.25rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(201, 161, 38, 0.12);
+    color: #7a6115;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .mas {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    color: var(--text-heading);
+  }
+  .tarjeta:hover .mas { color: #8a6d12; }
+</style>

@@ -10,8 +10,18 @@
 // `src/data/cursos.ts` (agrupado por eje temático): para agregar/quitar un
 // curso del navbar, edita ese archivo de datos, no este componente.
 import { getCursosPorEje } from "../data/cursos";
+import { SOLUCIONES } from "../data/soluciones";
 
-const cursosMenu = [
+interface ItemMenu {
+  title: string;
+  href: string;
+  active?: boolean;
+  external?: boolean;
+  pending?: boolean;
+  submenus?: ItemMenu[];
+}
+
+const cursosMenu: ItemMenu[] = [
   { title: "Ver todo el catálogo", href: "/cursos", active: true },
   ...getCursosPorEje().map((grupo) => ({
     title: grupo.eje,
@@ -25,7 +35,7 @@ const cursosMenu = [
   })),
 ];
 
-const menus = [
+const menus: ItemMenu[] = [
   {
     title: "Quiénes somos",
     active: true,
@@ -64,6 +74,12 @@ const menus = [
         ],
       },
     ],
+  },
+  {
+    title: "Soluciones",
+    href: "",
+    active: true,
+    submenus: SOLUCIONES.map((s) => ({ title: s.nombreCorto, href: `/soluciones/${s.slug}`, active: true })),
   },
   {
     title: "Cursos",
@@ -138,7 +154,7 @@ const style = "font-family:'Georgia', 'Arial Black', sans-serif;";
                     </svg>
                   </button>
                   <ul class="absolute right-0 mt-2 w-56 bg-white border border-gray-100 shadow-lg rounded-md invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
-                    {menu.submenus.map((sub) => (
+                    {(menu.submenus ?? []).map((sub) => (
                       <li class="border-b border-gray-50 last:border-0">
                         <a
                           href={sub.href}
@@ -321,7 +337,7 @@ const style = "font-family:'Georgia', 'Arial Black', sans-serif;";
                   </svg>
                 </summary>
                 <div class="pl-4 space-y-1 mt-1 border-l-2 border-gray-100 ml-4">
-                  {menu.submenus.map((sub) => (
+                  {(menu.submenus ?? []).map((sub) => (
                     <a
                       href={sub.href}
                       target={sub.external ? "_blank" : undefined}

@@ -17,9 +17,19 @@ export function getStaticPaths() {
 }
 
 const { curso } = Astro.props;
+
+const cursoLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: curso.titulo,
+  description: curso.descripcion,
+  inLanguage: "es-MX",
+  educationalLevel: curso.nivel,
+  provider: { "@id": "https://havenser.com/#organizacion" },
+};
 ---
 
-<Layout title={`${curso.titulo} | Cursos Havenser`}>
+<Layout title={`${curso.titulo} | Cursos Havenser`} description={curso.descripcion.slice(0, 158)} jsonLd={cursoLd}>
   <NavBar />
   <PlantillaCurso curso={curso} />
 </Layout>

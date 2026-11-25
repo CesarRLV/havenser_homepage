@@ -1,210 +1,189 @@
 ---
-// Portada / Hero.
+// Portada / Hero de la home (zona oscura de marca).
 //
-// Fondo oscuro a propósito: es una de las dos únicas zonas oscuras del
-// sitio (la otra es el Footer), pensadas como "ancla de marca". El resto
-// del sitio es claro.
-//
-// Layout: todo el texto está alineado a la izquierda. La animación de
-// fondo (OlaPuntos: una malla de puntos que se mueve como una ola) ocupa
-// las 100% del hero, pero se le aplica una máscara CSS (mask-image) que
-// la desvanece cerca del borde izquierdo y la deja a plena vista desde
-// ~42% del ancho hacia la derecha. Así la ola queda "alineada a la
-// derecha" y ocupa visualmente más espacio del lado derecho sin tener que
-// dividir el layout en columnas (funciona igual en cualquier ancho de
-// pantalla, incluido mobile).
-import OlaPuntos from "../animaciones/OlaPuntos.astro";
+// - El texto y los botones son HTML puro: se pintan de inmediato (LCP) y
+//   nunca dependen del 3D.
+// - El 3D (Hero3D, isla de React con client:idle) se monta detrás, a la
+//   derecha en escritorio y arriba/centrado en móvil, cuando el navegador
+//   está libre. Mientras tanto (o si no hay WebGL / reduced-motion) se ve
+//   un póster SVG estático.
+// - La entrada del texto es un timeline de GSAP; al hacer scroll el
+//   contenido se desvanece (scrub) mientras el núcleo 3D se expande.
+import Hero3D from "../hero/Hero3D";
 ---
 
-<header class="hero-circuito">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-viz">
-      <OlaPuntos />
-    </div>
+<header id="hero" class="hero zona-oscura">
+  <div class="hero-fondo" aria-hidden="true">
+    <Hero3D client:idle />
   </div>
 
-  <div class="header-content">
-    <p class="hero-eyebrow">Consultoría en ingeniería, datos e IA</p>
-    <h1>La complejidad operativa de tu empresa,<strong> resuelta con tecnología que sí se usa</strong></h1>
-    <p class="hero-sub">
-      Datos, inteligencia artificial, software a la medida e infraestructura cloud
-      para operaciones B2B que necesitan resultados, no demos.
+  <div class="hero-contenido">
+    <p class="eyebrow hero-anim">Consultoría en ingeniería, IA y ciencias exactas</p>
+    <h1 class="hero-titulo">
+      Innovación inteligente, <strong>ejecución impecable.</strong>
+    </h1>
+    <p class="hero-sub hero-anim">
+      Agentes de IA que automatizan su operación, chatbots que atienden en WhatsApp las 24&nbsp;horas,
+      marketing digital medible y software a la medida, con el rigor de un equipo de ingenieros y científicos.
     </p>
-    <div class="hero-cta">
-      <a href="#contacto" class="btn-primary">Agenda una consultoría sin costo</a>
-      <a href="#servicios" class="btn-secondary">Conoce nuestros servicios</a>
+    <div class="hero-cta hero-anim">
+      <a href="/contactanos" class="btn-oro">Cotiza tu solución</a>
+      <a href="/soluciones/marketing-digital#calculadora" class="btn-borde">Arma tu paquete de marketing</a>
     </div>
-    <p class="hero-trust">
-      Equipo interdisciplinario con formación de posgrado · Proyectos B2B · Acompañamiento posterior al lanzamiento
+    <p class="hero-confianza hero-anim">
+      Equipo interdisciplinario con formación de posgrado · Proyectos B2B · Acompañamiento después del lanzamiento
     </p>
   </div>
+
+  <a href="#soluciones" class="hero-scroll" aria-label="Ver soluciones">
+    <span></span>
+  </a>
 </header>
 
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+    // Entrada. El <h1> solo se desplaza (nunca opacity: 0) para no retrasar el LCP.
+    gsap
+      .timeline({ defaults: { ease: 'power3.out', duration: 0.9 } })
+      .from('.hero-titulo', { y: 24 })
+      .from('.hero-anim', { autoAlpha: 0, y: 20, stagger: 0.12 }, '<0.1')
+      .from('.hero-scroll', { autoAlpha: 0 }, '-=0.3');
+
+    // Salida con scroll: el texto sube y se desvanece mientras el 3D se expande.
+    gsap.to('.hero-contenido', {
+      yPercent: -18,
+      autoAlpha: 0.15,
+      ease: 'none',
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
+  });
+</script>
+
 <style>
-  /* Contenedor principal de la portada */
-  .hero-circuito {
-    width: 100%;
-    min-height: 100vh;
-    position: sticky;
-
-    overflow: hidden;
+  .hero {
+    position: relative;
+    min-height: 100svh;
     display: flex;
-
     flex-direction: column;
-    align-items: flex-start;
     justify-content: center;
-    padding: 96px 24px 48px;
-    box-sizing: border-box;
-    background: radial-gradient(120% 90% at 50% 15%, #192232 0%, #111b2c 55%, #05070d 100%);
-    top: 0;
-    z-index: 1;
+    padding: 112px 24px 72px;
+    overflow: hidden;
+    isolation: isolate;
   }
 
-  .hero-bg {
+  .hero-fondo {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    /* Respiración muy lenta para reforzar la sensación de calma */
-    animation: respirar 9s ease-in-out infinite;
+    z-index: -1;
+    pointer-events: none;
   }
 
-  .hero-viz {
+  /* Contenedores de la isla 3D (las clases las pone Hero3D.tsx). */
+  .hero-fondo :global(.hero-3d),
+  .hero-fondo :global(.hero-canvas) {
     position: absolute;
     inset: 0;
-    opacity: 0.8;
-    filter: saturate(0.9);
-    /* Desvanece la ola cerca del texto (izquierda) y la deja a plena
-       vista desde ~42% del ancho hacia la derecha: así ocupa más
-       espacio visual del lado derecho sin necesitar un layout a 2
-       columnas. */
-    mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 24%, #000 42%, #000 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 24%, #000 42%, #000 100%);
   }
-
-  @keyframes respirar {
-    0%, 100% { opacity: 0.85; }
-    50% { opacity: 1; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-bg {
-      animation: none;
+  .hero-fondo :global(.hero-canvas) { transition: opacity 1.2s ease; }
+  /* Escritorio: la red se desvanece hacia el texto (izquierda) para no competir con la lectura. */
+  @media (min-width: 768px) {
+    .hero-fondo :global(.hero-canvas) {
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.25) 32%, #000 58%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.25) 32%, #000 58%);
     }
   }
+  .hero-fondo :global(.poster-nucleo) {
+    position: absolute;
+    width: min(46vw, 560px);
+    right: 6vw;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-  .header-content {
+  .hero-contenido {
     position: relative;
-    z-index: 2;
-    text-align: left;
+    max-width: 720px;
     color: var(--text-light);
-    padding: 0;
-    max-width: 620px;
-    pointer-events: none; /* El texto no bloquea, pero los botones sí reciben clic (ver .hero-cta) */
   }
 
-  .hero-eyebrow {
-    font-family: 'Calibri', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: clamp(0.68rem, 2vw, 0.8rem);
-    font-weight: 600;
-    color: #c9a126;
-    margin: 0 0 18px 0;
+  .hero-titulo {
+    font-size: clamp(2.2rem, 5.6vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+    color: #fff;
+    text-wrap: balance;
   }
-
-  .header-content h1 {
-    font-family: 'Georgia', serif;
-    font-size: clamp(1.75rem, 4.6vw, 3.4rem);
-    font-weight: 700;
-    line-height: 1.18;
-    margin: 0 0 20px 0;
-    letter-spacing: -0.5px;
-    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
-  }
-
-  .header-content h1 strong {
-    color: #c9a126;
-  }
+  .hero-titulo strong { color: var(--gold); font-weight: 700; }
 
   .hero-sub {
-    font-family: 'Calibri', sans-serif;
-    font-size: clamp(1rem, 2.2vw, 1.35rem);
-    color: var(--text-muted);
-    margin: 0 0 32px 0;
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    color: #b9c0cc;
     max-width: 560px;
-    font-weight: 300;
-    line-height: 1.6;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    margin: 0 0 2rem;
+    text-wrap: pretty;
   }
 
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    pointer-events: auto;
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-cta .btn-borde { color: var(--text-light); border-color: rgba(230, 230, 240, 0.4); }
+
+  .hero-confianza {
+    margin: 1.75rem 0 0;
+    font-size: 0.88rem;
+    color: #8d94a1;
   }
 
-  .btn-primary,
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 28px;
-    border-radius: 10px;
-    font-family: 'Calibri', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.3px;
-    transition: all 0.3s ease;
+  .hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    width: 26px;
+    height: 42px;
+    margin-left: -13px;
+    border: 2px solid rgba(230, 230, 240, 0.35);
+    border-radius: 14px;
   }
-
-  .btn-primary {
-    background: #c9a126;
-    color: #10192d;
+  .hero-scroll span {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 4px;
+    height: 8px;
+    margin-left: -2px;
+    border-radius: 2px;
+    background: var(--gold);
+    animation: rueda 1.8s ease-in-out infinite;
   }
-
-  .btn-primary:hover {
-    background: #e0b62c;
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(201, 161, 38, 0.25);
-  }
-
-  .btn-secondary {
-    border: 2px solid rgba(230, 230, 240, 0.4);
-    color: var(--text-light);
-  }
-
-  .btn-secondary:hover {
-    border-color: #c9a126;
-    color: #c9a126;
-  }
-
-  .hero-trust {
-    font-family: 'Calibri', sans-serif;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin: 28px 0 0 0;
-    opacity: 0.8;
+  @keyframes rueda {
+    0% { transform: translateY(0); opacity: 1; }
+    80% { transform: translateY(14px); opacity: 0; }
+    100% { opacity: 0; }
   }
 
   @media (min-width: 900px) {
-    .hero-circuito {
-      padding-left: 6vw;
-      padding-right: 6vw;
-    }
+    .hero { padding-left: 6vw; padding-right: 6vw; }
   }
 
-  @media (max-width: 640px) {
-    .hero-circuito {
-      padding: 88px 18px 40px;
+  /* Móvil: franja superior reservada para el núcleo y el texto debajo,
+     con un velo para que la red no compita con la lectura. */
+  @media (max-width: 767px) {
+    .hero { justify-content: flex-start; padding: calc(64px + 26svh) 18px 88px; }
+    .hero-titulo { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+    .hero-fondo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 28%, rgba(16, 25, 45, 0.85) 42%, #10192d 58%);
     }
-    .hero-viz {
-      opacity: 0.3;
-      /* En mobile el texto ocupa casi todo el ancho: se retrasa el
-         inicio de la ola para que no compita con la lectura. */
-      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 45%, #000 68%, #000 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 45%, #000 68%, #000 100%);
+    .hero-fondo :global(.poster-nucleo) {
+      width: 26svh;
+      right: calc(50% - 13svh);
+      top: 76px;
+      transform: none;
     }
   }
 </style>
