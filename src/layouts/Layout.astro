@@ -1,26 +1,98 @@
 ---
-// 1. Necesitas este bloque (frontmatter) para poder importar archivos.
-// 2. Importa tu archivo CSS global de Tailwind. 
-// (Asegúrate de que la ruta coincida con donde guardaste tu global.css)
-import '../styles/global.css'; 
+// Layout base de TODAS las páginas: <head> con SEO (title, description,
+// canonical, Open Graph, Twitter, JSON-LD), Footer y el script global de
+// animaciones por scroll (src/scripts/scroll.ts).
+//
+// Props:
+//   title        <title> y og:title
+//   description  meta description y og:description
+//   image        imagen OG (ruta en /public o URL absoluta)
+//   jsonLd       objeto o arreglo de objetos schema.org específicos de la página
+//   noindex      true para páginas que no deben indexarse
+import Footer from '../components/Footer.astro';
+import { SITIO } from '../data/sitio';
+import '../styles/global.css';
 
-// (Opcional pero recomendado) Recibir el título como una variable
-// para que cada página pueda tener un título diferente en la pestaña del navegador.
-const { title = "Havenser" } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+}
+
+const {
+  title = `${SITIO.nombre} | ${SITIO.eslogan}`,
+  description = SITIO.descripcion,
+  image = SITIO.ogImage,
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITIO.url).href;
+const ogImage = new URL(image, Astro.site ?? SITIO.url).href;
+
+// Organización: se publica en todas las páginas (entidad de marca para
+// buscadores y asistentes de IA).
+const organizacion = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITIO.url}/#organizacion`,
+  name: SITIO.nombre,
+  slogan: SITIO.eslogan,
+  description: SITIO.descripcion,
+  url: SITIO.url,
+  logo: `${SITIO.url}/Havenser_Logo.png`,
+  image: ogImage,
+  email: SITIO.email,
+  telephone: SITIO.telefonoVisible,
+  address: { '@type': 'PostalAddress', addressLocality: 'Pachuca de Soto', addressRegion: 'Hidalgo', addressCountry: 'MX' },
+  areaServed: { '@type': 'Country', name: 'México' },
+  sameAs: Object.values(SITIO.redes),
+  knowsAbout: [
+    'Inteligencia artificial', 'Automatización de procesos', 'Agentes de IA', 'Chatbots para WhatsApp',
+    'Marketing digital', 'Desarrollo de software', 'Infraestructura cloud', 'Ciberseguridad',
+    'Realidad extendida', 'Gemelos digitales', 'Logística predictiva', 'Biotecnología',
+  ],
+};
+const esquemas = [organizacion, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])];
 ---
 
 <!doctype html>
-<html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<!--<link rel="icon" type="image/svg+xml" href="/favicon.svg" />-->
-		<link rel="icon" href="/favicon.ico" />
-		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body > {/* class="bg-[#111b2c] text-white" */}
-		<slot />
-	</body>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#10192d" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content={SITIO.nombre} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="generator" content={Astro.generator} />
+    {esquemas.map((e) => <script type="application/ld+json" set:html={JSON.stringify(e)} />)}
+  </head>
+  <body>
+    <a href="#contenido" class="skip-link">Saltar al contenido</a>
+    <div class="barra-progreso" aria-hidden="true"></div>
+    <slot />
+    <Footer />
+    <script>
+      import '../scripts/scroll';
+    </script>
+  </body>
 </html>

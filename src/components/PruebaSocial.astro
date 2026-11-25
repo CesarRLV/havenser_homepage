@@ -1,0 +1,132 @@
+---
+// src/components/PruebaSocial.astro
+// Antes se llamaba "Resultados que respaldan cada proyecto" y mostraba
+// métricas, logos de clientes y testimonios inventados. Se quitó todo eso
+// a propósito: Havenser es una empresa de reciente creación y presentar
+// cifras/clientes/testimonios falsos sería deshonesto. Lo único que se
+// conserva es "Cómo trabajamos" (proceso real de la consultora) y se
+// agrega un bloque de diferenciadores reales, tomados directamente del
+// brief de marca (equipo interdisciplinario, nivel doctoral, rigor
+// científico) — cosas que sí son ciertas hoy, sin necesidad de historial.
+//
+// Cuando existan casos de éxito reales y autorizados, este es el lugar
+// para volver a agregar métricas/testimonios verificables.
+
+const diferenciadores = [
+  {
+    icon: "🎓",
+    titulo: "Conocimiento de nivel doctoral",
+    desc: "Nuestro equipo interdisciplinario combina matemáticas, química, ingeniería automotriz y sistemas para diseñar soluciones que van más allá de lo genérico.",
+  },
+  {
+    icon: "🧬",
+    titulo: "Rigor científico, no solo código",
+    desc: "Cada arquitectura y modelo predictivo se sustenta en metodología validada, no en prueba y error sobre el sistema del cliente.",
+  },
+  {
+    icon: "🤝",
+    titulo: "Acompañamiento después del lanzamiento",
+    desc: "No entregamos un proyecto y desaparecemos: damos seguimiento técnico para que la solución evolucione con tu operación.",
+  },
+];
+
+const pasos = [
+  {
+    n: "01",
+    titulo: "Diagnóstico",
+    desc: "Mapeamos tu operación, identificamos los cuellos de botella y definimos qué se puede resolver con tecnología y qué no.",
+  },
+  {
+    n: "02",
+    titulo: "Diseño de la solución",
+    desc: "Proponemos una arquitectura concreta con alcance, tiempos y criterios de éxito medibles antes de escribir una línea de código.",
+  },
+  {
+    n: "03",
+    titulo: "Implementación",
+    desc: "Construimos en iteraciones cortas, con entregas revisables y tu equipo involucrado en cada avance.",
+  },
+  {
+    n: "04",
+    titulo: "Acompañamiento",
+    desc: "Damos seguimiento técnico continuo y transferimos el conocimiento para que la solución evolucione con tu negocio.",
+  },
+];
+---
+
+<section id="como-trabajamos" class="bg-[var(--bg-light)] text-[var(--text-heading)] py-20 md:py-24 relative z-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
+    <!-- Encabezado -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-[0.18em] mb-4" style="font-family: Calibri, sans-serif;">
+        Por qué elegirnos
+      </p>
+      <h2 class="text-3xl md:text-5xl font-bold mb-5 text-[#10192d]" style="font-family: Georgia, serif;">
+        Ciencia, ingeniería y acompañamiento real
+      </h2>
+      <p class="text-lg text-[#3e4b61] leading-relaxed" style="font-family: Calibri, sans-serif;">
+        No entregamos demos ni presentaciones. Diseñamos sistemas que tu equipo
+        usa todos los días y que seguimos acompañando después de que se lanzan.
+      </p>
+    </div>
+
+    <!-- Diferenciadores -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+      {diferenciadores.map((d) => (
+        <div class="bg-white border border-[var(--border-soft)] rounded-2xl p-8 text-center shadow-[0_10px_30px_rgba(16,25,45,0.05)] hover:shadow-[0_20px_40px_rgba(201,161,38,0.1)] hover:-translate-y-1 transition-all duration-300">
+          <div class="w-14 h-14 mx-auto mb-5 rounded-full bg-[#10192d] flex items-center justify-center text-2xl">
+            {d.icon}
+          </div>
+          <h3 class="text-lg font-bold text-[#10192d] mb-3" style="font-family: Georgia, serif;">
+            {d.titulo}
+          </h3>
+          <p class="text-sm text-[#3e4b61] leading-relaxed" style="font-family: Calibri, sans-serif;">
+            {d.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Cómo trabajamos -->
+    <div class="mb-20">
+      <h3 class="text-2xl md:text-3xl font-bold text-center mb-12 text-[#10192d]" style="font-family: Georgia, serif;">
+        Cómo trabajamos
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {pasos.map((p) => (
+          <div class="bg-white border border-[var(--border-soft)] rounded-2xl p-7 h-full hover:border-[#c9a126]/60 shadow-[0_10px_30px_rgba(16,25,45,0.05)] transition-colors duration-300">
+            <div class="text-[#c9a126] text-2xl font-bold mb-4" style="font-family: Georgia, serif;">
+              {p.n}
+            </div>
+            <h4 class="text-lg font-bold text-[#10192d] mb-3" style="font-family: Georgia, serif;">
+              {p.titulo}
+            </h4>
+            <p class="text-sm text-[#3e4b61] leading-relaxed" style="font-family: Calibri, sans-serif;">
+              {p.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-br from-[#152036] to-[#10192d] border border-[#3e4b61] rounded-2xl p-10 md:p-14 text-center">
+      <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white" style="font-family: Georgia, serif;">
+        ¿Tienes un desafío técnico que nadie ha podido resolver?
+      </h3>
+      <p class="text-[#e6e6f0]/80 text-lg mb-8 max-w-2xl mx-auto" style="font-family: Calibri, sans-serif;">
+        Agenda una consultoría sin costo. Revisamos tu caso y te decimos con
+        honestidad si podemos ayudarte y cómo.
+      </p>
+      <a
+        href="/contactanos"
+        class="inline-flex items-center justify-center bg-[#c9a126] text-[#10192d] font-bold px-9 py-4 rounded-xl hover:bg-[#e0b62c] hover:-translate-y-0.5 transition-all duration-300 shadow-lg"
+        style="font-family: Calibri, sans-serif; letter-spacing: 0.3px;"
+      >
+        Agenda tu consultoría
+      </a>
+    </div>
+
+  </div>
+</section>

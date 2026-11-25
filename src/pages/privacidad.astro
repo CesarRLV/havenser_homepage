@@ -1,13 +1,13 @@
 ---
-// src/pages/AvisoPrivacidad.astro
+// src/pages/privacidad.astro
 import Layout from '../layouts/Layout.astro';
 
 import NavBar from "../components/NavBar.astro";
 ---
 
-<Layout title="Aviso de Privacidad | Havenser">
+<Layout title="Aviso de Privacidad | Havenser" description="Aviso de privacidad de Havenser: tratamiento de datos personales y derechos ARCO.">
     <NavBar />
-  <main class="container-legal">
+  <main id="contenido" class="container-legal">
     <h1>Aviso de Privacidad Integral</h1>
 
     <section class="legal-content">
@@ -67,19 +67,29 @@ import NavBar from "../components/NavBar.astro";
     margin-bottom: 3rem;
   }
 
+  .container-legal {
+    background-color: var(--bg-light);
+  }
+
+  h1 {
+    color: var(--text-heading);
+  }
+
   /* Tarjeta o bloque visual que contiene el texto legal */
   .legal-content {
-    background-color: var(--bg-surface);
+    background-color: var(--surface-white);
     padding: 4rem;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--accent);
+    box-shadow: 0 10px 30px rgba(16, 25, 45, 0.06);
+    border: 1px solid var(--border-soft);
+    color: var(--text-body);
   }
 
   /* Espaciado para los subtítulos dentro de la tarjeta */
   .legal-content h2 {
     margin-top: 3rem;
     font-size: 2rem;
+    color: var(--text-heading);
   }
 
   .legal-content h2:first-of-type {
@@ -88,7 +98,7 @@ import NavBar from "../components/NavBar.astro";
 
   /* Ajustes de las listas para integrarse perfectamente al diseño base */
   .legal-content ul {
-    color: var(--text-muted);
+    color: var(--text-body);
     margin-bottom: 1.5rem;
     padding-left: 1.5rem;
   }
@@ -98,11 +108,11 @@ import NavBar from "../components/NavBar.astro";
   }
 
   /* Resaltar palabras clave */
-  strong {
-    color: var(--text-light);
+  .legal-content strong {
+    color: var(--text-heading);
     font-weight: bold;
   }
-  
+
   /* Ajustes para diseño responsivo (móviles) */
   @media (max-width: 768px) {
     .container-legal {

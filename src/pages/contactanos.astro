@@ -1,0 +1,30 @@
+---
+// src/pages/contactanos.astro
+//
+// Página dedicada de contacto. Reutiliza el mismo componente
+// ContactoForm.astro que aparece embebido en la portada (sección
+// #contacto de index.astro) — es el único lugar donde vive la lógica del
+// formulario, así que cualquier cambio al wizard se refleja en ambos
+// lugares automáticamente.
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import ContactoForm from "../components/ContactoForm.astro";
+---
+
+<Layout title="Contáctanos | Havenser" description="Cuéntenos su reto técnico en 4 pasos o escríbanos por WhatsApp. Consultoría en IA, automatización, software, cloud y marketing digital para empresas.">
+  <NavBar />
+  <main id="contenido" class="bg-[var(--bg-light)] pt-24">
+    <div class="max-w-4xl mx-auto px-6 pt-12 pb-4 text-center">
+      <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-[0.18em] mb-3" style="font-family: Calibri, sans-serif;">
+        Contacto
+      </p>
+      <h1 class="text-3xl md:text-5xl font-bold text-[#10192d] mb-4" style="font-family: Georgia, serif;">
+        Hablemos de su desafío técnico
+      </h1>
+      <p class="text-lg text-[#3e4b61]" style="font-family: Calibri, sans-serif;">
+        Cuéntenos en 4 pasos qué necesita su empresa. Le responde una persona de nuestro equipo.
+      </p>
+    </div>
+    <ContactoForm />
+  </main>
+</Layout>

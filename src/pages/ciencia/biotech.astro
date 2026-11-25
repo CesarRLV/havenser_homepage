@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+import PlantillaArea from "../../components/tech/PlantillaArea.astro";
+import { AREAS } from "../../data/areasEspecialidad";
+
+const area = AREAS["ciencia-biotech"];
+---
+
+<Layout title={`${area.titulo} | Havenser`} description={area.resumen.slice(0, 158)}>
+  <NavBar />
+  <PlantillaArea area={area} />
+</Layout>

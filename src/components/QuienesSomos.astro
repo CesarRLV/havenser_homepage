@@ -1,6 +1,5 @@
 ---
 import B2BEfficiencyFeature from "./animaciones/B2BEfficiencyFeature.astro";
-import DoctoralExpertiseViz from "./animaciones/DoctoralExpertiseViz.astro";
 import NatureTechBrain from "./animaciones/NatureTechBrain.astro";
 import PortadaImagen from "./Portadas/PortadaImagen.astro";
 
@@ -27,8 +26,8 @@ const valores = [
 ---
 
 <section
-  id="nosotros"
-  class="py-24 pt-0 bg-[#10192d] text-[#e6e6f0] relative z-10 overflow-hidden"
+
+  class="py-24 pt-0 bg-[var(--bg-light)] text-[var(--text-heading)] relative z-10 overflow-hidden"
 >
   <PortadaImagen
     alto="70vh"
@@ -37,7 +36,7 @@ const valores = [
     parrafo="Inspirando al futuro"
   />
 
-  <div class="max-w-7xl mx-auto px-6 pt-6 lg:px-8 relative">
+  <div  id="nosotros" class="max-w-7xl mx-auto px-6 pt-6 lg:px-8 relative">
     <!-- Encabezado y Descripción Principal -->
     <div class="text-center max-w-4xl mx-auto mb-20 mt-10">
       <h2
@@ -47,13 +46,13 @@ const valores = [
         ¿Quiénes Somos?
       </h2>
       <h3
-        class="text-2xl md:text-4xl text-light mb-8 font-semibold tracking-wide"
+        class="text-2xl md:text-4xl text-[#10192d] mb-8 font-semibold tracking-wide"
         style="font-family: Georgia, serif;"
       >
         "Innovación inteligente, ejecución impecable."
       </h3>
       <p
-        class="text-lg md:text-xl text-[#e6e6f0]/85 leading-relaxed py-4"
+        class="text-lg md:text-xl text-[#3e4b61] leading-relaxed py-4"
         style="font-family: Calibri, sans-serif;"
       >
         Somos una firma consultora de ingeniería avanzada y ciencias exactas.
@@ -304,7 +303,7 @@ const valores = [
     <!-- Valores Core (Grid de 4 columnas) -->
     <div class="text-center mb-12">
       <h4
-        class="text-3xl md:text-4xl font-bold text-[#e6e6f0]"
+        class="text-3xl md:text-4xl font-bold text-[#10192d]"
         style="font-family: Georgia, serif;"
       >
         Nuestros Valores
@@ -313,18 +312,18 @@ const valores = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {
         valores.map((valor) => (
-          <div class="bg-[#152036] p-8 rounded-xl border border-[#3e4b61] hover:border-[#c9a126] shadow-lg hover:shadow-[#c9a126]/10 transition-all duration-300 flex flex-col items-center text-center group">
-            <div class="w-14 h-14 mb-6 rounded-full bg-[#10192d] border border-[#3e4b61] flex items-center justify-center text-[#c9a126] group-hover:scale-110 transition-transform duration-300">
+          <div class="bg-white p-8 rounded-xl border border-[var(--border-soft)] hover:border-[#c9a126] shadow-[0_10px_30px_rgba(16,25,45,0.05)] hover:shadow-[0_20px_40px_rgba(201,161,38,0.12)] transition-all duration-300 flex flex-col items-center text-center group">
+            <div class="w-14 h-14 mb-6 rounded-full bg-[#10192d] flex items-center justify-center text-[#c9a126] group-hover:scale-110 transition-transform duration-300">
               <span class="text-2xl">✦</span>
             </div>
             <h5
-              class="text-xl font-bold mb-4 text-[#e6e6f0]"
+              class="text-xl font-bold mb-4 text-[#10192d]"
               style="font-family: Georgia, serif;"
             >
               {valor.title}
             </h5>
             <p
-              class="text-[#e6e6f0]/70 leading-relaxed text-sm"
+              class="text-[#3e4b61] leading-relaxed text-sm"
               style="font-family: Calibri, sans-serif;"
             >
               {valor.desc}

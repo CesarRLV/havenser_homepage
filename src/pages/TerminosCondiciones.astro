@@ -4,9 +4,9 @@ import NavBar from "../components/NavBar.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Términos y Condiciones | Havenser">
+<Layout title="Términos y Condiciones | Havenser" description="Términos y condiciones de uso del sitio y los servicios de Havenser.">
     <NavBar />
-    <main class="container-legal">
+    <main id="contenido" class="container-legal">
         <h1>Términos y Condiciones</h1>
 
         <section class="legal-content">
@@ -187,28 +187,38 @@ import Layout from "../layouts/Layout.astro";
         margin-bottom: 3rem;
     }
 
+    .container-legal {
+        background-color: var(--bg-light);
+    }
+
+    h1 {
+        color: var(--text-heading);
+    }
+
     /* Tarjeta o bloque visual que contiene el texto legal */
     .legal-content {
-        background-color: var(--bg-surface);
+        background-color: var(--surface-white);
         padding: 4rem;
         border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        border: 1px solid var(--accent);
+        box-shadow: 0 10px 30px rgba(16, 25, 45, 0.06);
+        border: 1px solid var(--border-soft);
+        color: var(--text-body);
     }
 
     /* Espaciado para los subtítulos dentro de la tarjeta */
     .legal-content h2 {
         margin-top: 3rem;
         font-size: 2rem; /* Ligeramente más pequeño que el default global para adaptarse al documento */
+        color: var(--text-heading);
     }
 
     .legal-content h2:first-of-type {
         margin-top: 0;
     }
 
-    /* Resaltar palabras clave en blanco o color claro */
-    strong {
-        color: var(--text-light);
+    /* Resaltar palabras clave */
+    .legal-content strong {
+        color: var(--text-heading);
         font-weight: bold;
     }
 

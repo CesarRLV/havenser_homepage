@@ -88,101 +88,49 @@
 </style>
 
 <script>
-  import { animate, createMotionPath, random, stagger } from 'animejs';
+  // Animación en bucle con GSAP. Se pausa cuando el SVG sale de pantalla
+  // (ahorra CPU/batería) y no corre con prefers-reduced-motion.
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // Seleccionamos todos los SVGs en caso de que el componente se use múltiples veces
-    const svgs = document.querySelectorAll('.b2b-svg');
+  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-    svgs.forEach((svg) => {
-      // 1. Animación de Entrada
-      animate(svg.querySelectorAll('.network-paths path, .sine-wave, .asset-node circle, .gear'), {
-        strokeDashoffset: [1000, 0],
-        ease: 'inOutSine',
-        duration: 2000,
-        delay: stagger(150)
+  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+    gsap.utils.toArray<SVGSVGElement>('.b2b-svg').forEach((svg) => {
+      const q = gsap.utils.selector(svg);
+      const tl = gsap.timeline({ paused: true, defaults: { transformOrigin: '50% 50%' } });
+
+      // 1. Entrada: trazos que se dibujan
+      tl.fromTo(q('.network-paths path, .sine-wave, .gear'), { strokeDasharray: 1000, strokeDashoffset: 1000 }, { strokeDashoffset: 0, duration: 2, ease: 'sine.inOut', stagger: 0.15 }, 0)
+        // 2. Núcleo IA latiendo
+        .to(q('.core-shape'), { scale: 1.2, opacity: 1, duration: 0.75, ease: 'sine.inOut', repeat: -1, yoyo: true }, 0)
+        // 3. Anillos de seguridad
+        .to(q('.sec-ring-1'), { rotation: 360, duration: 15, ease: 'none', repeat: -1 }, 0)
+        .to(q('.sec-ring-2'), { rotation: -360, duration: 10, ease: 'none', repeat: -1 }, 0)
+        // 4. Simulaciones predictivas
+        .fromTo(q('.sine-wave'), { x: -10 }, { x: 10, duration: 2, ease: 'sine.inOut', repeat: -1, yoyo: true }, 0)
+        // 5. Activos automatizados
+        .to(q('.gear'), { rotation: 360, duration: 8, ease: 'none', repeat: -1 }, 0)
+        .to(q('.asset-pulse'), { scale: 1.5, opacity: 0.2, duration: 1, ease: 'sine.inOut', repeat: -1, yoyo: true, stagger: 0.3 }, 0);
+
+      // 6. Paquetes de datos viajando por las rutas
+      (['tr', 'br', 'bl', 'tl'] as const).forEach((dir) => {
+        const ruta = svg.querySelector<SVGPathElement>(`.path-${dir}`);
+        if (!ruta) return;
+        tl.to(q(`.${dir}-packet`), {
+          motionPath: { path: ruta, align: ruta, alignOrigin: [0.5, 0.5] },
+          duration: gsap.utils.random(2.5, 3.5),
+          ease: 'none',
+          repeat: -1,
+        }, gsap.utils.random(0, 1));
       });
 
-      // 2. IA Core
-      animate(svg.querySelectorAll('.core-shape'), {
-        scale: [1, 1.2, 1],
-        opacity: [0.8, 1, 0.8],
-        ease: 'inOutSine',
-        duration: 1500,
-        loop: true
-      });
-
-      // 3. Anillos de seguridad
-      animate(svg.querySelectorAll('.sec-ring-1'), {
-        rotate: '1turn',
-        ease: 'linear',
-        duration: 15000,
-        loop: true,
-        transformOrigin: '0px 0px' 
-      });
-
-      animate(svg.querySelectorAll('.sec-ring-2'), {
-        rotate: '-1turn',
-        ease: 'linear',
-        duration: 10000,
-        loop: true,
-        transformOrigin: '0px 0px'
-      });
-
-      // 4. Simulaciones Predictivas
-      animate(svg.querySelectorAll('.sine-wave'), {
-        translateX: [-10, 10],
-        ease: 'inOutSine',
-        duration: 2000,
-        direction: 'alternate',
-        loop: true
-      });
-
-      // 5. Activos Automatizados
-      animate(svg.querySelectorAll('.gear'), {
-        rotate: '1turn',
-        ease: 'linear',
-        duration: 8000,
-        loop: true,
-        transformOrigin: 'center'
-      });
-
-      animate(svg.querySelectorAll('.asset-pulse'), {
-        scale: [0.8, 1.5, 0.8],
-        opacity: [1, 0.2, 1],
-        ease: 'inOutSine',
-        duration: 2000,
-        loop: true,
-        delay: stagger(300)
-      });
-
-      // 6. Eficiencia B2B: Rutas de datos
-      const paths = [
-        svg.querySelector('.path-tr'),
-        svg.querySelector('.path-br'),
-        svg.querySelector('.path-bl'),
-        svg.querySelector('.path-tl')
-      ];
-      
-      const packets = [
-        svg.querySelector('.tr-packet'),
-        svg.querySelector('.br-packet'),
-        svg.querySelector('.bl-packet'),
-        svg.querySelector('.tl-packet')
-      ];
-
-      packets.forEach((packet, index) => {
-        if (!packet || !paths[index]) return;
-        
-        const path = createMotionPath(paths[index]);
-        
-        animate(packet, {
-          ...path,
-          ease: 'linear',
-          duration: random(2500, 3500),
-          loop: true,
-          delay: random(0, 1000)
-        });
+      ScrollTrigger.create({
+        trigger: svg,
+        start: 'top bottom',
+        end: 'bottom top',
+        onToggle: (self) => (self.isActive ? tl.play() : tl.pause()),
       });
     });
   });

@@ -4,3 +4,344 @@
 @theme {
   --font-georgia: "Georgia", serif;
 }
+
+/*
+  Tokens y resets globales del sitio Havenser.
+  IMPORTANTE: este archivo se importa desde Layout.astro, que TODAS las
+  páginas usan — por eso es el lugar correcto para definir variables de
+  color globales (antes vivían en General.astro, pero General solo lo usa
+  la home, así que páginas como /cursos o /contactanos no las veían).
+*/
+:root {
+  /* ==========================================
+     SISTEMA DE COLORES HAVENSER — TEMA OSCURO
+     ==========================================
+     Reservado a propósito solo para el Hero y el Footer (el "ancla de
+     marca" oscura del sitio). Todo lo demás usa el tema claro de abajo. */
+  --bg-main: #111b2c;
+  --bg-surface: #192232;
+  --accent: #3e4b61;
+  --text-muted: #8d94a1;
+  --text-light: #e6e6f0;
+
+  /* ==========================================
+     TEMA CLARO (usado en ~80% del sitio)
+     ==========================================
+     Servicios, Quiénes Somos, Cursos, Tech/Ciencia, Contacto, legales. */
+  --bg-light: #f4f5f8;
+  --surface-white: #ffffff;
+  --text-heading: #10192d;
+  --text-body: #3e4b61;
+  --border-soft: #d8dce3;
+  --gold: #c9a126;
+  --gold-hover: #e0b62c;
+}
+
+/* En @layer base para que las utilidades de Tailwind (m-0, mb-4…) puedan
+   sobrescribir estos valores por defecto. */
+@layer base {
+/* ==========================================
+   RESETS Y TIPOGRAFÍA BASE
+   ========================================== */
+html {
+  scroll-behavior: smooth; /* Para que el menú navegue suavemente a las secciones */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-light);
+  font-family: "Calibri", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   TIPOGRAFÍA DE TÍTULOS (GEORGIA)
+   ========================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Georgia", serif;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================
+   ELEMENTOS COMUNES
+   ========================================== */
+p {
+  margin-bottom: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  transition: all 0.3s ease; /* Transiciones suaves de tecnología de alta gama */
+}
+}
+
+/* ==========================================
+   V4: utilidades globales
+   ========================================== */
+/* Zona oscura de marca (hero 3D, agentes IA, calculadora). */
+.zona-oscura {
+  background: radial-gradient(120% 90% at 50% 0%, #152036 0%, #10192d 60%, #0a1020 100%);
+  color: var(--text-light);
+}
+
+/* Barra de progreso de lectura (la anima src/scripts/scroll.ts). */
+.barra-progreso {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 70;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--text-heading);
+  color: #fff;
+}
+.skip-link:focus { top: 1rem; }
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Botones de marca reutilizables. */
+.btn-oro,
+.btn-borde {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.8rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-oro { background: var(--gold); color: var(--text-heading); }
+.btn-oro:hover { background: var(--gold-hover); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(201, 161, 38, 0.25); }
+.btn-borde { border: 2px solid currentColor; }
+.btn-borde:hover { color: var(--gold); border-color: var(--gold); }
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a6d12; /* oro oscurecido: contraste AA sobre fondos claros */
+  margin: 0 0 0.75rem;
+}
+.zona-oscura .eyebrow { color: var(--gold); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* ==========================================
+   CALCULADORAS (islas React en /soluciones/*, zona oscura)
+   ========================================== */
+.calc-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-family: Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+}
+.calc-legend > span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--text-heading);
+  font-family: Calibri, sans-serif;
+  font-size: 0.95rem;
+}
+.calc-legend em { font-style: normal; font-size: 0.9rem; font-weight: 400; color: #8d94a1; font-family: Calibri, sans-serif; }
+
+.calc-opcion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 14px;
+  border: 1px solid rgba(110, 123, 144, 0.45);
+  background: rgba(21, 32, 54, 0.6);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.calc-opcion:hover { border-color: rgba(201, 161, 38, 0.6); }
+.calc-opcion.is-activa {
+  border-color: var(--gold);
+  background: rgba(201, 161, 38, 0.1);
+  box-shadow: 0 0 0 1px var(--gold) inset;
+}
+.calc-opcion:has(input:focus-visible) { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.calc-lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(110, 123, 144, 0.3); }
+.calc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(110, 123, 144, 0.3);
+}
+.calc-item p { margin: 0; }
+.calc-item.is-off { opacity: 0.45; }
+.calc-incluido {
+  flex: none;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  background: var(--gold);
+}
+.calc-check { flex: none; width: 22px; height: 22px; accent-color: var(--gold); cursor: pointer; }
+.calc-stepper {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(110, 123, 144, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.calc-stepper button {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  color: #e6e6f0;
+  cursor: pointer;
+}
+.calc-stepper button:hover:not(:disabled) { background: rgba(201, 161, 38, 0.15); color: var(--gold); }
+.calc-stepper button:disabled { opacity: 0.35; cursor: not-allowed; }
+.calc-stepper output { min-width: 2ch; text-align: center; font-weight: 700; color: #fff; }
+
+.calc-rango { width: 100%; accent-color: var(--gold); height: 32px; cursor: pointer; }
+
+.calc-resumen {
+  position: sticky;
+  top: 88px;
+  padding: 1.75rem;
+  border-radius: 1.25rem;
+  background: #152036;
+  border: 1px solid rgba(201, 161, 38, 0.35);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+.calc-filas { margin: 0; }
+.calc-filas > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.45rem 0; color: #e6e6f0; }
+.calc-filas dt { color: #b9c0cc; }
+.calc-filas dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.calc-filas .sub { padding-top: 0; font-size: 0.85rem; }
+.calc-filas .sub dt, .calc-filas .sub dd { color: #8d94a1; font-weight: 400; }
+.calc-filas .total { margin-top: 0.5rem; padding-top: 0.9rem; border-top: 1px solid rgba(110, 123, 144, 0.4); }
+.calc-filas .total dt { color: #fff; font-weight: 700; }
+.calc-filas .total dd { font-size: 1.6rem; color: var(--gold); }
+.calc-nota { margin: 0.75rem 0 0; font-size: 0.85rem; color: #b9c0cc; }
+
+@media (max-width: 1023px) {
+  .calc-resumen { position: relative; top: 0; }
+}
+.calc-barra {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.75rem 0.75rem 1.1rem;
+  border-radius: 16px;
+  background: rgba(16, 25, 45, 0.95);
+  border: 1px solid rgba(201, 161, 38, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  transform: translateY(140%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.calc-barra.is-visible { transform: translateY(0); }
+.chip-area {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(110, 123, 144, 0.5);
+  color: #e6e6f0;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.chip-area:hover { border-color: var(--gold); }
+.chip-area.is-activa { background: var(--gold); border-color: var(--gold); color: var(--text-heading); font-weight: 700; }
+.chip-area:has(input:focus-visible) { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ==========================================
+   DEMO DE CHATBOT (/soluciones/chatbot-whatsapp)
+   ========================================== */
+.telefono {
+  width: min(100%, 340px);
+  padding: 12px;
+  border-radius: 42px;
+  background: #05070d;
+  border: 1px solid rgba(110, 123, 144, 0.4);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 0 6px rgba(21, 32, 54, 0.8);
+}
+.telefono-pantalla { border-radius: 32px; overflow: hidden; }
+.chat-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 440px;
+  padding: 16px 12px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.burbuja, .escribiendo {
+  max-width: 82%;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #e9edef;
+}
+.burbuja-cliente { align-self: flex-end; border-top-right-radius: 4px; }
+.burbuja-bot { align-self: flex-start; border-top-left-radius: 4px; }
+.escribiendo { display: flex; gap: 4px; padding: 12px 14px; }
+.escribiendo span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #8d94a1;
+  animation: escribiendo 1s infinite ease-in-out;
+}
+.escribiendo span:nth-child(2) { animation-delay: 0.15s; }
+.escribiendo span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes escribiendo {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}

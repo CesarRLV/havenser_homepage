@@ -1,0 +1,83 @@
+---
+// /soluciones/automatizacion-ia — agentes IA vendidos como ahorro de horas.
+// Áreas y casos típicos: src/data/soluciones.ts (AREAS_AUTOMATIZACION).
+import PlantillaSolucion from "../../components/soluciones/PlantillaSolucion.astro";
+import CalculadoraAhorro from "../../components/soluciones/CalculadoraAhorro";
+import { getSolucion, AREAS_AUTOMATIZACION } from "../../data/soluciones";
+
+const solucion = getSolucion("automatizacion-ia");
+---
+
+<PlantillaSolucion solucion={solucion} oscuro ctaTexto="Solicita un diagnóstico" ctaHref="#ahorro">
+  <!-- Áreas -->
+  <section class="py-20 md:py-24 bg-white" aria-labelledby="areas-titulo">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-2xl mb-12" data-animar="fade-up">
+        <p class="eyebrow">Dónde trabajan los agentes</p>
+        <h2 id="areas-titulo" class="text-3xl md:text-5xl font-bold text-[var(--text-heading)]">Un agente para cada área de su empresa</h2>
+        <p class="text-lg text-[var(--text-body)] m-0">
+          Empezamos por el proceso que más horas le cuesta. Estos son casos típicos de lo que automatizamos; los diseñamos a la medida de su operación.
+        </p>
+      </div>
+      <ul class="grid gap-5 md:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0" data-stagger>
+        {AREAS_AUTOMATIZACION.map((a) => (
+          <li class="area">
+            <h3 class="text-xl font-bold text-[var(--text-heading)] mb-3">{a.area}</h3>
+            <ul class="tareas">
+              {a.tareas.map((t) => <li>{t}</li>)}
+            </ul>
+            <p class="caso"><span>Caso típico</span>{a.casoTipico}</p>
+          </li>
+        ))}
+        <li class="area area-cta">
+          <h3 class="text-xl font-bold text-white mb-3">¿Su proceso no está en la lista?</h3>
+          <p class="text-[#b9c0cc]">Si es repetitivo y tiene reglas claras, casi seguro se puede automatizar.</p>
+          <a href="/contactanos" class="btn-oro mt-auto">Cuéntenos su caso</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Calculadora de ahorro (zona oscura) -->
+  <section id="ahorro" class="zona-oscura py-20 md:py-28 scroll-mt-16" aria-labelledby="ahorro-titulo">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-2xl mb-12" data-animar="fade-up">
+        <p class="eyebrow">Calculadora de ahorro</p>
+        <h2 id="ahorro-titulo" class="text-3xl md:text-5xl font-bold text-white">¿Cuántas horas puede recuperar su equipo?</h2>
+        <p class="text-lg text-[#b9c0cc] m-0">Mueva los controles y vea cuánto tiempo y dinero se va hoy en tareas que un agente puede hacer.</p>
+      </div>
+      <CalculadoraAhorro client:visible />
+    </div>
+  </section>
+</PlantillaSolucion>
+
+<style>
+  .area {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    background: var(--bg-light);
+    border: 1px solid var(--border-soft);
+  }
+  .tareas { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.5rem; }
+  .tareas li { position: relative; padding-left: 1.1rem; color: var(--text-body); }
+  .tareas li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .caso {
+    margin: auto 0 0;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border-soft);
+    font-size: 0.95rem;
+    color: var(--text-body);
+  }
+  .caso span {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a6d12;
+  }
+  .area-cta { background: var(--text-heading); border-color: var(--text-heading); }
+</style>

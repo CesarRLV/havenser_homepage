@@ -1,267 +1,189 @@
 ---
-// Componente Hero con Animación de Circuito H
+// Portada / Hero de la home (zona oscura de marca).
+//
+// - El texto y los botones son HTML puro: se pintan de inmediato (LCP) y
+//   nunca dependen del 3D.
+// - El 3D (Hero3D, isla de React con client:idle) se monta detrás, a la
+//   derecha en escritorio y arriba/centrado en móvil, cuando el navegador
+//   está libre. Mientras tanto (o si no hay WebGL / reduced-motion) se ve
+//   un póster SVG estático.
+// - La entrada del texto es un timeline de GSAP; al hacer scroll el
+//   contenido se desvanece (scrub) mientras el núcleo 3D se expande.
+import Hero3D from "../hero/Hero3D";
 ---
 
-<header class="hero-circuito">
-  
-  <div class="header-content">
-    <h1>Innovación, Datos y<strong> Tecnología</strong></h1>
-    <p>Innovación inteligente, ejecución impecable</p>
-    
+<header id="hero" class="hero zona-oscura">
+  <div class="hero-fondo" aria-hidden="true">
+    <Hero3D client:idle />
   </div>
-  
-  <canvas id="circuitoCanvas"></canvas>
+
+  <div class="hero-contenido">
+    <p class="eyebrow hero-anim">Consultoría en ingeniería, IA y ciencias exactas</p>
+    <h1 class="hero-titulo">
+      Innovación inteligente, <strong>ejecución impecable.</strong>
+    </h1>
+    <p class="hero-sub hero-anim">
+      Agentes de IA que automatizan su operación, chatbots que atienden en WhatsApp las 24&nbsp;horas,
+      marketing digital medible y software a la medida, con el rigor de un equipo de ingenieros y científicos.
+    </p>
+    <div class="hero-cta hero-anim">
+      <a href="/contactanos" class="btn-oro">Cotiza tu solución</a>
+      <a href="/soluciones/marketing-digital#calculadora" class="btn-borde">Arma tu paquete de marketing</a>
+    </div>
+    <p class="hero-confianza hero-anim">
+      Equipo interdisciplinario con formación de posgrado · Proyectos B2B · Acompañamiento después del lanzamiento
+    </p>
+  </div>
+
+  <a href="#soluciones" class="hero-scroll" aria-label="Ver soluciones">
+    <span></span>
+  </a>
 </header>
 
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+    // Entrada. El <h1> solo se desplaza (nunca opacity: 0) para no retrasar el LCP.
+    gsap
+      .timeline({ defaults: { ease: 'power3.out', duration: 0.9 } })
+      .from('.hero-titulo', { y: 24 })
+      .from('.hero-anim', { autoAlpha: 0, y: 20, stagger: 0.12 }, '<0.1')
+      .from('.hero-scroll', { autoAlpha: 0 }, '-=0.3');
+
+    // Salida con scroll: el texto sube y se desvanece mientras el 3D se expande.
+    gsap.to('.hero-contenido', {
+      yPercent: -18,
+      autoAlpha: 0.15,
+      ease: 'none',
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
+  });
+</script>
+
 <style>
-  /* Contenedor principal de la portada */
-  .hero-circuito {
-    width: 100%;
-    height: 90vh; /* Aumentamos ligeramente la altura para formato hero de escritorio */
-    position: sticky;
-    
-    overflow: hidden;
-    display: flex;
-    
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    padding-bottom: 20px;
-    box-sizing: border-box;
-    background-color: var(--bg-main);
-    top:0;
-    z-index: 1;
-  }
-
-  #circuitoCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    z-index: 1;
-  }
-
-  .header-content {
+  .hero {
     position: relative;
-    z-index: 2;
-    text-align: center;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 112px 24px 72px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero-fondo {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Contenedores de la isla 3D (las clases las pone Hero3D.tsx). */
+  .hero-fondo :global(.hero-3d),
+  .hero-fondo :global(.hero-canvas) {
+    position: absolute;
+    inset: 0;
+  }
+  .hero-fondo :global(.hero-canvas) { transition: opacity 1.2s ease; }
+  /* Escritorio: la red se desvanece hacia el texto (izquierda) para no competir con la lectura. */
+  @media (min-width: 768px) {
+    .hero-fondo :global(.hero-canvas) {
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.25) 32%, #000 58%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.25) 32%, #000 58%);
+    }
+  }
+  .hero-fondo :global(.poster-nucleo) {
+    position: absolute;
+    width: min(46vw, 560px);
+    right: 6vw;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .hero-contenido {
+    position: relative;
+    max-width: 720px;
     color: var(--text-light);
-    padding: 0 20px;
-    pointer-events: none; /* Permite que los clics pasen a través del texto si fuera necesario */
-    margin-top: 180px;
   }
 
-  .header-content h1 {
-    font-family: 'Georgia', serif;
-    font-size: 3.1rem; /* Tamaño con jerarquía visual */
-    font-weight: 700;
-    margin: 0 0 15px 0;
-    letter-spacing: -0.5px;
-    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+  .hero-titulo {
+    font-size: clamp(2.2rem, 5.6vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+    color: #fff;
+    text-wrap: balance;
+  }
+  .hero-titulo strong { color: var(--gold); font-weight: 700; }
+
+  .hero-sub {
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    color: #b9c0cc;
+    max-width: 560px;
+    margin: 0 0 2rem;
+    text-wrap: pretty;
   }
 
-  .header-content p {
-    font-family: 'Calibri', sans-serif;
-    font-size: 1.6rem;
-    color: var(--text-muted);
-    margin: 0;
-    font-weight: 300;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-cta .btn-borde { color: var(--text-light); border-color: rgba(230, 230, 240, 0.4); }
+
+  .hero-confianza {
+    margin: 1.75rem 0 0;
+    font-size: 0.88rem;
+    color: #8d94a1;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    width: 26px;
+    height: 42px;
+    margin-left: -13px;
+    border: 2px solid rgba(230, 230, 240, 0.35);
+    border-radius: 14px;
+  }
+  .hero-scroll span {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 4px;
+    height: 8px;
+    margin-left: -2px;
+    border-radius: 2px;
+    background: var(--gold);
+    animation: rueda 1.8s ease-in-out infinite;
+  }
+  @keyframes rueda {
+    0% { transform: translateY(0); opacity: 1; }
+    80% { transform: translateY(14px); opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  @media (min-width: 900px) {
+    .hero { padding-left: 6vw; padding-right: 6vw; }
+  }
+
+  /* Móvil: franja superior reservada para el núcleo y el texto debajo,
+     con un velo para que la red no compita con la lectura. */
+  @media (max-width: 767px) {
+    .hero { justify-content: flex-start; padding: calc(64px + 26svh) 18px 88px; }
+    .hero-titulo { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+    .hero-fondo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 28%, rgba(16, 25, 45, 0.85) 42%, #10192d 58%);
+    }
+    .hero-fondo :global(.poster-nucleo) {
+      width: 26svh;
+      right: calc(50% - 13svh);
+      top: 76px;
+      transform: none;
+    }
   }
 </style>
-
-<script>
-  // Astro empaquetará este script automáticamente para el cliente
-  const canvas = document.getElementById('circuitoCanvas');
-  
-  if (canvas) { // Buena práctica: verificar que el elemento exista antes de ejecutar
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-        canvas.width = canvas.parentElement.offsetWidth;
-        canvas.height = canvas.parentElement.offsetHeight;
-        generarEstructuraH(); 
-    }
-
-    const numPuntos = 120;
-    const puntos = [];
-
-    let nodosCircuito = [];
-    let lineasCircuito = [];
-    let circuitoIniciado = false;
-
-    function initPuntos() {
-        puntos.length = 0;
-        for (let i = 0; i < numPuntos; i++) {
-            puntos.push({
-                angulo: Math.random() * Math.PI * 2,
-                radioOrbita: Math.random() * (Math.min(canvas.width, canvas.height) * 0.35) + 20,
-                velocidadOrbita: (Math.random() - 0.5) * 0.03,
-                distorsion: (Math.random() - 0.5) * 0.5,
-                radio: Math.random() * 2 + 1,
-                alpha: Math.random() * 0.7 + 0.3,
-                x: 0,
-                y: 0,
-                objetivoX: null,
-                objetivoY: null
-            });
-        }
-    }
-
-    function generarEstructuraH() {
-        nodosCircuito = [];
-        lineasCircuito = [];
-
-        const cx = canvas.width / 2;
-        const cy = (canvas.height / 2) - 50;
-
-        const hAncho = 110;
-        const hAlto = 150;
-        const hMitadA = hAncho / 2;
-        const hMitadH = hAlto / 2;
-
-        const puntosH = [];
-        const pasosVerticales = 6;
-        const pasosHorizontales = 4;
-
-        // Columna Izquierda H
-        for (let i = 0; i <= pasosVerticales; i++) {
-            puntosH.push({ x: cx - hMitadA, y: cy - hMitadH + (hAlto / pasosVerticales) * i });
-        }
-        // Columna Derecha H
-        for (let i = 0; i <= pasosVerticales; i++) {
-            puntosH.push({ x: cx + hMitadA, y: cy - hMitadH + (hAlto / pasosVerticales) * i });
-        }
-        // Barra Horizontal Central H
-        for (let i = 1; i < pasosHorizontales; i++) {
-            puntosH.push({ x: cx - hMitadA + (hAncho / pasosHorizontales) * i, y: cy });
-        }
-
-        // Marco / Borde del Circuito
-        const marcoAncho = 260;
-        const marcoAlto = 200;
-        const mMitadA = marcoAncho / 2;
-        const mMitadH = marcoAlto / 2;
-
-        const puntosBorde = [
-            { x: cx - mMitadA, y: cy - mMitadH },
-            { x: cx + mMitadA, y: cy - mMitadH },
-            { x: cx + mMitadA, y: cy + mMitadH },
-            { x: cx - mMitadA, y: cy + mMitadH },
-            { x: cx, y: cy - mMitadH },
-            { x: cx, y: cy + mMitadH },
-            { x: cx - mMitadA, y: cy },
-            { x: cx + mMitadA, y: cy }
-        ];
-
-        nodosCircuito = [...puntosH, ...puntosBorde];
-
-        for (let i = 0; i < nodosCircuito.length; i++) {
-            for (let j = i + 1; j < nodosCircuito.length; j++) {
-                const p1 = nodosCircuito[i];
-                const p2 = nodosCircuito[j];
-                const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-
-                if (dist < 70 || (Math.abs(p1.x - p2.x) < 5 && dist < 110) || (Math.abs(p1.y - p2.y) < 5 && dist < 110)) {
-                    lineasCircuito.push({ p1, p2 });
-                }
-            }
-        }
-
-        if (circuitoIniciado) {
-            asignarObjetivos();
-        }
-    }
-
-    function asignarObjetivos() {
-        for (let i = 0; i < puntos.length; i++) {
-            const nodoTarget = nodosCircuito[i % nodosCircuito.length];
-            puntos[i].objetivoX = nodoTarget.x;
-            puntos[i].objetivoY = nodoTarget.y;
-        }
-    }
-
-    function dibujarFondoDifuminado() {
-        const cx = canvas.width / 2;
-        const cy = (canvas.height / 2) - 50;
-        const maxRadius = Math.max(canvas.width, canvas.height) * 0.8;
-
-        const gradiente = ctx.createRadialGradient(cx, cy, 20, cx, cy, maxRadius);
-        // Ajuste de colores para integrarse con --bg-main (#111b2c)
-        gradiente.addColorStop(0, '#192232'); 
-        gradiente.addColorStop(0.6, '#111b2c');
-        gradiente.addColorStop(1, '#010206');
-
-        ctx.fillStyle = gradiente;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function animar() {
-        dibujarFondoDifuminado();
-
-        const cx = canvas.width / 2;
-        const cy = (canvas.height / 2) - 50;
-
-        if (circuitoIniciado) {
-            ctx.save();
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = 'rgba(0, 162, 255, 0.4)';
-            ctx.shadowColor = '#0088ff';
-            ctx.shadowBlur = 10;
-
-            lineasCircuito.forEach(linea => {
-                ctx.beginPath();
-                ctx.moveTo(linea.p1.x, linea.p1.y);
-                ctx.lineTo(linea.p2.x, linea.p2.y);
-                ctx.stroke();
-            });
-            ctx.restore();
-        }
-
-        for (let i = 0; i < puntos.length; i++) {
-            const p = puntos[i];
-
-            if (!circuitoIniciado) {
-                p.angulo += p.velocidadOrbita;
-                p.radioOrbita += p.distorsion;
-
-                if (p.radioOrbita < 30 || p.radioOrbita > Math.min(canvas.width, canvas.height) * 0.4) {
-                    p.distorsion *= -1;
-                }
-
-                p.x = cx + Math.cos(p.angulo) * p.radioOrbita;
-                p.y = cy + Math.sin(p.angulo) * p.radioOrbita;
-
-            } else {
-                if (p.objetivoX !== null && p.objetivoY !== null) {
-                    p.x += (p.objetivoX - p.x) * 0.025;
-                    p.y += (p.objetivoY - p.y) * 0.025;
-                }
-            }
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radio, 0, Math.PI * 2);
-            ctx.fillStyle = '#61dafb';
-            ctx.shadowColor = '#00d2ff';
-            ctx.shadowBlur = circuitoIniciado ? 8 : 6;
-            ctx.fill();
-            ctx.restore();
-        }
-
-        requestAnimationFrame(animar);
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    initPuntos();
-    animar();
-
-    setTimeout(() => {
-        circuitoIniciado = true;
-        asignarObjetivos();
-    }, 3500);
-  }
-</script>

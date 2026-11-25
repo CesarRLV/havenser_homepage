@@ -1,0 +1,24 @@
+# Havenser
+
+> Consultora de ingeniería avanzada y ciencias exactas en México (Pachuca, Hidalgo). Fusiona rigor científico con IA, automatización, software, cloud y marketing digital para empresas B2B. Eslogan: "Innovación inteligente, ejecución impecable."
+
+Contacto: consultoria@havenser.com · WhatsApp +52 56 5072 4919
+
+## Soluciones
+- [Marketing digital](https://havenser.com/soluciones/marketing-digital): 4 paquetes mensuales en MXN + IVA — Presencia $3,499, Visibilidad $6,999, Prospectos $12,499, Integral $21,999 (+ $12,000 de arranque). Incluye calculadora de paquete.
+- [Agentes IA y automatización](https://havenser.com/soluciones/automatizacion-ia): agentes de inteligencia artificial para ventas, atención, finanzas, RH y operaciones; calculadora de horas ahorradas.
+- [Chatbot con IA para WhatsApp y Telegram](https://havenser.com/soluciones/chatbot-whatsapp): atención 24/7, citas, pedidos y canalización a un asesor. Precio a la medida tras demo.
+
+## Áreas de especialidad
+- [AI & Datos](https://havenser.com/tech/data)
+- [Desarrollo, infraestructura e IoT](https://havenser.com/tech/dev)
+- [Realidad extendida](https://havenser.com/tech/virtual)
+- [Biotecnología](https://havenser.com/ciencia/biotech)
+- [Logística predictiva](https://havenser.com/ciencia/logistica)
+- [Innovación y gemelos digitales](https://havenser.com/ciencia/innova)
+
+## Capacitación
+- [Catálogo de cursos](https://havenser.com/cursos)
+
+## Contacto
+- [Contáctanos](https://havenser.com/contactanos)

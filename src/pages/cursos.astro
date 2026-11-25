@@ -1,27 +1,99 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PortadaCursos from '../components/capacitaciones/PortadaCursos.astro';
-import GridCursos from '../components/capacitaciones/GridCursos.astro';
-import Navbar from '../components/NavBar.astro';
-import General from '../layouts/General.astro';
+// src/pages/cursos.astro — catálogo de cursos, agrupado por eje temático.
+// Los datos vienen de src/data/cursos.ts; cada tarjeta enlaza a su página
+// real en /cursos/[id] (generada por src/pages/cursos/[id].astro).
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+import { getCursosPorEje, getImagenCurso } from "../data/cursos";
+
+const grupos = getCursosPorEje();
 ---
 
-<Layout title="Cursos Havenser | Capacitación Técnica">
-  <Navbar />
-    <General>
-    
-    <PortadaCursos />
-    
-    <section class="py-16 px-6 max-w-4xl mx-auto text-center text-black">
-      <h2 class="text-3xl text-black font-bold mb-6">Excelencia en Transferencia Tecnológica</h2>
-      <p class="text-xl leading-relaxed text-lg" style="font-family: Calibri, sans-serif;">
-        En Havenser, creemos que la mejor ventaja competitiva es un equipo capacitado. 
-        Nuestros cursos no son solo teoría; son una transferencia de competencias clave 
-        en metodologías ágiles y herramientas avanzadas para elevar las capacidades 
-        tecnológicas de sus equipos de ingeniería y analistas.
-      </p>
-    </section>
+<Layout title="Cursos y Capacitación | Havenser" description="Catálogo de cursos de Havenser: programación, datos, IA, ingeniería y ciencias aplicadas para equipos corporativos. Academias y programas de upskilling a la medida.">
+  <NavBar />
+  <main id="contenido" class="bg-[var(--bg-light)] pt-28 pb-24">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
 
-    <GridCursos />
-</General>
+      <div class="text-center max-w-3xl mx-auto mb-16" data-animar="fade-up">
+        <p class="text-[#c9a126] text-sm font-semibold uppercase tracking-[0.18em] mb-3">Capacitación técnica</p>
+        <h1 class="text-4xl md:text-5xl font-bold text-[#10192d] mb-5" style="font-family: Georgia, serif;">
+          Nuestros Cursos
+        </h1>
+        <p class="text-lg text-[#3e4b61] leading-relaxed">
+          Programas de capacitación interdisciplinaria: IA, IoT, ciencia de datos,
+          química, matemáticas aplicadas y más. No son solo teoría — son
+          transferencia de competencias que su equipo aplica desde la primera semana.
+        </p>
+      </div>
+
+      {grupos.map((grupo) => (
+        <section class="mb-16" data-animar="fade-up">
+          <h2 class="text-2xl md:text-3xl font-bold text-[#10192d] mb-2" style="font-family: Georgia, serif;">
+            {grupo.eje}
+          </h2>
+          <div class="w-16 h-1 bg-[#c9a126] rounded-full mb-8"></div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {grupo.cursos.map((curso) => (
+              <a
+                href={`/cursos/${curso.id}`}
+                class="curso-card group bg-white border border-[var(--border-soft)] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(16,25,45,0.05)] hover:shadow-[0_20px_45px_rgba(16,25,45,0.12)] hover:-translate-y-1.5 transition-all duration-500 flex flex-col"
+              >
+                <div class="h-40 overflow-hidden relative">
+                  <img
+                    src={getImagenCurso(curso)}
+                    alt={curso.titulo}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  {curso.estatus === "en_revision" && (
+                    <span class="absolute top-3 right-3 bg-[#c9a126] text-[#10192d] text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full shadow">
+                      En preparación
+                    </span>
+                  )}
+                </div>
+                <div class="p-6 flex flex-col grow">
+                  <h3 class="text-lg font-bold text-[#10192d] mb-2 leading-snug" style="font-family: Georgia, serif;">
+                    {curso.titulo}
+                  </h3>
+                  <p class="text-sm text-[#3e4b61] leading-relaxed mb-4 grow">
+                    {curso.descripcion}
+                  </p>
+                  <span class="inline-flex items-center text-sm font-bold text-[#c9a126] group-hover:text-[#10192d] transition-colors">
+                    Ver detalles
+                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div class="text-center bg-white border border-[var(--border-soft)] rounded-2xl p-10 md:p-14" data-animar="fade-up">
+        <h3 class="text-2xl md:text-3xl font-bold text-[#10192d] mb-4" style="font-family: Georgia, serif;">
+          ¿No encuentras el curso que necesitas?
+        </h3>
+        <p class="text-[#3e4b61] text-lg mb-8 max-w-xl mx-auto">
+          Diseñamos capacitaciones a la medida de tu equipo y tu industria.
+        </p>
+        <a
+          href="/contactanos"
+          class="inline-flex items-center justify-center bg-[#10192d] text-white font-bold px-9 py-4 rounded-xl hover:bg-[#1c2c47] hover:-translate-y-0.5 transition-all duration-300 shadow-lg"
+        >
+          Contáctanos
+        </a>
+      </div>
+
+    </div>
+  </main>
 </Layout>
+
+<script>
+  // Compatibilidad con el patrón cursos?id=<id> (redirige a /cursos/<id>,
+  // que es la ruta real y estática del curso).
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (id) {
+    window.location.replace(`/cursos/${id}`);
+  }
+</script>
